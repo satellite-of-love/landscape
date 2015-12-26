@@ -1,7 +1,16 @@
 module Landscape where
 
 import Graphics.Element as E exposing (Element)
-import Text
+import Graphics.Collage as C exposing (Form)
 
 main : Element
-main = E.centered (Text.fromString "wat")
+main = C.collage 1000 748 forms
+
+forms : List Form
+forms = 
+  [
+    C.toForm background
+  ]
+
+
+background = E.image 1000 748 "../images/solarsystem.png"
