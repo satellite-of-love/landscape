@@ -13,6 +13,7 @@ type alias MousePosition = ( Int, Int )
 type alias Model =
   { 
     pointer: MousePosition
+  , messages: List String
   } 
 
 lANDSCAPE_H = 768
@@ -44,22 +45,24 @@ produceModel action =
     Click -> 
       {
         pointer = ( 0, 0 )
+      , messages = [ "You clicked!"]
       }
     MouseMove spot -> 
       { 
         pointer = spot
+      , messages = [] 
       }
 
 view : Model -> Html
-view pointer =
+view model =
   Html.div []
     [
-      Html.div [ Attr.style [ ("display", "inline-block"), ("*display", "inline"), ("border", "medium dashed blue") ] ] [ landscape pointer ]
-    , messages
+      Html.div [ Attr.style [ ("display", "inline-block"), ("*display", "inline"), ("border", "medium dashed blue") ] ] [ landscape model.pointer ]
+    , messages model.messages
     ]
 
-messages : Html
-messages = 
+messages : List String -> Html
+messages whatToSay = 
   Html.div 
   [
     Attr.style 
@@ -72,19 +75,18 @@ messages =
     , ("vertical-align", "top")
     ]
   ]
-  [
-    Html.li [] [ Html.text "yo" ]
-  ]
+  ( List.map (\a -> Html.li [] [Html.text a]) whatToSay )
+  
 
-landscape : Model -> Html
+landscape : MousePosition -> Html
 landscape model =
   C.collage 1000 lANDSCAPE_H (forms model) |> Html.fromElement
 
 
-forms : Model -> List Form
+forms : MousePosition -> List Form
 forms model  =
   [ C.toForm background
-  , C.text (Text.fromString (toString model.pointer))
+  , C.text (Text.fromString (toString model))
   ]
 
 
