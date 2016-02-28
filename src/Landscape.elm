@@ -9,16 +9,37 @@ import Signal exposing (Signal)
 import Mouse
 
 
+type alias MousePosition = ( Int, Int )
 type alias Model =
-  ( Int, Int )
+  { 
+    pointer: MousePosition
+  } 
 
 lANDSCAPE_H = 768
 
+type Action = 
+    MouseMove MousePosition
+
+
 main : Signal Html
 main =
-  Mouse.position 
+  mousePointer
+  |> Signal.map produceModel
   |> Signal.map view
 
+mousePointer : Signal Action
+mousePointer =   
+  Mouse.position 
+  |> Signal.map MouseMove
+
+-- update section
+produceModel : Action -> Model
+produceModel action =
+  case action of
+    MouseMove spot -> 
+      { 
+        pointer = spot
+      }
 
 view : Model -> Html
 view pointer =
@@ -47,14 +68,14 @@ messages =
   ]
 
 landscape : Model -> Html
-landscape pointer =
-  C.collage 1000 lANDSCAPE_H (forms pointer) |> Html.fromElement
+landscape model =
+  C.collage 1000 lANDSCAPE_H (forms model) |> Html.fromElement
 
 
 forms : Model -> List Form
-forms pointer =
+forms model  =
   [ C.toForm background
-  , C.text (Text.fromString (toString pointer))
+  , C.text (Text.fromString (toString model.pointer))
   ]
 
 
