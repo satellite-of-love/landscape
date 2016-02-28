@@ -19,11 +19,11 @@ lANDSCAPE_H = 768
 
 type Action = 
     MouseMove MousePosition
-
+    | Click
 
 main : Signal Html
 main =
-  mousePointer
+  Signal.merge mousePointer mouseClicks
   |> Signal.map produceModel
   |> Signal.map view
 
@@ -32,10 +32,19 @@ mousePointer =
   Mouse.position 
   |> Signal.map MouseMove
 
+mouseClicks : Signal Action
+mouseClicks =
+  Mouse.clicks
+  |> Signal.map (always Click)
+
 -- update section
 produceModel : Action -> Model
 produceModel action =
   case action of
+    Click -> 
+      {
+        pointer = ( 0, 0 )
+      }
     MouseMove spot -> 
       { 
         pointer = spot
