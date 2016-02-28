@@ -5,6 +5,7 @@ import Graphics.Collage as C exposing (Form)
 import Text
 import Html exposing (Html)
 import Signal exposing (Signal)
+import Mouse
 
 
 type alias Model =
@@ -13,7 +14,8 @@ type alias Model =
 
 main : Signal Html
 main =
-  Signal.constant (view ( 0, 0 ))
+  Mouse.position 
+  |> Signal.map view
 
 
 view : Model -> Html
