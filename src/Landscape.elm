@@ -20,6 +20,10 @@ main =
 
 view : Model -> Html
 view pointer =
+  landscape pointer
+
+landscape : Model -> Html
+landscape pointer =
   C.collage 1000 748 (forms pointer) |> Html.fromElement
 
 
