@@ -20,7 +20,14 @@ main =
 
 view : Model -> Html
 view pointer =
-  landscape pointer
+  Html.div []
+    [
+      landscape pointer
+    , messages
+    ]
+
+messages : Html
+messages = Html.text "yo"
 
 landscape : Model -> Html
 landscape pointer =
