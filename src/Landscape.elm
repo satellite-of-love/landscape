@@ -68,7 +68,12 @@ updateModel action model =
     Click ->
       { model
         | messages =
-            model.messages ++ [ "You clicked at " ++ (toString model.pointer) ]
+            model.messages
+              ++ [ "You clicked at "
+                    ++ (toString model.pointer)
+                    ++ " with keys "
+                    ++ (toString (Set.map Char.fromCode model.keysDown))
+                 ]
       }
 
     MouseMove spot keys ->
