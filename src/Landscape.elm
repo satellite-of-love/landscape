@@ -74,6 +74,7 @@ updateModel action model =
     MouseMove spot keys ->
       { model
         | pointer = spot
+        , keysDown = keys
       }
 
 
