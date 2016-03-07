@@ -7,6 +7,9 @@ import Html exposing (Html)
 import Html.Attributes as Attr
 import Signal exposing (Signal)
 import Mouse
+import Keyboard
+import Char exposing (KeyCode)
+import Set exposing (Set)
 
 
 type alias MousePosition =
@@ -31,7 +34,7 @@ lANDSCAPE_H =
 
 
 type Action
-  = MouseMove MousePosition
+  = MouseMove MousePosition (Set KeyCode)
   | Click
 
 
@@ -44,8 +47,7 @@ main =
 
 mousePointer : Signal Action
 mousePointer =
-  Mouse.position
-    |> Signal.map MouseMove
+  Signal.map2 MouseMove Mouse.position Keyboard.keysDown
 
 
 mouseClicks : Signal Action
@@ -63,10 +65,11 @@ updateModel action model =
   case action of
     Click ->
       { model
-        | messages = model.messages ++ [ "You clicked at " ++ (toString model.pointer) ]
+        | messages =
+            model.messages ++ [ "You clicked at " ++ (toString model.pointer) ]
       }
 
-    MouseMove spot ->
+    MouseMove spot keys ->
       { model
         | pointer = spot
       }
