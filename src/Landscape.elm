@@ -63,7 +63,7 @@ updateModel action model =
   case action of
     Click ->
       { model
-        | messages = model.messages ++ [ "You clicked!" ]
+        | messages = model.messages ++ [ "You clicked at " ++ (toString model.pointer) ]
       }
 
     MouseMove spot ->
