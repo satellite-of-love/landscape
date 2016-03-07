@@ -20,6 +20,7 @@ type alias Model =
   { pointer : MousePosition
   , messages : List String
   , keysDown : Set KeyCode
+  , inputIsAThing : Bool
   }
 
 
@@ -28,6 +29,7 @@ init =
   { pointer = ( 0, 0 )
   , messages = []
   , keysDown = Set.empty
+  , inputIsAThing = False
   }
 
 
@@ -74,6 +76,7 @@ updateModel action model =
                     ++ " with keys "
                     ++ (toString (Set.map Char.fromCode model.keysDown))
                  ]
+        , inputIsAThing = Set.member 'T' (Set.map Char.fromCode model.keysDown)
       }
 
     MouseMove spot keys ->
@@ -100,7 +103,10 @@ view model =
       , messages model.messages
       , Html.input
           [ Attr.style
-              [ ( "position", "absolute" ), ( "top", px y ), ( "left", px x ) ]
+              [ ( "position", "absolute" )
+              , ( "top", px y )
+              , ( "left", px x )
+              ]
           ]
           []
       ]
