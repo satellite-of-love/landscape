@@ -9,74 +9,100 @@ import Signal exposing (Signal)
 import Mouse
 
 
-type alias MousePosition = ( Int, Int )
+type alias MousePosition =
+  ( Int, Int )
+
+
 type alias Model =
-  { 
-    pointer: MousePosition
-  , messages: List String
-  } 
+  { pointer : MousePosition
+  , messages : List String
+  }
 
-lANDSCAPE_H = 768
 
-type Action = 
-    MouseMove MousePosition
-    | Click
+init : Model
+init =
+  { pointer = ( 0, 0 )
+  , messages = []
+  }
+
+
+lANDSCAPE_H =
+  768
+
+
+type Action
+  = MouseMove MousePosition
+  | Click
+
 
 main : Signal Html
 main =
-  Signal.merge mousePointer mouseClicks
-  |> Signal.map produceModel
-  |> Signal.map view
+  let
+    hereComeTheActions =
+      Signal.merge mousePointer mouseClicks
+
+    hereComeTheModels =
+      Signal.foldp updateModel init hereComeTheActions
+
+    hereComeTheHtmls =
+      Signal.map view hereComeTheModels
+  in
+    hereComeTheHtmls
+
 
 mousePointer : Signal Action
-mousePointer =   
-  Mouse.position 
-  |> Signal.map MouseMove
+mousePointer =
+  Mouse.position
+    |> Signal.map MouseMove
+
 
 mouseClicks : Signal Action
 mouseClicks =
   Mouse.clicks
-  |> Signal.map (always Click)
+    |> Signal.map (always Click)
+
+
 
 -- update section
-produceModel : Action -> Model
-produceModel action =
+
+
+updateModel : Action -> Model -> Model
+updateModel action model =
   case action of
-    Click -> 
-      {
-        pointer = ( 0, 0 )
-      , messages = [ "You clicked!"]
+    Click ->
+      { pointer = ( 0, 0 )
+      , messages = [ "You clicked!" ]
       }
-    MouseMove spot -> 
-      { 
-        pointer = spot
-      , messages = [] 
+
+    MouseMove spot ->
+      { pointer = spot
+      , messages = []
       }
+
 
 view : Model -> Html
 view model =
-  Html.div []
-    [
-      Html.div [ Attr.style [ ("display", "inline-block"), ("*display", "inline"), ("border", "medium dashed blue") ] ] [ landscape model.pointer ]
+  Html.div
+    []
+    [ Html.div [ Attr.style [ ( "display", "inline-block" ), ( "*display", "inline" ), ( "border", "medium dashed blue" ) ] ] [ landscape model.pointer ]
     , messages model.messages
     ]
 
+
 messages : List String -> Html
-messages whatToSay = 
-  Html.div 
-  [
-    Attr.style 
-    [
-      ("width", "200px")
-    , ("height", (toString lANDSCAPE_H) ++ "px")
-    , ("border", "medium dashed green")
-    , ("display", "inline-block")
-    , ("*display", "inline")
-    , ("vertical-align", "top")
+messages whatToSay =
+  Html.div
+    [ Attr.style
+        [ ( "width", "200px" )
+        , ( "height", (toString lANDSCAPE_H) ++ "px" )
+        , ( "border", "medium dashed green" )
+        , ( "display", "inline-block" )
+        , ( "*display", "inline" )
+        , ( "vertical-align", "top" )
+        ]
     ]
-  ]
-  ( List.map (\a -> Html.li [] [Html.text a]) whatToSay )
-  
+    (List.map (\a -> Html.li [] [ Html.text a ]) whatToSay)
+
 
 landscape : MousePosition -> Html
 landscape model =
@@ -84,7 +110,7 @@ landscape model =
 
 
 forms : MousePosition -> List Form
-forms model  =
+forms model =
   [ C.toForm background
   , C.text (Text.fromString (toString model))
   ]
