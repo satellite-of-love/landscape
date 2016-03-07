@@ -74,16 +74,30 @@ updateModel action model =
 
 view : Model -> Html
 view model =
-  Html.div
-    []
-    [ Html.div
-        [ Attr.style
-            [ ( "position", "absolute" )
-            ]
-        ]
-        [ landscape model.pointer ]
-    , messages model.messages
-    ]
+  let
+    ( x, y ) =
+      model.pointer
+  in
+    Html.div
+      []
+      [ Html.div
+          [ Attr.style
+              [ ( "position", "absolute" )
+              ]
+          ]
+          [ landscape model.pointer ]
+      , messages model.messages
+      , Html.input
+          [ Attr.style
+              [ ( "position", "absolute" ), ( "top", px y ), ( "left", px x ) ]
+          ]
+          []
+      ]
+
+
+px : Int -> String
+px i =
+  (toString i) ++ "px"
 
 
 messages : List String -> Html
