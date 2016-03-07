@@ -76,7 +76,12 @@ view : Model -> Html
 view model =
   Html.div
     []
-    [ Html.div [ Attr.style [ ( "display", "inline-block" ), ( "*display", "inline" ), ( "border", "medium dashed blue" ) ] ] [ landscape model.pointer ]
+    [ Html.div
+        [ Attr.style
+            [ ( "position", "absolute" )
+            ]
+        ]
+        [ landscape model.pointer ]
     , messages model.messages
     ]
 
@@ -88,8 +93,8 @@ messages whatToSay =
         [ ( "width", "200px" )
         , ( "height", (toString lANDSCAPE_H) ++ "px" )
         , ( "border", "medium dashed green" )
-        , ( "display", "inline-block" )
-        , ( "*display", "inline" )
+        , ( "position", "relative" )
+        , ( "left", "1000" )
         , ( "vertical-align", "top" )
         ]
     ]
