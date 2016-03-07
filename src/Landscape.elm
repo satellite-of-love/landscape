@@ -107,6 +107,7 @@ view model =
               , ( "top", px y )
               , ( "left", px x )
               ]
+          , Attr.attribute "visible" (toString model.inputIsAThing)
           ]
           []
       ]
