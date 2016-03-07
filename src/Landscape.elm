@@ -62,13 +62,13 @@ updateModel : Action -> Model -> Model
 updateModel action model =
   case action of
     Click ->
-      { pointer = ( 0, 0 )
-      , messages = [ "You clicked!" ]
+      { model
+        | messages = model.messages ++ [ "You clicked!" ]
       }
 
     MouseMove spot ->
-      { pointer = spot
-      , messages = []
+      { model
+        | pointer = spot
       }
 
 
