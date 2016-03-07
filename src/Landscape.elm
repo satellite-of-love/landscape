@@ -19,6 +19,7 @@ type alias MousePosition =
 type alias Model =
   { pointer : MousePosition
   , messages : List String
+  , keysDown : Set KeyCode
   }
 
 
@@ -26,6 +27,7 @@ init : Model
 init =
   { pointer = ( 0, 0 )
   , messages = []
+  , keysDown = Set.empty
   }
 
 
