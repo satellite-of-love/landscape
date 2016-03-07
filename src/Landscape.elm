@@ -37,17 +37,9 @@ type Action
 
 main : Signal Html
 main =
-  let
-    hereComeTheActions =
-      Signal.merge mousePointer mouseClicks
-
-    hereComeTheModels =
-      Signal.foldp updateModel init hereComeTheActions
-
-    hereComeTheHtmls =
-      Signal.map view hereComeTheModels
-  in
-    hereComeTheHtmls
+  Signal.merge mousePointer mouseClicks
+    |> Signal.foldp updateModel init
+    |> Signal.map view
 
 
 mousePointer : Signal Action
