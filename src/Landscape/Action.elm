@@ -1,4 +1,4 @@
-module Landscape.Action (Action) where
+module Landscape.Action (Action(..)) where
 
 import Char exposing (KeyCode)
 import Set exposing (Set)

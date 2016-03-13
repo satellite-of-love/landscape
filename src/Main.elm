@@ -11,16 +11,12 @@ import Keyboard
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import Landscape.Model exposing (Model, MousePosition)
-import Landscape.Action exposing (Action)
+import Landscape.Action exposing (Action(..))
+import Messages.Update exposing (messagesReact)
 
 
 lANDSCAPE_H =
   768
-
-
-type Action
-  = MouseMove MousePosition (Set KeyCode)
-  | Click
 
 
 main : Signal Html
@@ -48,31 +44,8 @@ mouseClicks =
 updateModel : Action -> Model -> Model
 updateModel action model =
   model
-    |> messagesReact action
+    |> Messages.Update.messagesReact action
     |> inputReact action
-
-
-messagesReact : Action -> Model -> Model
-messagesReact action model =
-  case action of
-    Click ->
-      { model
-        | messages =
-            model.messages
-              ++ [ "You clicked at "
-                    ++ (toString model.pointer)
-                    ++ " with keys "
-                    ++ (toString (Set.map Char.fromCode model.keysDown))
-                 ]
-        , textInput =
-            { isAThing = Set.member 'T' (Set.map Char.fromCode model.keysDown)
-            , contents = ""
-            , position = model.pointer
-            }
-      }
-
-    _ ->
-      model
 
 
 inputReact action model =
