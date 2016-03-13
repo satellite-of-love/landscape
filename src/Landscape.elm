@@ -1,4 +1,4 @@
-module Landscape (..) where
+module Landscape (main) where
 
 import Graphics.Element as E exposing (Element)
 import Graphics.Collage as C exposing (Form)
@@ -20,7 +20,11 @@ type alias Model =
   { pointer : MousePosition
   , messages : List String
   , keysDown : Set KeyCode
-  , inputIsAThing : Bool
+  , textInput :
+      { isAThing : Bool
+      , position : MousePosition
+      , contents : String
+      }
   }
 
 
@@ -29,7 +33,11 @@ init =
   { pointer = ( 0, 0 )
   , messages = []
   , keysDown = Set.empty
-  , inputIsAThing = False
+  , textInput =
+      { isAThing = False
+      , position = ( 0, 0 )
+      , contents = ""
+      }
   }
 
 
@@ -76,7 +84,11 @@ updateModel action model =
                     ++ " with keys "
                     ++ (toString (Set.map Char.fromCode model.keysDown))
                  ]
-        , inputIsAThing = Set.member 'T' (Set.map Char.fromCode model.keysDown)
+        , textInput =
+            { isAThing = Set.member 'T' (Set.map Char.fromCode model.keysDown)
+            , contents = ""
+            , position = model.pointer
+            }
       }
 
     MouseMove spot keys ->
@@ -104,16 +116,16 @@ view model =
 
 possibleInput : Model -> List Html
 possibleInput model =
-  if model.inputIsAThing then
-    [ input model ]
+  if model.textInput.isAThing then
+    [ input model.textInput ]
   else
     []
 
 
-input model =
+input textInputModel =
   let
     ( x, y ) =
-      model.pointer
+      textInputModel.position
   in
     Html.input
       [ Attr.style
