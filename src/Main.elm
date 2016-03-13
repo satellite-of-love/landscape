@@ -13,6 +13,7 @@ import Set exposing (Set)
 import Landscape.Model exposing (Model, MousePosition)
 import Landscape.Action exposing (Action(..))
 import Messages.Update exposing (messagesReact)
+import Messages.View exposing (messagePane)
 
 
 lANDSCAPE_H =
@@ -70,7 +71,7 @@ view model =
             ]
         ]
         [ landscape model.pointer ]
-     , messages model.messages
+     , Messages.View.messagePane lANDSCAPE_H model.messages
      ]
       ++ (possibleInput model)
     )
@@ -102,21 +103,6 @@ input textInputModel =
 px : Int -> String
 px i =
   (toString i) ++ "px"
-
-
-messages : List String -> Html
-messages whatToSay =
-  Html.div
-    [ Attr.style
-        [ ( "width", "200px" )
-        , ( "height", (toString lANDSCAPE_H) ++ "px" )
-        , ( "border", "medium dashed green" )
-        , ( "position", "relative" )
-        , ( "left", "1000" )
-        , ( "vertical-align", "top" )
-        ]
-    ]
-    (List.map (\a -> Html.li [] [ Html.text a ]) whatToSay)
 
 
 landscape : MousePosition -> Html
