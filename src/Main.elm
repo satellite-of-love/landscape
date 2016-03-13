@@ -11,6 +11,7 @@ import Keyboard
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import Landscape.Model exposing (Model, MousePosition)
+import Landscape.Action exposing (Action)
 
 
 lANDSCAPE_H =
