@@ -41,8 +41,21 @@ mouseClicks =
 updateModel : Action -> Model -> Model
 updateModel action model =
   model
+    |> retainOutsideWorld action
     |> Messages.Update.messagesReact action
     |> inputReact action
+
+
+retainOutsideWorld action model =
+  case action of
+    MouseMove spot keys ->
+      { model
+        | pointer = spot
+        , keysDown = keys
+      }
+
+    _ ->
+      model
 
 
 view : Model -> Html

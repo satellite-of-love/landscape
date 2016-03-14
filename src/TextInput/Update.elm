@@ -8,10 +8,13 @@ import Set exposing (Set)
 
 inputReact action model =
   case action of
-    MouseMove spot keys ->
+    Click ->
       { model
-        | pointer = spot
-        , keysDown = keys
+        | textInput =
+            { isAThing = Set.member 'T' (Set.map Char.fromCode model.keysDown)
+            , contents = ""
+            , position = model.pointer
+            }
       }
 
     _ ->

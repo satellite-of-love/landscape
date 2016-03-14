@@ -18,11 +18,6 @@ messagesReact action model =
                     ++ " with keys "
                     ++ (toString (Set.map Char.fromCode model.keysDown))
                  ]
-        , textInput =
-            { isAThing = Set.member 'T' (Set.map Char.fromCode model.keysDown)
-            , contents = ""
-            , position = model.pointer
-            }
       }
 
     _ ->
