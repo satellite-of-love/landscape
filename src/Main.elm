@@ -49,10 +49,15 @@ updateModel action model =
 retainOutsideWorld action model =
   case action of
     MouseMove spot keys ->
-      { model
-        | pointer = spot
-        , keysDown = keys
-      }
+      let
+        before =
+          model.keysDown
+      in
+        { model
+          | pointer = spot
+          , keysDown = keys
+          , previousKeysDown = before
+        }
 
     _ ->
       model
