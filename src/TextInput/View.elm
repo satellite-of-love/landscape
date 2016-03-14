@@ -24,6 +24,7 @@ input textInputModel =
           , ( "top", px y )
           , ( "left", px x )
           ]
+      , Attr.value textInputModel.contents
       ]
       []
 
