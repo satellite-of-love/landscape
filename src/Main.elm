@@ -65,16 +65,20 @@ view : Model -> Html
 view model =
   Html.div
     []
-    ([ Html.div
-        [ Attr.style
-            [ ( "position", "absolute" )
-            ]
-        ]
-        [ landscape model.pointer ]
+    ([ landscapePane model
      , Messages.View.messagePane lANDSCAPE_H model.messages
      ]
       ++ (possibleInput model)
     )
+
+
+landscapePane model =
+  Html.div
+    [ Attr.style
+        [ ( "position", "absolute" )
+        ]
+    ]
+    [ landscape model.pointer ]
 
 
 possibleInput : Model -> List Html
