@@ -12,6 +12,7 @@ import Landscape.Action exposing (Action(..))
 import Landscape.View exposing (landscapePane)
 import Messages.Update exposing (messagesReact)
 import Messages.View exposing (messagePane)
+import TextInput.Update exposing (inputReact)
 import TextInput.View exposing (possibleInput)
 
 
@@ -37,27 +38,11 @@ mouseClicks =
     |> Signal.map (always Click)
 
 
-
--- update section
-
-
 updateModel : Action -> Model -> Model
 updateModel action model =
   model
     |> Messages.Update.messagesReact action
     |> inputReact action
-
-
-inputReact action model =
-  case action of
-    MouseMove spot keys ->
-      { model
-        | pointer = spot
-        , keysDown = keys
-      }
-
-    _ ->
-      model
 
 
 view : Model -> Html
