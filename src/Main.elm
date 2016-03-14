@@ -12,6 +12,7 @@ import Landscape.Action exposing (Action(..))
 import Landscape.View exposing (landscapePane)
 import Messages.Update exposing (messagesReact)
 import Messages.View exposing (messagePane)
+import TextInput.View exposing (possibleInput)
 
 
 lANDSCAPE_H =
@@ -68,31 +69,3 @@ view model =
      ]
       ++ (possibleInput model)
     )
-
-
-possibleInput : Model -> List Html
-possibleInput model =
-  if model.textInput.isAThing then
-    [ input model.textInput ]
-  else
-    []
-
-
-input textInputModel =
-  let
-    ( x, y ) =
-      textInputModel.position
-  in
-    Html.input
-      [ Attr.style
-          [ ( "position", "absolute" )
-          , ( "top", px y )
-          , ( "left", px x )
-          ]
-      ]
-      []
-
-
-px : Int -> String
-px i =
-  (toString i) ++ "px"
