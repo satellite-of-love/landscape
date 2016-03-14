@@ -1,6 +1,6 @@
 module Messages.Update (messagesReact) where
 
-import Landscape.Model exposing (Model)
+import Landscape.Model exposing (Model, keysPressed)
 import Landscape.Action exposing (Action(..))
 import Char exposing (KeyCode)
 import Set exposing (Set)
@@ -21,4 +21,14 @@ messagesReact action model =
       }
 
     _ ->
-      model
+      let
+        presses =
+          keysPressed model
+      in
+        if Set.isEmpty presses then
+          model
+        else
+          { model
+            | messages =
+                model.messages ++ [ "jhgfkhgdkhtdkf" ]
+          }
