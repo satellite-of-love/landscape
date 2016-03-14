@@ -23,12 +23,12 @@ messagesReact action model =
     _ ->
       let
         presses =
-          keysPressed model
+          Set.toList (keysPressed model)
+
+        more =
+          List.map (\s -> "you pushed " ++ (toString s)) presses
       in
-        if Set.isEmpty presses then
-          model
-        else
-          { model
-            | messages =
-                model.messages ++ [ "jhgfkhgdkhtdkf" ]
-          }
+        { model
+          | messages =
+              model.messages ++ more
+        }
