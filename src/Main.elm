@@ -26,6 +26,8 @@ main =
     |> Signal.foldp updateModel Landscape.Model.init
     |> Signal.map view
 
+newsFromTheView : Signal.Mailbox Action
+newsFromTheView = Signal.mailbox NoOp
 
 mousePointer : Signal Action
 mousePointer =

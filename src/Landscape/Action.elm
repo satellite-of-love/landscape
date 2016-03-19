@@ -8,3 +8,4 @@ import Landscape.Model exposing (MousePosition)
 type Action
   = MouseMove MousePosition (Set KeyCode)
   | Click
+  | NoOp
