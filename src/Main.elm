@@ -24,7 +24,7 @@ main : Signal Html
 main =
   Signal.merge mousePointer mouseClicks
     |> Signal.foldp updateModel Landscape.Model.init
-    |> Signal.map view
+    |> Signal.map (view newsFromTheView.address)
 
 newsFromTheView : Signal.Mailbox Action
 newsFromTheView = Signal.mailbox NoOp
@@ -65,8 +65,8 @@ retainOutsideWorld action model =
       model
 
 
-view : Model -> Html
-view model =
+view : Signal.Address Action -> Model -> Html
+view address model =
   Html.div
     []
     ([ landscapePane lANDSCAPE_H model
