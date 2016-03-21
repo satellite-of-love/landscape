@@ -2,18 +2,20 @@ module TextInput.View (possibleInput) where
 
 import Html exposing (Html)
 import Html.Attributes as Attr
+import Signal exposing (Address)
 import Landscape.Model exposing (Model, MousePosition)
+import Landscape.Action exposing (Action)
 
 
-possibleInput : Model -> List Html
-possibleInput model =
+possibleInput : Address Action -> Model -> List Html
+possibleInput address model =
   if model.textInput.isAThing then
-    [ input model.textInput ]
+    [ input address model.textInput ]
   else
     []
 
 
-input textInputModel =
+input address textInputModel =
   let
     ( x, y ) =
       textInputModel.position

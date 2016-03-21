@@ -26,8 +26,11 @@ main =
     |> Signal.foldp updateModel Landscape.Model.init
     |> Signal.map (view newsFromTheView.address)
 
+
 newsFromTheView : Signal.Mailbox Action
-newsFromTheView = Signal.mailbox NoOp
+newsFromTheView =
+  Signal.mailbox NoOp
+
 
 mousePointer : Signal Action
 mousePointer =
@@ -72,5 +75,5 @@ view address model =
     ([ landscapePane lANDSCAPE_H model
      , Messages.View.messagePane lANDSCAPE_H model.messages
      ]
-      ++ (possibleInput model)
+      ++ (possibleInput address model)
     )
