@@ -10,7 +10,7 @@ addMessages : Model -> List String -> Model
 addMessages model more =
   { model
     | messages =
-        model.messages ++ more
+        more ++ model.messages
   }
 
 
