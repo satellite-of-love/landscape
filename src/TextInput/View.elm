@@ -27,6 +27,7 @@ input address textInputModel =
           , ( "left", px x )
           ]
       , Attr.value textInputModel.contents
+      , Attr.attribute "autofocus" "true"
       ]
       []
 
