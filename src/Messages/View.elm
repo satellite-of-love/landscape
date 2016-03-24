@@ -17,4 +17,4 @@ messagePane height whatToSay =
         , ( "overflow", "scroll" )
         ]
     ]
-    (List.map (\a -> Html.li [] [ Html.text a ]) whatToSay)
+    [ Html.ul [] (List.map (\a -> Html.li [] [ Html.text a ]) whatToSay) ]
