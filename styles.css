@@ -3,6 +3,13 @@ aside {
   background-color: white;
   margin: 0;
   padding: 0;
+  width: 200px;
+  height: 100%;
+  border: medium dashed green;
+  position: relative;
+  left: 1000;
+  vertical-align: top;
+  overflow: scroll;
 }
 
 aside ul {
