@@ -1,6 +1,6 @@
 module TextInput.Update (inputReact) where
 
-import Landscape.Model exposing (Model, keysPressed)
+import Landscape.Model exposing (Model, keysPressed, InformativeText)
 import Landscape.Action exposing (Action(..))
 import Char exposing (KeyCode)
 import Set exposing (Set)
@@ -34,7 +34,9 @@ inputReact action model =
 
 saveTheText model =
   if model.textInput.isAThing then
-    initializeNewInput model
+    { model
+      | annotations = model.annotations ++ [(InformativeText model.textInput.contents model.textInput.position )]
+    } |> goodbyeInput
   else
     model
 

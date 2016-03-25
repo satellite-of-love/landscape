@@ -1,4 +1,4 @@
-module Landscape.Model (Model, MousePosition, init, keysPressed) where
+module Landscape.Model (Model, MousePosition, InformativeText, init, keysPressed) where
 
 import Set exposing (Set)
 import Char exposing (KeyCode)
@@ -6,6 +6,13 @@ import Char exposing (KeyCode)
 
 type alias MousePosition =
   ( Int, Int )
+
+
+type alias InformativeText =
+  {
+    text: String,
+    position: MousePosition
+  }
 
 
 type alias Model =
@@ -18,6 +25,7 @@ type alias Model =
       , position : MousePosition
       , contents : String
       }
+  , annotations: List InformativeText
   }
 
 
@@ -32,6 +40,7 @@ init =
       , position = ( 0, 0 )
       , contents = ""
       }
+  , annotations = []
   }
 
 
