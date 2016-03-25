@@ -3,11 +3,11 @@ aside {
   background-color: white;
   margin: 0;
   padding: 0;
-  width: 200px;
+  left: 70%;
+  width: 30%;
   height: 100%;
   border: medium dashed green;
-  position: relative;
-  left: 1000;
+  position: absolute;
   vertical-align: top;
   overflow: scroll;
 }
@@ -28,5 +28,13 @@ aside li:first-of-type {
   margin: 10px 10px;
   padding: 0;
   background-color: pink;
+}
+
+canvas {
+  position: absolute;
+  background: url(images/solarsystem.png);
+  background-size: 100% 100%;
+  width: 70%;
+  height: 100%;
 }
 
