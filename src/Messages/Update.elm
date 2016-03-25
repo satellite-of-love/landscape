@@ -26,6 +26,11 @@ messagesReact action model =
           ++ (toString (Set.map Char.fromCode model.keysDown))
         ]
 
+    TypedSomething something ->
+      addMessages
+        model
+        [ "You typed " ++ something ]
+
     _ ->
       let
         presses =

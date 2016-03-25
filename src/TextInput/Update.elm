@@ -15,35 +15,28 @@ inputReact action model =
       else
         model
 
+    TypedSomething something ->
+      let
+        ti = model.textInput
+        new = { ti | contents = something }
+      in
+        { model
+          | textInput = new
+        }
+
     _ ->
       if theyPushedEscape model then
         goodbyeInput model
-      else if model.textInput.isAThing then
-        addTypingToContent model
+      else if theyPushedEnter model then
+        saveTheText model
       else
         model
 
-
-addTypingToContent model =
-  let
-    typing =
-      keysPressed model
-        |> Set.toList
-        |> List.filter isPrintable
-        |> List.map Char.fromCode
-        |> List.map String.fromChar
-        |> List.foldr (++) ""
-
-    ti =
-      model.textInput
-  in
-    { model
-      | textInput = { ti | contents = ti.contents ++ typing }
-    }
-
-
-isPrintable keycode =
-  keycode >= 40
+saveTheText model =
+  if model.textInput.isAThing then
+    initializeNewInput model
+  else
+    model
 
 
 initializeNewInput model =
@@ -72,3 +65,7 @@ theyAreHoldingT model =
 
 theyPushedEscape model =
   Set.member 27 model.keysDown
+
+
+theyPushedEnter model =
+  Set.member 13 model.keysDown

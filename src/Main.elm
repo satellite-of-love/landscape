@@ -22,7 +22,7 @@ lANDSCAPE_H =
 
 main : Signal Html
 main =
-  Signal.merge mousePointer mouseClicks
+  Signal.mergeMany [ mousePointer, mouseClicks, newsFromTheView.signal ]
     |> Signal.foldp updateModel Landscape.Model.init
     |> Signal.map (view newsFromTheView.address)
 

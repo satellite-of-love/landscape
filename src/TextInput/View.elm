@@ -3,8 +3,9 @@ module TextInput.View (possibleInput) where
 import Html exposing (Html)
 import Html.Attributes as Attr
 import Signal exposing (Address)
+import Html.Events exposing (on, targetValue)
 import Landscape.Model exposing (Model, MousePosition)
-import Landscape.Action exposing (Action)
+import Landscape.Action exposing (Action(..))
 
 
 possibleInput : Address Action -> Model -> List Html
@@ -28,6 +29,7 @@ input address textInputModel =
           ]
       , Attr.value textInputModel.contents
       , Attr.attribute "autofocus" "true"
+      , on "input" targetValue (Signal.message address << TypedSomething)
       ]
       []
 
