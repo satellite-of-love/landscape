@@ -6,7 +6,7 @@ aside {
   left: 70%;
   width: 30%;
   height: 100%;
-  border: medium dashed green;
+  border: medium groove green;
   position: absolute;
   vertical-align: top;
   overflow: scroll;
@@ -21,13 +21,11 @@ aside li {
   margin: 0 10px;
   margin-right: 10px;
   padding: 0;
-  background-color: pink;
 }
 
 aside li:first-of-type {
   margin: 10px 10px;
   padding: 0;
-  background-color: pink;
 }
 
 canvas {

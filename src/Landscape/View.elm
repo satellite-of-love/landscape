@@ -9,15 +9,15 @@ import Landscape.Model exposing (Model, MousePosition, InformativeText)
 landscapePane : Int -> Model -> Html
 landscapePane height model =
   Html.div
-  [ Attr.style
-      [ ( "transform" , "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
-      , ( "border" , "1px solid green")
-      , ( "transform-origin", (toString (fst model.center)) ++ "vw " ++ (toString (snd model.center)) ++ "vh")
-      , ( "transition" , "1s ease-in-out")
-      ]
+  [
   ]
   ([
-    Html.canvas [
+    Html.canvas
+    [ Attr.style
+        [ ( "transform" , "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
+        , ( "transform-origin", (toString (fst model.center)) ++ "vw " ++ (toString (snd model.center)) ++ "vh")
+        , ( "transition" , "1s ease-in-out")
+        ]
      ]
      []
   ,  mousePointerText model
