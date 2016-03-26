@@ -10,6 +10,8 @@ update action model =
     Click ->
       if upArrowPressed model then
         zoomIn model
+      else if downArrowPressed model then
+        zoomOut model
       else
         model
     _ -> model
@@ -23,6 +25,15 @@ zoomIn model =
   , center = model.pointer
   }
 
+zoomOut : Model -> Model
+zoomOut model =
+  { model
+  | z = (max 1 (model.z - howMuchToZoomIn))
+  }
+
 
 upArrowPressed model =
   Set.member 38 model.keysDown
+
+downArrowPressed model =
+  Set.member 40 model.keysDown

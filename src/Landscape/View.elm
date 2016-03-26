@@ -12,10 +12,13 @@ landscapePane height model =
   [ Attr.style
       [ ( "transform" , "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
       , ( "border" , "1px solid green")
+      , ( "transform-origin", (toString (fst model.center)) ++ "vw " ++ (toString (snd model.center)) ++ "vh")
       ]
   ]
   ([
-    Html.canvas [] []
+    Html.canvas [
+     ]
+     []
   ,  mousePointerText model
   ] ++ List.map draw model.annotations)
 
