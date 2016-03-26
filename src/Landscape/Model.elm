@@ -1,4 +1,4 @@
-module Landscape.Model (Model, MousePosition, InformativeText, init, keysPressed) where
+module Landscape.Model (Model, MousePosition, InformativeText, init, keysPressed, xyz) where
 
 import Set exposing (Set)
 import Char exposing (KeyCode)
@@ -45,6 +45,15 @@ init =
       }
   , annotations = []
   }
+
+
+xyz : Model -> ( Int, Int, Int )
+xyz model =
+  let
+    ( x, y ) =
+      model.pointer
+  in
+    ( x, y, model.z )
 
 
 keysPressed : Model -> Set KeyCode

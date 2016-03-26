@@ -1,6 +1,6 @@
 module Messages.Update (messagesReact) where
 
-import Landscape.Model exposing (Model, keysPressed)
+import Landscape.Model exposing (Model, keysPressed, xyz)
 import Landscape.Action exposing (Action(..))
 import Char exposing (KeyCode)
 import Set exposing (Set)
@@ -19,19 +19,12 @@ messagesReact : Action -> Model -> Model
 messagesReact action model =
   case action of
     Click ->
-      let
-        ( x, y ) =
-          model.pointer
-
-        whereAmi =
-          ( x, y, model.z )
-      in
-        addMessages
-          model
-          [ "You clicked at "
-              ++ (toString whereAmi)
-              ++ descriptionOfKeys model
-          ]
+      addMessages
+        model
+        [ "You clicked at "
+            ++ (toString (xyz model))
+            ++ descriptionOfKeys model
+        ]
 
     _ ->
       let
