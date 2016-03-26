@@ -14,17 +14,16 @@ landscapePane height model =
   ([
     Html.canvas
     [ Attr.style
-        [ ( "transform" , "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
-        , ( "transform-origin", (toString (fst model.center)) ++ "vw " ++ (toString (snd model.center)) ++ "vh")
-        , ( "transition" , "1s ease-in-out")
-        ]
-     ]
-     []
+      [ ( "transform" , "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
+      , ( "transform-origin", (toString (fst model.center)) ++ "vw " ++ (toString (snd model.center)) ++ "vh")
+      , ( "transition" , "1s ease-in-out")
+      ]
+    ]
+    []
   ,  mousePointerText model
-  ] ++ List.map draw model.annotations)
+  ] ++ List.map (draw model) model.annotations)
 
-draw: InformativeText -> Html
-draw annotation =
+draw model annotation =
   let
     (x, y) = annotation.position
   in
@@ -33,6 +32,9 @@ draw annotation =
     [ ( "position", "absolute")
       , ("top", (toString y) ++ "vh" )
       , ("left", (toString x) ++ "vw" )
+      , ( "transform" , "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
+      , ( "transform-origin", (toString (fst model.center)) ++ "vw " ++ (toString (snd model.center)) ++ "vh")
+      , ( "transition" , "1s ease-in-out")
     ]
   ] [ Html.text annotation.text ]
 

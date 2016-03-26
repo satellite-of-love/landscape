@@ -29,12 +29,22 @@ aside li:first-of-type {
   padding: 0;
 }
 
-canvas {
+main {
+
+  overflow: hidden;
+}
+
+main, canvas {
   position: absolute;
-  background: url(images/solarsystem.png);
-  background-size: 100% 100%;
   width: 70vw;
   height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+canvas {
+  background: url(images/solarsystem.png);
+  background-size: 100% 100%;
 }
 
 input {
