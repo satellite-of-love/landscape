@@ -13,6 +13,7 @@ landscapePane height model =
       [ ( "transform" , "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
       , ( "border" , "1px solid green")
       , ( "transform-origin", (toString (fst model.center)) ++ "vw " ++ (toString (snd model.center)) ++ "vh")
+      , ( "transition" , "1s ease-in-out")
       ]
   ]
   ([
