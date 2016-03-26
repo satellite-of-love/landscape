@@ -1,7 +1,7 @@
 module LandscapeCss (css) where
 
-import Css exposing (boxSizing, borderBox, overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
-import Css.Elements exposing (canvas, aside, ul, mainElement)
+import Css exposing (boxSizing, em, borderBox, overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
+import Css.Elements exposing (output, canvas, aside, ul, mainElement)
 
 
 fullHeight =
@@ -52,6 +52,7 @@ css =
           ++ landscapeSize
           ++ [ overflow hidden ]
         )
+    , output [ padding (em 1) ]
     ]
 
 

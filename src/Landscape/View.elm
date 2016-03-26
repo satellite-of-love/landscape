@@ -14,7 +14,6 @@ landscapePane height model =
     ([ Html.canvas
         [ zoomTo model.z model.center ]
         []
-     , mousePointerText model
      ]
       ++ List.map draw model.annotations
     )
@@ -50,15 +49,3 @@ draw annotation =
 
 pct i =
   (toString i) ++ "%"
-
-
-mousePointerText : Model -> Html
-mousePointerText model =
-  Html.div
-    [ Attr.style
-        [ ( "position", "absolute" )
-        , ( "top", "500px" )
-        , ( "left", "396px" )
-        ]
-    ]
-    [ Html.output [] [ Html.text (toString model.pointer) ] ]
