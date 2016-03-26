@@ -11,17 +11,24 @@ landscapePane height model =
   Html.div
     []
     ([ Html.canvas
-        [ Attr.style
-            [ ( "transform", "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
-            , ( "transform-origin", (toString (fst model.center)) ++ "vw " ++ (toString (snd model.center)) ++ "vh" )
-            , ( "transition", "1s ease-in-out" )
-            ]
-        ]
+        [ zoomTo model.z model.center ]
         []
      , mousePointerText model
      ]
       ++ List.map draw model.annotations
     )
+
+
+zoomTo : Int -> MousePosition -> Html.Attribute
+zoomTo zoomLevel ( x, y ) =
+  let
+    scaleFunction =
+      "scale(" ++ (toString zoomLevel) ++ ")"
+  in
+    Attr.style
+      [ ( "transform", scaleFunction )
+      , ( "transform-origin", (toString x) ++ "vw " ++ (toString y) ++ "vh" )
+      ]
 
 
 draw : InformativeText -> Html

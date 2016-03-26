@@ -30,7 +30,7 @@ css =
         (beAt veryTop landscapeWidth
           ++ [ backgroundColor white
              , margin (px 0)
-             , padding (px 0)
+             , padding (px 2)
              , height fullHeight
              , width messagesWidth
              , border3 mediumBorder groove green
@@ -44,6 +44,7 @@ css =
              , Css.property "background-size" "100% 100%"
              , width landscapeWidth
              , height fullHeight
+             , Css.property "transition" "1s ease-in-out"
              ]
         )
     ]
