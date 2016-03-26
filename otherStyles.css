@@ -1,17 +1,4 @@
 
-aside {
-  background-color: white;
-  margin: 0;
-  padding: 0;
-  left: 70%;
-  width: 30%;
-  height: 100%;
-  border: medium groove green;
-  position: absolute;
-  vertical-align: top;
-  overflow: scroll;
-}
-
 aside ul {
   margin: 0;
   padding: 0;
