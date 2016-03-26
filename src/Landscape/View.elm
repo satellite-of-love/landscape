@@ -21,9 +21,9 @@ draw annotation =
   in
   Html.div [
     Attr.style
-    [ ( "position", "relative")
-      , ("top", pct y)
-      , ("left", pct x)
+    [ ( "position", "absolute")
+      , ("top", (toString y) ++ "vh" )
+      , ("left", (toString x) ++ "vw" )
     ]
   ] [ Html.text annotation.text ]
 

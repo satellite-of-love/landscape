@@ -24,8 +24,8 @@ input address textInputModel =
     Html.input
       [ Attr.style
           [ ( "position", "relative" )
-          , ( "top", pct y )
-          , ( "left", pct x )
+          , ( "top", (toString y) ++ "vh" )
+          , ( "left", (toString x) ++ "vw" )
           ]
       , Attr.value textInputModel.contents
       , Attr.attribute "autofocus" "true"
@@ -36,4 +36,4 @@ input address textInputModel =
 
 pct : Int -> String
 pct i =
-  (toString i) ++ "%"
+  (toString i) ++ "vh"
