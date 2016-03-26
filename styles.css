@@ -34,8 +34,8 @@ canvas {
   position: absolute;
   background: url(images/solarsystem.png);
   background-size: 100% 100%;
-  width: 70%;
-  height: 100%;
+  width: 70vw;
+  height: 100vh;
 }
 
 input {

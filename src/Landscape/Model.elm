@@ -34,7 +34,7 @@ type alias Model =
 init : Model
 init =
   { pointer = ( 0, 0 )
-  , z = 0
+  , z = 1
   , center = ( 0, 0 )
   , messages = []
   , keysDown = Set.empty

@@ -8,11 +8,15 @@ import Landscape.Model exposing (Model, MousePosition, InformativeText)
 
 landscapePane : Int -> Model -> Html
 landscapePane height model =
-  Html.div []
+  Html.div
+  [ Attr.style
+      [ ( "transform" , "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
+      , ( "border" , "1px solid green")
+      ]
+  ]
   ([
-    Html.canvas [ Attr.style
-    [( "zoom" , (toString model.z) )]][],
-    mousePointerText model
+    Html.canvas [] []
+  ,  mousePointerText model
   ] ++ List.map draw model.annotations)
 
 draw: InformativeText -> Html
