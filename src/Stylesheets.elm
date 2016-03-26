@@ -1,6 +1,6 @@
 module Stylesheets (..) where
 
-import Css.File exposing (CssFileStructure, toFileStructure)
+import Css.File exposing (CssFileStructure, toFileStructure, compile)
 import LandscapeCss as Landscape
 
 

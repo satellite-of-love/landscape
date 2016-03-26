@@ -1,1 +1,10 @@
+set -e
+
+echo "Formatting..."
+elm format --yes src/*
+
+echo "Styling..."
+elm-css src/Stylesheets.elm
+
+echo "Compiling..."
 elm make --output elm.js src/Main.elm

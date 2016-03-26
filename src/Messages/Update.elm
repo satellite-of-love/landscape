@@ -20,14 +20,17 @@ messagesReact action model =
   case action of
     Click ->
       let
-        (x, y) = model.pointer
-        whereAmi = (x, y, model.z)
+        ( x, y ) =
+          model.pointer
+
+        whereAmi =
+          ( x, y, model.z )
       in
         addMessages
           model
           [ "You clicked at "
-            ++ (toString whereAmi)
-            ++ descriptionOfKeys model
+              ++ (toString whereAmi)
+              ++ descriptionOfKeys model
           ]
 
     _ ->
@@ -45,5 +48,5 @@ descriptionOfKeys model =
   if Set.isEmpty model.keysDown then
     ""
   else
-    " with keys " ++
-      String.join ", " (Set.toList (Set.map (Char.fromCode >> toString) model.keysDown))
+    " with keys "
+      ++ String.join ", " (Set.toList (Set.map (Char.fromCode >> toString) model.keysDown))

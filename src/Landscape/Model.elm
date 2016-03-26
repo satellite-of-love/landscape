@@ -9,9 +9,8 @@ type alias MousePosition =
 
 
 type alias InformativeText =
-  {
-    text: String,
-    position: MousePosition
+  { text : String
+  , position : MousePosition
   }
 
 
@@ -27,7 +26,7 @@ type alias Model =
       , position : MousePosition
       , contents : String
       }
-  , annotations: List InformativeText
+  , annotations : List InformativeText
   }
 
 

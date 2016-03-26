@@ -1,0 +1,13 @@
+aside {
+    background-color: rgb(255, 255, 255);
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    top: 0vh;
+    left: 70vw;
+    height: 100vh;
+    width: 30vw;
+    border: 3px groove rgb(10, 205, 10);
+    vertical-align: top;
+    overflow: scroll;
+}

@@ -38,13 +38,16 @@ mousePointer : Signal Action
 mousePointer =
   Signal.map2 MouseMove relativeMousePosition Keyboard.keysDown
 
+
 relativeMousePosition : Signal MousePosition
 relativeMousePosition =
   Signal.map3 relativize Mouse.position Window.width Window.height
 
+
 relativize : MousePosition -> Int -> Int -> MousePosition
-relativize (x, y) w h =
-  (x * 100 // w, y * 100 // h)
+relativize ( x, y ) w h =
+  ( x * 100 // w, y * 100 // h )
+
 
 mouseClicks : Signal Action
 mouseClicks =

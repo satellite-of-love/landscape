@@ -9,45 +9,49 @@ import Landscape.Model exposing (Model, MousePosition, InformativeText)
 landscapePane : Int -> Model -> Html
 landscapePane height model =
   Html.div
-  [
-  ]
-  ([
-    Html.canvas
-    [ Attr.style
-        [ ( "transform" , "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
-        , ( "transform-origin", (toString (fst model.center)) ++ "vw " ++ (toString (snd model.center)) ++ "vh")
-        , ( "transition" , "1s ease-in-out")
+    []
+    ([ Html.canvas
+        [ Attr.style
+            [ ( "transform", "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
+            , ( "transform-origin", (toString (fst model.center)) ++ "vw " ++ (toString (snd model.center)) ++ "vh" )
+            , ( "transition", "1s ease-in-out" )
+            ]
         ]
+        []
+     , mousePointerText model
      ]
-     []
-  ,  mousePointerText model
-  ] ++ List.map draw model.annotations)
+      ++ List.map draw model.annotations
+    )
 
-draw: InformativeText -> Html
+
+draw : InformativeText -> Html
 draw annotation =
   let
-    (x, y) = annotation.position
+    ( x, y ) =
+      annotation.position
   in
-  Html.label [
-    Attr.style
-    [ ( "position", "absolute")
-      , ("top", (toString y) ++ "vh" )
-      , ("left", (toString x) ++ "vw" )
-    ]
-  ] [ Html.text annotation.text ]
+    Html.label
+      [ Attr.style
+          [ ( "position", "absolute" )
+          , ( "top", (toString y) ++ "vh" )
+          , ( "left", (toString x) ++ "vw" )
+          ]
+      ]
+      [ Html.text annotation.text ]
+
 
 pct i =
   (toString i) ++ "%"
 
+
 mousePointerText : Model -> Html
 mousePointerText model =
   Html.div
-   [ Attr.style
-      [ ( "position", "absolute" ),
-        ( "background", "images/solarsystem.png"),
-        ( "top", "500px"),
-        ( "left", "396px")
-      ]
+    [ Attr.style
+        [ ( "position", "absolute" )
+        , ( "background", "images/solarsystem.png" )
+        , ( "top", "500px" )
+        , ( "left", "396px" )
+        ]
     ]
-    [ Html.output [] [Html.text (toString model.pointer)]]
-
+    [ Html.output [] [ Html.text (toString model.pointer) ] ]
