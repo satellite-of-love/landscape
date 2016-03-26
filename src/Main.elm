@@ -3,6 +3,7 @@ module Main (main) where
 import Html exposing (Html)
 import Html.Attributes as Attr
 import Signal exposing (Signal)
+import Window
 import Mouse
 import Keyboard
 import Char exposing (KeyCode)
@@ -34,8 +35,15 @@ newsFromTheView =
 
 mousePointer : Signal Action
 mousePointer =
-  Signal.map2 MouseMove Mouse.position Keyboard.keysDown
+  Signal.map2 MouseMove relativeMousePosition Keyboard.keysDown
 
+relativeMousePosition : Signal MousePosition
+relativeMousePosition =
+  Signal.map3 relativize Mouse.position Window.width Window.height
+
+relativize : MousePosition -> Int -> Int -> MousePosition
+relativize (x, y) w h =
+  (x * 100 // w, y * 100 // h)
 
 mouseClicks : Signal Action
 mouseClicks =

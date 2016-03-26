@@ -21,14 +21,14 @@ draw annotation =
   in
   Html.div [
     Attr.style
-    [ ( "position", "absolute")
-      , ("top", px y)
-      , ("left", px x)
+    [ ( "position", "relative")
+      , ("top", pct y)
+      , ("left", pct x)
     ]
   ] [ Html.text annotation.text ]
 
-px i =
-  (toString i) ++ "px"
+pct i =
+  (toString i) ++ "%"
 
 mousePointerText : Model -> Html
 mousePointerText model =
