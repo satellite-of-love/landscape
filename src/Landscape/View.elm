@@ -10,7 +10,8 @@ landscapePane : Int -> Model -> Html
 landscapePane height model =
   Html.div []
   ([
-    Html.canvas [][],
+    Html.canvas [ Attr.style
+    [( "zoom" , (toString model.z) )]][],
     mousePointerText model
   ] ++ List.map draw model.annotations)
 

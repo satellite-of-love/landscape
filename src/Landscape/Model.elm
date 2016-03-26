@@ -17,6 +17,8 @@ type alias InformativeText =
 
 type alias Model =
   { pointer : MousePosition
+  , z : Int
+  , center : MousePosition
   , messages : List String
   , keysDown : Set KeyCode
   , previousKeysDown : Set KeyCode
@@ -32,6 +34,8 @@ type alias Model =
 init : Model
 init =
   { pointer = ( 0, 0 )
+  , z = 0
+  , center = ( 0, 0 )
   , messages = []
   , keysDown = Set.empty
   , previousKeysDown = Set.empty

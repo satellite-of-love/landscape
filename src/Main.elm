@@ -11,6 +11,7 @@ import Set exposing (Set)
 import Landscape.Model exposing (Model, MousePosition)
 import Landscape.Action exposing (Action(..))
 import Landscape.View exposing (landscapePane)
+import Landscape.Update
 import Messages.Update exposing (messagesReact)
 import Messages.View exposing (messagePane)
 import TextInput.Update exposing (inputReact)
@@ -57,6 +58,7 @@ updateModel action model =
     |> retainOutsideWorld action
     |> Messages.Update.messagesReact action
     |> inputReact action
+    |> Landscape.Update.update action
 
 
 retainOutsideWorld action model =
