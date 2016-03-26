@@ -13,7 +13,7 @@ import Landscape.Action exposing (Action(..))
 import Landscape.View exposing (landscapePane)
 import Landscape.Update
 import Messages.Update exposing (messagesReact)
-import Messages.View exposing (messagePane)
+import Messages.View
 import TextInput.Update exposing (inputReact)
 import TextInput.View exposing (possibleInput)
 
@@ -86,7 +86,7 @@ view address model =
   Html.div
     []
     ([ landscapePane lANDSCAPE_H model
-     , Messages.View.messagePane lANDSCAPE_H model.messages
+     , Messages.View.view model
      ]
       ++ (possibleInput address model)
     )

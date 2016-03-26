@@ -1,11 +1,17 @@
-module Messages.View (messagePane) where
+module Messages.View (view) where
 
 import Html exposing (Html)
 import Html.Attributes as Attr
+import Landscape.Model exposing (Model)
 
 
-messagePane : Int -> List String -> Html
-messagePane height whatToSay =
+view : Model -> Html
+view model =
   Html.aside
     []
-    [ Html.ul [] (List.map (\a -> Html.li [] [ Html.text a ]) whatToSay) ]
+    [ messagePane model.messages ]
+
+
+messagePane : List String -> Html
+messagePane whatToSay =
+  Html.ul [] (List.map (\a -> Html.li [] [ Html.text a ]) whatToSay)
