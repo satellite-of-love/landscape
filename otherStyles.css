@@ -15,14 +15,6 @@ aside li:first-of-type {
   padding: 0;
 }
 
-canvas {
-  position: absolute;
-  background: url(images/solarsystem.png);
-  background-size: 100% 100%;
-  width: 70vw;
-  height: 100vh;
-}
-
 input {
   border: 0;
   margin-top: -4vh;
@@ -47,4 +39,3 @@ label {
   background-color: rgba(255,255,255,0.5);
   box-shadow: 0 0 5px white;
 }
-

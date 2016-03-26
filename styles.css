@@ -3,11 +3,21 @@ aside {
     margin: 0px;
     padding: 0px;
     position: absolute;
-    top: 0vh;
+    top: 0px;
     left: 70vw;
     height: 100vh;
     width: 30vw;
     border: 3px groove rgb(10, 205, 10);
     vertical-align: top;
     overflow: scroll;
+}
+
+canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: url(images/solarsystem.png);
+    background-size: 100% 100%;
+    width: 70vw;
+    height: 100vh;
 }
