@@ -3,9 +3,10 @@ aside {
   background-color: white;
   margin: 0;
   padding: 0;
-  left: 70%;
-  width: 30%;
-  height: 100%;
+  left: 70vw;
+  top: 0;
+  width: 30vw;
+  height: 100vh;
   border: medium groove green;
   position: absolute;
   vertical-align: top;
