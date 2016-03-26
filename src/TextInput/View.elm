@@ -1,5 +1,6 @@
 module TextInput.View (possibleInput) where
 
+import String
 import Html exposing (Html)
 import Html.Attributes as Attr
 import Signal exposing (Address)
@@ -26,6 +27,7 @@ input address textInputModel =
           [ ( "position", "relative" )
           , ( "top", (toString y) ++ "vh" )
           , ( "left", (toString x) ++ "vw" )
+          , ( "width", (toString (8 * (String.length textInputModel.contents))) ++ "px")
           ]
       , Attr.value textInputModel.contents
       , Attr.attribute "autofocus" "true"

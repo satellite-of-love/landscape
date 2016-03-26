@@ -19,7 +19,7 @@ draw annotation =
   let
     (x, y) = annotation.position
   in
-  Html.div [
+  Html.label [
     Attr.style
     [ ( "position", "absolute")
       , ("top", (toString y) ++ "vh" )

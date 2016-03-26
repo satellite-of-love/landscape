@@ -38,3 +38,28 @@ canvas {
   height: 100%;
 }
 
+input {
+  border: 0;
+  margin-top: -4vh;
+  margin-left: -1vw;
+  background-color: rgba(255,255,255,0.8);
+  box-shadow: 0 0 5px white;
+  min-width: 8vw;
+  width: 10vw;
+}
+
+input, label {
+  font-family: sans-serif;
+  font-size: 1em;
+  line-height: 1.5em;
+}
+
+input:focus {
+  outline: none;
+}
+
+label {
+  background-color: rgba(255,255,255,0.5);
+  box-shadow: 0 0 5px white;
+}
+
