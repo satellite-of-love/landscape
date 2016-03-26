@@ -17,8 +17,11 @@ inputReact action model =
 
     TypedSomething something ->
       let
-        ti = model.textInput
-        new = { ti | contents = something }
+        ti =
+          model.textInput
+
+        new =
+          { ti | contents = something }
       in
         { model
           | textInput = new
@@ -32,20 +35,26 @@ inputReact action model =
       else
         model
 
+
 saveTheText model =
   if model.textInput.isAThing then
     { model
-      | annotations = model.annotations ++
-        [(InformativeText
-          model.textInput.contents
-          (moveItOverABit model.textInput.position) )]
-    } |> goodbyeInput
+      | annotations =
+          model.annotations
+            ++ [ (InformativeText
+                    model.textInput.contents
+                    (moveItOverABit model.textInput.position)
+                 )
+               ]
+    }
+      |> goodbyeInput
   else
     model
 
+
 moveItOverABit : MousePosition -> MousePosition
-moveItOverABit (x, y) =
-  (x, y - 2)
+moveItOverABit ( x, y ) =
+  ( x, y - 2 )
 
 
 initializeNewInput model =

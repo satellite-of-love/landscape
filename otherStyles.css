@@ -1,0 +1,41 @@
+
+aside ul {
+  margin: 0;
+  padding: 0;
+}
+
+aside li {
+  margin: 0 10px;
+  margin-right: 10px;
+  padding: 0;
+}
+
+aside li:first-of-type {
+  margin: 10px 10px;
+  padding: 0;
+}
+
+input {
+  border: 0;
+  margin-top: -1em;
+  margin-left: -1vw;
+  background-color: rgba(255,255,255,0.8);
+  box-shadow: 0 0 5px white;
+  min-width: 8vw;
+  width: 10vw;
+}
+
+input, label {
+  font-family: sans-serif;
+  font-size: 1em;
+  line-height: 1.5em;
+}
+
+input:focus {
+  outline: none;
+}
+
+label {
+  background-color: rgba(255,255,255,0.5);
+  box-shadow: 0 0 5px white;
+}

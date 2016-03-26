@@ -8,48 +8,58 @@ import Landscape.Model exposing (Model, MousePosition, InformativeText)
 
 landscapePane : Int -> Model -> Html
 landscapePane height model =
-  Html.node "main"
-  [
-  ]
-  ([
-    Html.canvas
-    [ Attr.style
-      [ ( "transform" , "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
-      , ( "transform-origin", (toString (fst model.center)) ++ "vw " ++ (toString (snd model.center)) ++ "vh")
-      , ( "transition" , "1s ease-in-out")
-      ]
-    ]
+  Html.node
+    "main"
     []
-  ,  mousePointerText model
-  ] ++ List.map (draw model) model.annotations)
+    ([ Html.canvas
+        [ zoomTo model.z model.center ]
+        []
+     , mousePointerText model
+     ]
+      ++ List.map draw model.annotations
+    )
 
-draw model annotation =
+
+zoomTo : Int -> MousePosition -> Html.Attribute
+zoomTo zoomLevel ( x, y ) =
   let
-    (x, y) = annotation.position
+    scaleFunction =
+      "scale(" ++ (toString zoomLevel) ++ ")"
   in
-  Html.label [
     Attr.style
-    [ ( "position", "absolute")
-      , ("top", (toString y) ++ "vh" )
-      , ("left", (toString x) ++ "vw" )
-      , ( "transform" , "scale(" ++ (toString model.z) ++ "," ++ (toString model.z) ++ ")" )
-      , ( "transform-origin", (toString (fst model.center)) ++ "vw " ++ (toString (snd model.center)) ++ "vh")
-      , ( "transition" , "1s ease-in-out")
-    ]
-  ] [ Html.text annotation.text ]
+      [ ( "transform", scaleFunction )
+      , ( "transform-origin", (toString x) ++ "vw " ++ (toString y) ++ "vh" )
+      ]
+
+
+draw : InformativeText -> Html
+draw annotation =
+  let
+    ( x, y ) =
+      annotation.position
+  in
+    Html.label
+      [ Attr.style
+          [ ( "position", "absolute" )
+          , ( "top", (toString y) ++ "vh" )
+          , ( "left", (toString x) ++ "vw" )
+          ]
+      ]
+      [ Html.text annotation.text ]
+
 
 pct i =
   (toString i) ++ "%"
 
+
 mousePointerText : Model -> Html
 mousePointerText model =
   Html.div
-   [ Attr.style
-      [ ( "position", "absolute" ),
-        ( "background", "images/solarsystem.png"),
-        ( "top", "500px"),
-        ( "left", "396px")
-      ]
+    [ Attr.style
+        [ ( "position", "absolute" )
+        , ( "background", "images/solarsystem.png" )
+        , ( "top", "500px" )
+        , ( "left", "396px" )
+        ]
     ]
-    [ Html.output [] [Html.text (toString model.pointer)]]
-
+    [ Html.output [] [ Html.text (toString model.pointer) ] ]

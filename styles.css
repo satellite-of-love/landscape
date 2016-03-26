@@ -1,74 +1,33 @@
-
 aside {
-  background-color: white;
-  margin: 0;
-  padding: 0;
-  left: 70vw;
-  top: 0;
-  width: 30vw;
-  height: 100vh;
-  border: medium groove green;
-  position: absolute;
-  vertical-align: top;
-  overflow: scroll;
-}
-
-aside ul {
-  margin: 0;
-  padding: 0;
-}
-
-aside li {
-  margin: 0 10px;
-  margin-right: 10px;
-  padding: 0;
-}
-
-aside li:first-of-type {
-  margin: 10px 10px;
-  padding: 0;
-}
-
-main {
-
-  overflow: hidden;
-}
-
-main, canvas {
-  position: absolute;
-  width: 70vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
+    position: absolute;
+    top: 0px;
+    left: 70vw;
+    background-color: rgb(255, 255, 255);
+    margin: 0px;
+    padding: 2px;
+    height: 100vh;
+    width: 30vw;
+    border: 3px groove rgb(10, 205, 10);
+    vertical-align: top;
+    overflow: scroll;
 }
 
 canvas {
-  background: url(images/solarsystem.png);
-  background-size: 100% 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 70vw;
+    height: 100vh;
+    background-image: url(images/solarsystem.png);
+    background-size: 100% 100%;
+    transition: 1s ease-in-out;
 }
 
-input {
-  border: 0;
-  margin-top: -4vh;
-  margin-left: -1vw;
-  background-color: rgba(255,255,255,0.8);
-  box-shadow: 0 0 5px white;
-  min-width: 8vw;
-  width: 10vw;
+main {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 70vw;
+    height: 100vh;
+    overflow: hidden;
 }
-
-input, label {
-  font-family: sans-serif;
-  font-size: 1em;
-  line-height: 1.5em;
-}
-
-input:focus {
-  outline: none;
-}
-
-label {
-  background-color: rgba(255,255,255,0.5);
-  box-shadow: 0 0 5px white;
-}
-
