@@ -8,7 +8,7 @@ import Landscape.Model exposing (Model, MousePosition, InformativeText)
 
 landscapePane : Int -> Model -> Html
 landscapePane height model =
-  Html.div
+  Html.node "main"
   [
   ]
   ([
