@@ -1,6 +1,6 @@
 module LandscapeCss (css) where
 
-import Css exposing (overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
+import Css exposing (boxSizing, borderBox, overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
 import Css.Elements exposing (canvas, aside, ul, mainElement)
 
 
@@ -36,6 +36,7 @@ css =
              , border3 mediumBorder groove green
              , verticalAlign top
              , overflow scroll
+             , boxSizing borderBox
              ]
         )
     , canvas
