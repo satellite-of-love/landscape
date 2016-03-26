@@ -1,6 +1,6 @@
 module LandscapeCss (css) where
 
-import Css exposing (overflow, scroll, border3, verticalAlign, height, width, groove, top, left, vw, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
+import Css exposing (overflow, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
 import Css.Elements exposing (canvas, aside, ul)
 
 
@@ -20,31 +20,40 @@ veryTop =
   (px 0)
 
 
+veryLeft =
+  (px 0)
+
+
 css =
   stylesheet
     [ aside
-        [ backgroundColor white
-        , margin (px 0)
-        , padding (px 0)
-        , position absolute
-        , top veryTop
-        , left landscapeWidth
-        , height fullHeight
-        , width messagesWidth
-        , border3 mediumBorder groove green
-        , verticalAlign top
-        , overflow scroll
-        ]
+        (beAt veryTop landscapeWidth
+          ++ [ backgroundColor white
+             , margin (px 0)
+             , padding (px 0)
+             , height fullHeight
+             , width messagesWidth
+             , border3 mediumBorder groove green
+             , verticalAlign top
+             , overflow scroll
+             ]
+        )
     , canvas
-        [ position absolute
-        , top veryTop
-        , left (px 0)
-        , backgroundImageUrl "images/solarsystem.png"
-        , Css.property "background-size" "100% 100%"
-        , width landscapeWidth
-        , height fullHeight
-        ]
+        (beAt veryTop veryLeft
+          ++ [ backgroundImageUrl "images/solarsystem.png"
+             , Css.property "background-size" "100% 100%"
+             , width landscapeWidth
+             , height fullHeight
+             ]
+        )
     ]
+
+
+beAt myTop myLeft =
+  [ position absolute
+  , Css.top myTop
+  , Css.left myLeft
+  ]
 
 
 backgroundImageUrl url =
