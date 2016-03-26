@@ -57,7 +57,6 @@ mousePointerText model =
   Html.div
     [ Attr.style
         [ ( "position", "absolute" )
-        , ( "background", "images/solarsystem.png" )
         , ( "top", "500px" )
         , ( "left", "396px" )
         ]
