@@ -1,6 +1,6 @@
 module Messages.Update (messagesReact) where
 
-import Landscape.Model exposing (Model, keysPressed, xyz)
+import Landscape.Model exposing (Model, keysPressed, xyz, printableKeysDown, betterFromCode)
 import Landscape.Action exposing (Action(..))
 import Char exposing (KeyCode)
 import Set exposing (Set)
@@ -21,7 +21,7 @@ messagesReact action model =
     Click ->
       addMessages
         model
-        [ "You clicked at "
+        [ "Click: "
             ++ (toString (xyz model))
             ++ descriptionOfKeys model
         ]
@@ -32,7 +32,9 @@ messagesReact action model =
           Set.toList (keysPressed model)
 
         more =
-          List.map (\s -> "you pushed " ++ (toString s)) presses
+          List.map
+            (\s -> "Press: " ++ (betterFromCode s))
+            presses
       in
         addMessages model more
 
@@ -41,5 +43,4 @@ descriptionOfKeys model =
   if Set.isEmpty model.keysDown then
     ""
   else
-    " with keys "
-      ++ String.join ", " (Set.toList (Set.map (Char.fromCode >> toString) model.keysDown))
+    "+" ++ (printableKeysDown model)
