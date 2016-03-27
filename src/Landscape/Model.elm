@@ -81,4 +81,11 @@ betterFromCode keyCode =
       "enter"
 
     other ->
-      Char.fromCode other |> String.fromChar
+      if isOrdinaryChar other then
+        Char.fromCode other |> String.fromChar
+      else
+        (toString other)
+
+
+isOrdinaryChar keyCode =
+  (65 <= keyCode) && (keyCode <= 90)

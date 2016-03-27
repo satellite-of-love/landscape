@@ -1,11 +1,13 @@
 module LandscapeCss (css, CssClass(..)) where
 
-import Css exposing ((.), boxSizing, whiteSpace, noWrap, minWidth, border2, fontFamily, monospace, sansSerif, inset, em, borderBox, overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
+import Css exposing ((.), fontWeight, bold, boxSizing, whiteSpace, noWrap, minWidth, border2, fontFamily, monospace, sansSerif, inset, em, borderBox, overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
 import Css.Elements exposing (output, canvas, aside, ul, mainElement)
 
 
 type CssClass
   = WhereAmI
+  | Chunder
+  | Notice
 
 
 fullHeight =
@@ -66,6 +68,10 @@ css =
         , margin (em 0.2)
         , minWidth (vw 10)
         ]
+    , ((.) Notice)
+        [ backgroundColor pink
+          --  , fontWeight bold
+        ]
     ]
 
 
@@ -90,8 +96,8 @@ white =
   rgb 255 255 255
 
 
-grey =
-  rgb 100 100 100
+pink =
+  rgb 255 200 200
 
 
 green =

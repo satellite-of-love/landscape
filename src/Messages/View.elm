@@ -4,7 +4,7 @@ import Html exposing (Html)
 import Html.Attributes as Attr
 import Html.CssHelpers
 import Landscape.Model exposing (Model, printableKeysDown)
-import LandscapeCss exposing (CssClass(..))
+import LandscapeCss
 import Messages exposing (Message(..))
 
 
@@ -34,7 +34,7 @@ whereAmI model =
 output : String -> Html
 output whatToSay =
   Html.div
-    [ class [ WhereAmI ] ]
+    [ class [ LandscapeCss.WhereAmI ] ]
     [ Html.output
         []
         [ Html.text whatToSay
@@ -51,7 +51,7 @@ oneMessage : Message -> Html
 oneMessage m =
   case m of
     Chunder message ->
-      Html.li [] [ Html.text message ]
+      Html.li [ class [ LandscapeCss.Chunder ] ] [ Html.text message ]
 
     Notice message ->
-      Html.li [] [ Html.text ("**" ++ message) ]
+      Html.li [ class [ LandscapeCss.Notice ] ] [ Html.text message ]
