@@ -1,6 +1,6 @@
 module TextInput.Update (inputReact) where
 
-import Landscape.Model exposing (Model, keysPressed, InformativeText, MousePosition)
+import Model exposing (Model, keysPressed, InformativeText, MousePosition)
 import Action exposing (Action(..))
 import Char exposing (KeyCode)
 import Set exposing (Set)

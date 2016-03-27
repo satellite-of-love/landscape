@@ -5,7 +5,7 @@ import Html exposing (Html)
 import Html.Attributes as Attr
 import Signal exposing (Address)
 import Html.Events exposing (on, targetValue)
-import Landscape.Model exposing (Model, MousePosition)
+import Model exposing (Model, MousePosition)
 import Action exposing (Action(..))
 
 

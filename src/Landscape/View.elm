@@ -3,7 +3,7 @@ module Landscape.View (landscapePane) where
 import Text
 import Html exposing (Html)
 import Html.Attributes as Attr
-import Landscape.Model exposing (Model, MousePosition, InformativeText)
+import Model exposing (Model, MousePosition, InformativeText)
 import LandscapeCss exposing (beAt)
 import Css exposing (vh, vw, asPairs)
 

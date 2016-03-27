@@ -1,4 +1,4 @@
-module Landscape.Model (Model, MousePosition, InformativeText, init, keysPressed, betterFromCode, xyz, printableKeysDown) where
+module Model (Model, MousePosition, InformativeText, init, keysPressed, betterFromCode, xyz, printableKeysDown) where
 
 import Set exposing (Set)
 import Char exposing (KeyCode)

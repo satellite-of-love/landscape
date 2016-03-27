@@ -4,7 +4,7 @@ import Html exposing (Html)
 import Html.Attributes as Attr
 import Html.Events
 import Html.CssHelpers as Help
-import Landscape.Model exposing (Model, printableKeysDown)
+import Model exposing (Model, printableKeysDown)
 import LandscapeCss
 import Action exposing (Action(Disvisiblate, Envisiblate))
 import Messages exposing (isVisible, importances, Message, MessageVisibility, MessageImportance)

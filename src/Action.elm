@@ -2,7 +2,7 @@ module Action (Action(..)) where
 
 import Char exposing (KeyCode)
 import Set exposing (Set)
-import Landscape.Model exposing (MousePosition)
+import Model exposing (MousePosition)
 import Messages exposing (MessageImportance)
 
 

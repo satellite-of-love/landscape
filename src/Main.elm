@@ -8,7 +8,7 @@ import Mouse
 import Keyboard
 import Char exposing (KeyCode)
 import Set exposing (Set)
-import Landscape.Model exposing (Model, MousePosition)
+import Model exposing (Model, MousePosition)
 import Action exposing (Action(..))
 import Landscape.View
 import Landscape.Update
@@ -21,7 +21,7 @@ import TextInput.View
 main : Signal Html
 main =
   Signal.mergeMany [ mousePointer, mouseClicks, newsFromTheView.signal ]
-    |> Signal.foldp updateModel Landscape.Model.init
+    |> Signal.foldp updateModel Model.init
     |> Signal.map (view newsFromTheView.address)
 
 
