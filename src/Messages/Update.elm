@@ -5,13 +5,14 @@ import Landscape.Action exposing (Action(..))
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
+import Messages exposing (Message(..))
 
 
 addMessages : Model -> List String -> Model
 addMessages model more =
   { model
     | messages =
-        more ++ model.messages
+        (List.map Chunder more) ++ model.messages
   }
 
 

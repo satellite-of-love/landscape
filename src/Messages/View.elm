@@ -5,6 +5,7 @@ import Html.Attributes as Attr
 import Html.CssHelpers
 import Landscape.Model exposing (Model, printableKeysDown)
 import LandscapeCss exposing (CssClass(..))
+import Messages exposing (Message(..))
 
 
 { id, class, classList } =
@@ -41,6 +42,16 @@ output whatToSay =
     ]
 
 
-messagePane : List String -> Html
+messagePane : List Message -> Html
 messagePane whatToSay =
-  Html.ul [] (List.map (\a -> Html.li [] [ Html.text a ]) whatToSay)
+  Html.ul [] (List.map oneMessage whatToSay)
+
+
+oneMessage : Message -> Html
+oneMessage m =
+  case m of
+    Chunder message ->
+      Html.li [] [ Html.text message ]
+
+    Notice message ->
+      Html.li [] [ Html.text ("**" ++ message) ]

@@ -3,6 +3,7 @@ module Landscape.Model (Model, MousePosition, InformativeText, init, keysPressed
 import Set exposing (Set)
 import Char exposing (KeyCode)
 import String
+import Messages exposing (Message(..))
 
 
 type alias MousePosition =
@@ -19,7 +20,7 @@ type alias Model =
   { pointer : MousePosition
   , z : Int
   , center : MousePosition
-  , messages : List String
+  , messages : List Message
   , keysDown : Set KeyCode
   , previousKeysDown : Set KeyCode
   , textInput :

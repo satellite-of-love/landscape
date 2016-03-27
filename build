@@ -1,10 +1,14 @@
 set -e
 
+
+echo "Compiling..."
+elm make --output elm.js src/Main.elm
+
 echo "Formatting..."
 elm format --yes src/*
 
 echo "Styling..."
 elm-css src/Stylesheets.elm
 
-echo "Compiling..."
+echo "Compiling again just in case..."
 elm make --output elm.js src/Main.elm
