@@ -4,6 +4,8 @@ import Text
 import Html exposing (Html)
 import Html.Attributes as Attr
 import Landscape.Model exposing (Model, MousePosition, InformativeText)
+import LandscapeCss exposing (beAt)
+import Css exposing (vh, vw, asPairs)
 
 
 landscapePane : Model -> Html
@@ -36,14 +38,17 @@ draw annotation =
   let
     ( x, y ) =
       annotation.position
+
+    positioningCss =
+      beAt (y |> toFloat |> vh) (x |> toFloat |> vw)
   in
     Html.label
       [ Attr.style
-          -- TODO: call beAt
-          [ ( "position", "absolute" )
-          , ( "top", (toString y) ++ "vh" )
-          , ( "left", (toString x) ++ "vw" )
-          ]
+          (asPairs positioningCss)
+        -- [ ( "position", "absolute" )
+        -- , ( "top", (toString y) ++ "vh" )
+        -- , ( "left", (toString x) ++ "vw" )
+        -- ]
       ]
       [ Html.text annotation.text ]
 
