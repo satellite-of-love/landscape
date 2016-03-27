@@ -5,6 +5,7 @@ import Landscape.Action exposing (Action(..))
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
+import Messages.Update exposing (takeNotice)
 
 
 inputReact action model =
@@ -57,6 +58,7 @@ moveItOverABit ( x, y ) =
   ( x, y - 2 )
 
 
+initializeNewInput : Model -> Model
 initializeNewInput model =
   { model
     | textInput =
@@ -65,6 +67,7 @@ initializeNewInput model =
         , position = model.pointer
         }
   }
+    |> takeNotice ("New input field at " ++ (toString model.pointer))
 
 
 goodbyeInput model =

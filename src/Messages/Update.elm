@@ -16,8 +16,8 @@ addMessages model more =
   }
 
 
-takeNotice : Model -> String -> Model
-takeNotice model message =
+takeNotice : String -> Model -> Model
+takeNotice message model =
   addMessages model [ Notice message ]
 
 
