@@ -2,23 +2,44 @@ module Messages.View (view) where
 
 import Html exposing (Html)
 import Html.Attributes as Attr
+import Html.Events
 import Html.CssHelpers
 import Landscape.Model exposing (Model, printableKeysDown)
 import LandscapeCss
-import Messages exposing (Message(..))
+import Landscape.Action exposing (Action(Disvisiblate))
+import Messages exposing (Message, MessageVisibility, MessageImportance(Save, Chunder, Notice))
+import Signal exposing (Address)
 
 
 { id, class, classList } =
   Html.CssHelpers.withNamespace ""
 
 
-view : Model -> Html
-view model =
+view : Address Action -> Model -> Html
+view address model =
   Html.aside
     []
     [ whereAmI model
+    , visibility address model
     , messagePane model.messages
     ]
+
+
+visibility : Address Action -> Model -> Html
+visibility address model =
+  Html.div
+    []
+    List.map (viz address model.messageVisibility) [ Chunder , Notice, Save ]
+
+
+viz address messageVisibility category =
+  let
+    text = (toString category)
+  in
+    if List.member messageVisibility category then
+      Html.button [ Html.Events.onClick (Disvisiblate category)] [ Html.text text ]
+    else
+      Html.s [] [ Html.text text ]
 
 
 whereAmI : Model -> Html
@@ -49,12 +70,12 @@ messagePane whatToSay =
 
 oneMessage : Message -> Html
 oneMessage m =
-  case m of
-    Chunder message ->
-      Html.li [ class [ LandscapeCss.Chunder ] ] [ Html.text message ]
+  case m.importance of
+    Chunder ->
+      Html.li [ class [ LandscapeCss.Chunder ] ] [ Html.text m.say ]
 
-    Notice message ->
-      Html.li [ class [ LandscapeCss.Notice ] ] [ Html.text message ]
+    Notice ->
+      Html.li [ class [ LandscapeCss.Notice ] ] [ Html.text m.say ]
 
-    Save message ->
-      Html.li [ class [ LandscapeCss.Save ] ] [ Html.text message ]
+    Save ->
+      Html.li [ class [ LandscapeCss.Save ] ] [ Html.text m.say ]

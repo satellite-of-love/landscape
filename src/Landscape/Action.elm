@@ -3,6 +3,7 @@ module Landscape.Action (Action(..)) where
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import Landscape.Model exposing (MousePosition)
+import Messages exposing (MessageImportance)
 
 
 type Action
@@ -10,4 +11,5 @@ type Action
   | Click
   | TypedSomething String
   | SaveText
+  | Disvisiblate MessageImportance
   | NoOp

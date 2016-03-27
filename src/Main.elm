@@ -86,7 +86,7 @@ view address model =
   Html.div
     []
     ([ landscapePane lANDSCAPE_H model
-     , Messages.View.view model
+     , Messages.View.view address model
      ]
       ++ (possibleInput address model)
     )

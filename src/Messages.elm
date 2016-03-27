@@ -1,7 +1,16 @@
 module Messages (..) where
 
+import Set exposing (Set)
 
-type Message
-  = Chunder String
-  | Notice String
-  | Save String
+type MessageImportance = Chunder | Notice | Save
+
+type alias Message = { say: String, importance: MessageImportance }
+
+
+type alias MessageVisibility =
+  List MessageImportance
+
+
+allVisible : MessageVisibility
+allVisible =
+  [ Chunder, Notice, Save ]
