@@ -6,8 +6,8 @@ import Html.Events
 import Html.CssHelpers
 import Landscape.Model exposing (Model, printableKeysDown)
 import LandscapeCss
-import Landscape.Action exposing (Action(Disvisiblate))
-import Messages exposing (isVisible, Message, MessageVisibility, MessageImportance(Save, Chunder, Notice))
+import Landscape.Action exposing (Action(Disvisiblate, Envisiblate))
+import Messages exposing (isVisible, importancesWithDescriptions, Message, MessageVisibility, MessageImportance(Save, Chunder, Notice))
 import Signal exposing (Address)
 
 
@@ -29,19 +29,23 @@ visibility : Address Action -> Model -> Html
 visibility address model =
   Html.div
     []
-    (List.map (viz address model.messageVisibility) [ Chunder, Notice, Save ])
+    (List.map (makeButton address (isVisible model.messageVisibility)) importancesWithDescriptions)
 
 
-viz : Address Action -> MessageVisibility -> MessageImportance -> Html
-viz address messageVisibility category =
+makeButton : Address Action -> (MessageImportance -> Bool) -> ( MessageImportance, String ) -> Html
+makeButton address isVisible ( importance, description ) =
   let
-    text =
-      (toString category)
+    ( buttonClass, event ) =
+      if isVisible importance then
+        ( LandscapeCss.CurrentlyVisible, Disvisiblate )
+      else
+        ( LandscapeCss.CurrentlyInvisible, Envisiblate )
   in
-    if isVisible messageVisibility category then
-      Html.button [ Html.Events.onClick address (Disvisiblate category) ] [ Html.text text ]
-    else
-      Html.s [] [ Html.text text ]
+    Html.button
+      [ class [ buttonClass ]
+      , Html.Events.onClick address (event importance)
+      ]
+      [ Html.text description ]
 
 
 whereAmI : Model -> Html

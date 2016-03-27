@@ -9,6 +9,13 @@ type MessageImportance
   | Save
 
 
+importancesWithDescriptions =
+  [ ( Chunder, "Chunder" )
+  , ( Notice, "Notice" )
+  , ( Save, "Save" )
+  ]
+
+
 type alias Message =
   { say : String, importance : MessageImportance }
 
@@ -34,6 +41,11 @@ allVisible =
 removeVisibility : MessageImportance -> MessageVisibility -> MessageVisibility
 removeVisibility =
   Set.remove << makeComparable
+
+
+addVisibility : MessageImportance -> MessageVisibility -> MessageVisibility
+addVisibility =
+  Set.insert << makeComparable
 
 
 makeComparable : MessageImportance -> MessageImportanceShouldBeComparable

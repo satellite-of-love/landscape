@@ -12,4 +12,5 @@ type Action
   | TypedSomething String
   | SaveText
   | Disvisiblate MessageImportance
+  | Envisiblate MessageImportance
   | NoOp

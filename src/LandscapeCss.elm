@@ -1,6 +1,6 @@
 module LandscapeCss (css, CssClass(..)) where
 
-import Css exposing ((.), margin4, fontWeight, bold, boxSizing, whiteSpace, noWrap, minWidth, border2, fontFamily, monospace, sansSerif, inset, em, borderBox, overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
+import Css exposing ((.), margin4, outset, fontWeight, bold, boxSizing, whiteSpace, noWrap, minWidth, border2, fontFamily, monospace, sansSerif, inset, em, borderBox, overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
 import Css.Elements exposing (output, strong, canvas, aside, ul, mainElement)
 
 
@@ -9,6 +9,8 @@ type CssClass
   | Chunder
   | Notice
   | Save
+  | CurrentlyVisible
+  | CurrentlyInvisible
 
 
 fullHeight =
@@ -76,8 +78,12 @@ css =
         [ backgroundColor blue
         , fontWeight bold
         ]
-    , strong
-        [ margin4 (px 0) (px 3) (px 0) (px 3) ]
+    , ((.) CurrentlyVisible)
+        [ (border2 (px 3) inset)
+        ]
+    , ((.) CurrentlyInvisible)
+        [ (border2 (px 3) outset)
+        ]
     ]
 
 
