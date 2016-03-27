@@ -21,7 +21,7 @@ view address model =
     []
     [ whereAmI model
     , visibility address model
-    , messagePane model.messages
+    , messagePane model.messageVisibility model.messages
     ]
 
 
@@ -69,9 +69,14 @@ output whatToSay =
     ]
 
 
-messagePane : List Message -> Html
-messagePane whatToSay =
-  Html.ul [] (List.map oneMessage whatToSay)
+messagePane : MessageVisibility -> List Message -> Html
+messagePane visibility whatToSay =
+  Html.ul
+    []
+    (whatToSay
+      |> List.filter ((isVisible visibility) << .importance)
+      |> List.map oneMessage
+    )
 
 
 oneMessage : Message -> Html
