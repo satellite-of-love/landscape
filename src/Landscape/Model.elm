@@ -1,7 +1,8 @@
-module Landscape.Model (Model, MousePosition, InformativeText, init, keysPressed, xyz) where
+module Landscape.Model (Model, MousePosition, InformativeText, init, keysPressed, xyz, printableKeysDown) where
 
 import Set exposing (Set)
 import Char exposing (KeyCode)
+import String
 
 
 type alias MousePosition =
@@ -59,3 +60,24 @@ xyz model =
 keysPressed : Model -> Set KeyCode
 keysPressed model =
   Set.diff model.keysDown model.previousKeysDown
+
+
+printableKeysDown : Model -> String
+printableKeysDown model =
+  String.join "," (Set.toList (Set.map betterFromCode model.keysDown))
+
+
+betterFromCode : KeyCode -> String
+betterFromCode keyCode =
+  case keyCode of
+    38 ->
+      "up"
+
+    40 ->
+      "down"
+
+    13 ->
+      "enter"
+
+    other ->
+      Char.fromCode other |> String.fromChar

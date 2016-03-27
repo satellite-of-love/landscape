@@ -2,7 +2,13 @@ module Messages.View (view) where
 
 import Html exposing (Html)
 import Html.Attributes as Attr
-import Landscape.Model exposing (Model, xyz)
+import Html.CssHelpers
+import Landscape.Model exposing (Model, printableKeysDown)
+import LandscapeCss exposing (CssClass(..))
+
+
+{ id, class, classList } =
+  Html.CssHelpers.withNamespace ""
 
 
 view : Model -> Html
@@ -16,9 +22,22 @@ view model =
 
 whereAmI : Model -> Html
 whereAmI model =
-  Html.output
+  Html.div
     []
-    [ Html.text (toString (xyz model))
+    [ output ("mouse: " ++ (toString model.pointer))
+    , output ("zoom: " ++ (toString model.z))
+    , output ("keys: " ++ (printableKeysDown model))
+    ]
+
+
+output : String -> Html
+output whatToSay =
+  Html.div
+    [ class [ WhereAmI ] ]
+    [ Html.output
+        []
+        [ Html.text whatToSay
+        ]
     ]
 
 
