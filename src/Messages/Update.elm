@@ -5,7 +5,7 @@ import Landscape.Action exposing (Action(..))
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
-import Messages exposing (Message, MessageImportance(Notice, Chunder, Save), removeVisibility, addVisibility)
+import Messages exposing (Message, importances, removeVisibility, addVisibility)
 
 
 addMessages : Model -> List Message -> Model
@@ -18,12 +18,12 @@ addMessages model more =
 
 takeNotice : String -> Model -> Model
 takeNotice message model =
-  addMessages model [ Message message Notice ]
+  addMessages model [ Message Messages.notice message ]
 
 
 takeSave : String -> Model -> Model
 takeSave message model =
-  addMessages model [ Message message Save ]
+  addMessages model [ Message Messages.save message ]
 
 
 messagesReact : Action -> Model -> Model
@@ -33,11 +33,11 @@ messagesReact action model =
       addMessages
         model
         [ Message
+            Messages.chunder
             ("Click: "
               ++ (toString (xyz model))
               ++ descriptionOfKeys model
             )
-            Chunder
         ]
 
     Disvisiblate imp ->
@@ -53,7 +53,7 @@ messagesReact action model =
 
         more =
           List.map
-            (\s -> Message ("Press: " ++ (betterFromCode s)) Chunder)
+            (betterFromCode >> (++) "Press: " >> Message Messages.chunder)
             presses
       in
         addMessages model more

@@ -7,7 +7,7 @@ import Html.CssHelpers
 import Landscape.Model exposing (Model, printableKeysDown)
 import LandscapeCss
 import Landscape.Action exposing (Action(Disvisiblate, Envisiblate))
-import Messages exposing (isVisible, importancesWithDescriptions, Message, MessageVisibility, MessageImportance(Save, Chunder, Notice))
+import Messages exposing (isVisible, importances, Message, MessageVisibility, MessageImportance)
 import Signal exposing (Address)
 
 
@@ -29,11 +29,11 @@ visibility : Address Action -> Model -> Html
 visibility address model =
   Html.div
     []
-    (List.map (makeButton address (isVisible model.messageVisibility)) importancesWithDescriptions)
+    (List.map (makeButton address (isVisible model.messageVisibility)) importances)
 
 
-makeButton : Address Action -> (MessageImportance -> Bool) -> ( MessageImportance, String ) -> Html
-makeButton address isVisible ( importance, description ) =
+makeButton : Address Action -> (MessageImportance -> Bool) -> MessageImportance -> Html
+makeButton address isVisible importance =
   let
     ( buttonClass, event ) =
       if isVisible importance then
@@ -45,7 +45,7 @@ makeButton address isVisible ( importance, description ) =
       [ class [ buttonClass ]
       , Html.Events.onClick address (event importance)
       ]
-      [ Html.text description ]
+      [ Html.text importance.name ]
 
 
 whereAmI : Model -> Html
@@ -81,12 +81,4 @@ messagePane visibility whatToSay =
 
 oneMessage : Message -> Html
 oneMessage m =
-  case m.importance of
-    Chunder ->
-      Html.li [ class [ LandscapeCss.Chunder ] ] [ Html.text m.say ]
-
-    Notice ->
-      Html.li [ class [ LandscapeCss.Notice ] ] [ Html.text m.say ]
-
-    Save ->
-      Html.li [ class [ LandscapeCss.Save ] ] [ Html.text m.say ]
+  Html.li [ class [ m.importance.cssClass ] ] [ Html.text m.say ]

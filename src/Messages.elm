@@ -1,27 +1,41 @@
 module Messages (..) where
 
 import Set exposing (Set)
+import LandscapeCss
 
 
-type MessageImportance
-  = Chunder
-  | Notice
-  | Save
+type alias MessageImportance =
+  { name : String, cssClass : LandscapeCss.CssClass }
 
 
-importancesWithDescriptions =
-  [ ( Chunder, "Chunder" )
-  , ( Notice, "Notice" )
-  , ( Save, "Save" )
+chunder : MessageImportance
+chunder =
+  { name = "Chunder", cssClass = LandscapeCss.Chunder }
+
+
+notice : MessageImportance
+notice =
+  { name = "Notice", cssClass = LandscapeCss.Notice }
+
+
+save : MessageImportance
+save =
+  { name = "Save", cssClass = LandscapeCss.Save }
+
+
+importances =
+  [ chunder
+  , notice
+  , save
   ]
 
 
 type alias Message =
-  { say : String, importance : MessageImportance }
+  { importance : MessageImportance, say : String }
 
 
 type alias MessageImportanceShouldBeComparable =
-  Int
+  String
 
 
 type alias MessageVisibility =
@@ -35,7 +49,7 @@ isVisible visibility importance =
 
 allVisible : MessageVisibility
 allVisible =
-  [ Chunder, Notice, Save ] |> List.map makeComparable |> Set.fromList
+  importances |> List.map makeComparable |> Set.fromList
 
 
 removeVisibility : MessageImportance -> MessageVisibility -> MessageVisibility
@@ -49,13 +63,5 @@ addVisibility =
 
 
 makeComparable : MessageImportance -> MessageImportanceShouldBeComparable
-makeComparable mi =
-  case mi of
-    Chunder ->
-      0
-
-    Notice ->
-      1
-
-    Save ->
-      2
+makeComparable =
+  .name
