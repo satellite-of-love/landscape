@@ -10,16 +10,12 @@ import Char exposing (KeyCode)
 import Set exposing (Set)
 import Landscape.Model exposing (Model, MousePosition)
 import Landscape.Action exposing (Action(..))
-import Landscape.View exposing (landscapePane)
+import Landscape.View
 import Landscape.Update
 import Messages.Update exposing (messagesReact)
 import Messages.View
 import TextInput.Update exposing (inputReact)
-import TextInput.View exposing (possibleInput)
-
-
-lANDSCAPE_H =
-  768
+import TextInput.View
 
 
 main : Signal Html
@@ -85,8 +81,8 @@ view : Signal.Address Action -> Model -> Html
 view address model =
   Html.div
     []
-    ([ landscapePane lANDSCAPE_H model
+    ([ Landscape.View.landscapePane model
      , Messages.View.view address model
      ]
-      ++ (possibleInput address model)
+      ++ (TextInput.View.possibleInput address model)
     )

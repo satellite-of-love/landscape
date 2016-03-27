@@ -6,8 +6,8 @@ import Html.Attributes as Attr
 import Landscape.Model exposing (Model, MousePosition, InformativeText)
 
 
-landscapePane : Int -> Model -> Html
-landscapePane height model =
+landscapePane : Model -> Html
+landscapePane model =
   Html.node
     "main"
     []
