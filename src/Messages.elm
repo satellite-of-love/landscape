@@ -13,10 +13,37 @@ type alias Message =
   { say : String, importance : MessageImportance }
 
 
+type alias MessageImportanceShouldBeComparable =
+  Int
+
+
 type alias MessageVisibility =
-  List MessageImportance
+  Set MessageImportanceShouldBeComparable
+
+
+isVisible : MessageVisibility -> MessageImportance -> Bool
+isVisible visibility importance =
+  Set.member (makeComparable importance) visibility
 
 
 allVisible : MessageVisibility
 allVisible =
-  [ Chunder, Notice, Save ]
+  [ Chunder, Notice, Save ] |> List.map makeComparable |> Set.fromList
+
+
+removeVisibility : MessageImportance -> MessageVisibility -> MessageVisibility
+removeVisibility =
+  Set.remove << makeComparable
+
+
+makeComparable : MessageImportance -> MessageImportanceShouldBeComparable
+makeComparable mi =
+  case mi of
+    Chunder ->
+      0
+
+    Notice ->
+      1
+
+    Save ->
+      2

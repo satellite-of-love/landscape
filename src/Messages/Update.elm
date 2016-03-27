@@ -5,7 +5,7 @@ import Landscape.Action exposing (Action(..))
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
-import Messages exposing (Message, MessageImportance(Notice, Chunder, Save))
+import Messages exposing (Message, MessageImportance(Notice, Chunder, Save), removeVisibility)
 
 
 addMessages : Model -> List Message -> Model
@@ -41,7 +41,7 @@ messagesReact action model =
         ]
 
     Disvisiblate imp ->
-      model |> takeNotice (toString action)
+      model |> takeNotice (toString action) |> disvisiblate imp
 
     _ ->
       let
@@ -55,9 +55,12 @@ messagesReact action model =
       in
         addMessages model more
 
-removeVisibility model importance =
+
+disvisiblate imp model =
   { model
-  | messageVisibility = (List.filter (\s -> s != importance) model.messageVisibility) }
+    | messageVisibility = removeVisibility imp model.messageVisibility
+  }
+
 
 descriptionOfKeys model =
   if Set.isEmpty model.keysDown then

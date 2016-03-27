@@ -7,7 +7,7 @@ import Html.CssHelpers
 import Landscape.Model exposing (Model, printableKeysDown)
 import LandscapeCss
 import Landscape.Action exposing (Action(Disvisiblate))
-import Messages exposing (Message, MessageVisibility, MessageImportance(Save, Chunder, Notice))
+import Messages exposing (isVisible, Message, MessageVisibility, MessageImportance(Save, Chunder, Notice))
 import Signal exposing (Address)
 
 
@@ -42,11 +42,6 @@ viz address messageVisibility category =
       Html.button [ Html.Events.onClick address (Disvisiblate category) ] [ Html.text text ]
     else
       Html.s [] [ Html.text text ]
-
-
-isVisible : MessageVisibility -> MessageImportance -> Bool
-isVisible visibility importance =
-  List.member importance visibility
 
 
 whereAmI : Model -> Html
