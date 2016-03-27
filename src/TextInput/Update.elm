@@ -5,7 +5,7 @@ import Landscape.Action exposing (Action(..))
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
-import Messages.Update exposing (takeNotice)
+import Messages.Update exposing (takeNotice, takeSave)
 
 
 inputReact action model =
@@ -39,16 +39,26 @@ inputReact action model =
 
 saveTheText model =
   if model.textInput.isAThing then
-    { model
-      | annotations =
-          model.annotations
-            ++ [ (InformativeText
-                    model.textInput.contents
-                    (moveItOverABit model.textInput.position)
-                 )
-               ]
-    }
-      |> goodbyeInput
+    let
+      newText =
+        model.textInput.contents
+
+      position =
+        moveItOverABit model.textInput.position
+
+      annotation =
+        InformativeText
+          newText
+          position
+    in
+      { model
+        | annotations =
+            model.annotations
+              ++ [ annotation
+                 ]
+      }
+        |> goodbyeInput
+        |> takeSave (toString annotation)
   else
     model
 

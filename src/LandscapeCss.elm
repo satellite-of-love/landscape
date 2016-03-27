@@ -8,6 +8,7 @@ type CssClass
   = WhereAmI
   | Chunder
   | Notice
+  | Save
 
 
 fullHeight =
@@ -70,7 +71,10 @@ css =
         ]
     , ((.) Notice)
         [ backgroundColor pink
-          --  , fontWeight bold
+        ]
+    , ((.) Save)
+        [ backgroundColor blue
+        , fontWeight bold
         ]
     ]
 
@@ -98,6 +102,10 @@ white =
 
 pink =
   rgb 255 200 200
+
+
+blue =
+  rgb 200 200 255
 
 
 green =

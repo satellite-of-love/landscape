@@ -55,3 +55,6 @@ oneMessage m =
 
     Notice message ->
       Html.li [ class [ LandscapeCss.Notice ] ] [ Html.text message ]
+
+    Save message ->
+      Html.li [ class [ LandscapeCss.Save ] ] [ Html.text message ]

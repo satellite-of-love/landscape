@@ -1,4 +1,4 @@
-module Messages.Update (messagesReact, takeNotice) where
+module Messages.Update (messagesReact, takeNotice, takeSave) where
 
 import Landscape.Model exposing (Model, keysPressed, xyz, printableKeysDown, betterFromCode)
 import Landscape.Action exposing (Action(..))
@@ -19,6 +19,11 @@ addMessages model more =
 takeNotice : String -> Model -> Model
 takeNotice message model =
   addMessages model [ Notice message ]
+
+
+takeSave : String -> Model -> Model
+takeSave message model =
+  addMessages model [ Save message ]
 
 
 messagesReact : Action -> Model -> Model
