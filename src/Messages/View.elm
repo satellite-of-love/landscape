@@ -29,17 +29,24 @@ visibility : Address Action -> Model -> Html
 visibility address model =
   Html.div
     []
-    List.map (viz address model.messageVisibility) [ Chunder , Notice, Save ]
+    (List.map (viz address model.messageVisibility) [ Chunder, Notice, Save ])
 
 
+viz : Address Action -> MessageVisibility -> MessageImportance -> Html
 viz address messageVisibility category =
   let
-    text = (toString category)
+    text =
+      (toString category)
   in
-    if List.member messageVisibility category then
-      Html.button [ Html.Events.onClick (Disvisiblate category)] [ Html.text text ]
+    if isVisible messageVisibility category then
+      Html.button [ Html.Events.onClick address (Disvisiblate category) ] [ Html.text text ]
     else
       Html.s [] [ Html.text text ]
+
+
+isVisible : MessageVisibility -> MessageImportance -> Bool
+isVisible visibility importance =
+  List.member importance visibility
 
 
 whereAmI : Model -> Html
