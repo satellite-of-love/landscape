@@ -1,7 +1,7 @@
 module Messages.Update (seeTheWorld, messagesReact, takeNotice, takeSave) where
 
 import Model exposing (Model, keysPressed, xyz, printableKeysDown, betterFromCode)
-import Action exposing (Action(Chunder, Disvisiblate, Envisiblate), News(Click))
+import Action exposing (Action(..), News(Click))
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
@@ -62,6 +62,9 @@ messagesReact action model =
 
     Envisiblate imp ->
       model |> takeNotice (toString action) |> envisiblate imp
+
+    NewTextInput pos ->
+      takeNotice ("New input field at " ++ (toString (toString pos))) model
 
     _ ->
       model

@@ -5,7 +5,7 @@ import Action exposing (Action(NewTextInput, ReceiveText, SaveText, DiscardText)
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
-import Messages.Update exposing (takeNotice, takeSave)
+import Messages.Update exposing (takeSave)
 
 
 seeTheWorld : News Action -> Model -> List Action
@@ -93,7 +93,6 @@ initializeNewInput model position =
         , position = position
         }
   }
-    |> takeNotice ("New input field at " ++ (toString model.pointer))
 
 
 goodbyeInput model =
