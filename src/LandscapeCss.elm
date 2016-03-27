@@ -1,7 +1,7 @@
 module LandscapeCss (css, CssClass(..)) where
 
-import Css exposing ((.), margin4, outset, fontWeight, bold, boxSizing, whiteSpace, noWrap, minWidth, border2, fontFamily, monospace, sansSerif, inset, em, borderBox, overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
-import Css.Elements exposing (output, strong, canvas, aside, ul, mainElement)
+import Css exposing ((.), selector, margin4, outset, fontWeight, bold, boxSizing, whiteSpace, noWrap, minWidth, border2, fontFamily, monospace, sansSerif, inset, em, borderBox, overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
+import Css.Elements exposing (canvas, ul)
 
 
 type CssClass
@@ -35,7 +35,8 @@ veryLeft =
 
 css =
   stylesheet
-    [ aside
+    [ selector
+        "aside"
         (beAt veryTop landscapeWidth
           ++ [ backgroundColor white
              , margin (px 0)
@@ -56,12 +57,14 @@ css =
              , Css.property "transition" "1s ease-in-out"
              ]
         )
-    , mainElement
+    , selector
+        "main"
         (beAt veryTop veryLeft
           ++ landscapeSize
           ++ [ overflow hidden ]
         )
-    , output
+    , selector
+        "output"
         [ fontFamily monospace
         , whiteSpace noWrap
         ]

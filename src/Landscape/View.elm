@@ -39,6 +39,7 @@ draw annotation =
   in
     Html.label
       [ Attr.style
+          -- TODO: call beAt
           [ ( "position", "absolute" )
           , ( "top", (toString y) ++ "vh" )
           , ( "left", (toString x) ++ "vw" )

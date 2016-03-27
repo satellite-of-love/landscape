@@ -3,7 +3,7 @@ module Messages.View (view) where
 import Html exposing (Html)
 import Html.Attributes as Attr
 import Html.Events
-import Html.CssHelpers
+import Html.CssHelpers as Help
 import Landscape.Model exposing (Model, printableKeysDown)
 import LandscapeCss
 import Landscape.Action exposing (Action(Disvisiblate, Envisiblate))
@@ -12,7 +12,7 @@ import Signal exposing (Address)
 
 
 { id, class, classList } =
-  Html.CssHelpers.withNamespace ""
+  Help.namespace ""
 
 
 view : Address Action -> Model -> Html
