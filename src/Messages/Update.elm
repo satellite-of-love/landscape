@@ -1,4 +1,4 @@
-module Messages.Update (messagesReact) where
+module Messages.Update (messagesReact, takeNotice) where
 
 import Landscape.Model exposing (Model, keysPressed, xyz, printableKeysDown, betterFromCode)
 import Landscape.Action exposing (Action(..))
@@ -8,12 +8,17 @@ import String
 import Messages exposing (Message(..))
 
 
-addMessages : Model -> List String -> Model
+addMessages : Model -> List Message -> Model
 addMessages model more =
   { model
     | messages =
-        (List.map Chunder more) ++ model.messages
+        more ++ model.messages
   }
+
+
+takeNotice : Model -> String -> Model
+takeNotice model message =
+  addMessages model [ Notice message ]
 
 
 messagesReact : Action -> Model -> Model
@@ -22,9 +27,11 @@ messagesReact action model =
     Click ->
       addMessages
         model
-        [ "Click: "
-            ++ (toString (xyz model))
-            ++ descriptionOfKeys model
+        [ Chunder
+            ("Click: "
+              ++ (toString (xyz model))
+              ++ descriptionOfKeys model
+            )
         ]
 
     _ ->
@@ -34,7 +41,7 @@ messagesReact action model =
 
         more =
           List.map
-            (\s -> "Press: " ++ (betterFromCode s))
+            (\s -> Chunder ("Press: " ++ (betterFromCode s)))
             presses
       in
         addMessages model more
