@@ -31,7 +31,7 @@ input address textInputModel =
           ]
       , Attr.value textInputModel.contents
       , Attr.attribute "autofocus" "true"
-      , on "input" targetValue (Signal.message address << TypedSomething)
+      , on "input" targetValue (Signal.message address << ReceiveText)
       ]
       []
 

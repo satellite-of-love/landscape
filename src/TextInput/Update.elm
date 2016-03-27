@@ -1,22 +1,37 @@
-module TextInput.Update (inputReact) where
+module TextInput.Update (seeTheWorld, inputReact) where
 
 import Model exposing (Model, keysPressed, InformativeText, MousePosition)
-import Action exposing (Action(..))
+import Action exposing (Action(NewTextInput, ReceiveText, SaveText, DiscardText), News(Click))
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
 import Messages.Update exposing (takeNotice, takeSave)
 
 
-inputReact action model =
-  case action of
+seeTheWorld : News Action -> Model -> List Action
+seeTheWorld news model =
+  case news of
     Click ->
       if theyAreHoldingT model then
-        initializeNewInput model
+        [ NewTextInput model.pointer ]
       else
-        model
+        []
 
-    TypedSomething something ->
+    _ ->
+      if theyPushedEscape model then
+        [ DiscardText ]
+      else if theyPushedEnter model then
+        [ SaveText ]
+      else
+        []
+
+
+inputReact action model =
+  case action of
+    NewTextInput position ->
+      initializeNewInput model position
+
+    ReceiveText something ->
       let
         ti =
           model.textInput
@@ -28,13 +43,14 @@ inputReact action model =
           | textInput = new
         }
 
+    DiscardText ->
+      goodbyeInput model
+
+    SaveText ->
+      saveTheText model
+
     _ ->
-      if theyPushedEscape model then
-        goodbyeInput model
-      else if theyPushedEnter model then
-        saveTheText model
-      else
-        model
+      model
 
 
 saveTheText model =
@@ -68,13 +84,13 @@ moveItOverABit ( x, y ) =
   ( x, y - 2 )
 
 
-initializeNewInput : Model -> Model
-initializeNewInput model =
+initializeNewInput : Model -> MousePosition -> Model
+initializeNewInput model position =
   { model
     | textInput =
         { isAThing = True
         , contents = ""
-        , position = model.pointer
+        , position = position
         }
   }
     |> takeNotice ("New input field at " ++ (toString model.pointer))

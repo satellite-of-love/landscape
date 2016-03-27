@@ -9,7 +9,7 @@ import Keyboard
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import Model exposing (Model, MousePosition)
-import Action exposing (Action(..))
+import Action exposing (Action, News(..))
 import Landscape.View
 import Landscape.Update
 import Messages.Update exposing (messagesReact)
@@ -22,15 +22,15 @@ main : Signal Html
 main =
   Signal.mergeMany [ mousePointer, mouseClicks, newsFromTheView.signal ]
     |> Signal.foldp updateModel Model.init
-    |> Signal.map (view newsFromTheView.address)
+    |> Signal.map (view (Signal.forwardTo newsFromTheView.address DoThis))
 
 
-newsFromTheView : Signal.Mailbox Action
+newsFromTheView : Signal.Mailbox (News Action)
 newsFromTheView =
   Signal.mailbox NoOp
 
 
-mousePointer : Signal Action
+mousePointer : Signal (News a)
 mousePointer =
   Signal.map2 MouseMove relativeMousePosition Keyboard.keysDown
 
@@ -45,23 +45,47 @@ relativize ( x, y ) w h =
   ( x * 100 // w, y * 100 // h )
 
 
-mouseClicks : Signal Action
+mouseClicks : Signal (News a)
 mouseClicks =
   Mouse.clicks
     |> Signal.map (always Click)
 
 
-updateModel : Action -> Model -> Model
-updateModel action model =
+updateModel : News Action -> Model -> Model
+updateModel news model =
+  let
+    model =
+      retainOutsideWorld news model
+
+    actions : List Action
+    actions =
+      (Landscape.Update.seeTheWorld news model)
+        ++ (Messages.Update.seeTheWorld news model)
+        ++ (TextInput.Update.seeTheWorld news model)
+        ++ (explicitActions news)
+  in
+    List.foldl respondToAction model actions
+
+
+respondToAction : Action -> Model -> Model
+respondToAction action model =
   model
-    |> retainOutsideWorld action
     |> Messages.Update.messagesReact action
     |> inputReact action
     |> Landscape.Update.update action
 
 
-retainOutsideWorld action model =
-  case action of
+explicitActions news =
+  case news of
+    DoThis action ->
+      [ action ]
+
+    _ ->
+      []
+
+
+retainOutsideWorld news model =
+  case news of
     MouseMove spot keys ->
       let
         before =

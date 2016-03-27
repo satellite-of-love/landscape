@@ -1,7 +1,7 @@
-module Messages.Update (messagesReact, takeNotice, takeSave) where
+module Messages.Update (seeTheWorld, messagesReact, takeNotice, takeSave) where
 
 import Model exposing (Model, keysPressed, xyz, printableKeysDown, betterFromCode)
-import Action exposing (Action(..))
+import Action exposing (Action(Chunder, Disvisiblate, Envisiblate), News(Click))
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
@@ -26,18 +26,35 @@ takeSave message model =
   addMessages model [ Message Messages.save message ]
 
 
+seeTheWorld : News Action -> Model -> List Action
+seeTheWorld news model =
+  case news of
+    Click ->
+      [ Chunder
+          ("Click: "
+            ++ (toString (xyz model))
+            ++ (descriptionOfKeys model)
+          )
+      ]
+
+    _ ->
+      let
+        notifactionsOfKeyPresses =
+          keysPressed model
+            |> Set.toList
+            |> List.map betterFromCode
+            |> List.map ((++) "Press: ")
+      in
+        List.map Chunder notifactionsOfKeyPresses
+
+
 messagesReact : Action -> Model -> Model
 messagesReact action model =
   case action of
-    Click ->
+    Chunder msg ->
       addMessages
         model
-        [ Message
-            Messages.chunder
-            ("Click: "
-              ++ (toString (xyz model))
-              ++ descriptionOfKeys model
-            )
+        [ Message Messages.chunder msg
         ]
 
     Disvisiblate imp ->
@@ -47,16 +64,7 @@ messagesReact action model =
       model |> takeNotice (toString action) |> envisiblate imp
 
     _ ->
-      let
-        presses =
-          Set.toList (keysPressed model)
-
-        more =
-          List.map
-            (betterFromCode >> (++) "Press: " >> Message Messages.chunder)
-            presses
-      in
-        addMessages model more
+      model
 
 
 disvisiblate imp model =
