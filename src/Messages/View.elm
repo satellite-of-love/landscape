@@ -6,7 +6,7 @@ import Html.Events
 import Html.CssHelpers as Help
 import Landscape.Model exposing (Model, printableKeysDown)
 import LandscapeCss
-import Landscape.Action exposing (Action(Disvisiblate, Envisiblate))
+import Action exposing (Action(Disvisiblate, Envisiblate))
 import Messages exposing (isVisible, importances, Message, MessageVisibility, MessageImportance)
 import Signal exposing (Address)
 

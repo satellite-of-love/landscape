@@ -1,7 +1,7 @@
 module Messages.Update (messagesReact, takeNotice, takeSave) where
 
 import Landscape.Model exposing (Model, keysPressed, xyz, printableKeysDown, betterFromCode)
-import Landscape.Action exposing (Action(..))
+import Action exposing (Action(..))
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String

@@ -1,7 +1,7 @@
 module Landscape.Update (..) where
 
 import Landscape.Model exposing (Model)
-import Landscape.Action exposing (Action(..))
+import Action exposing (Action(..))
 import Set
 
 

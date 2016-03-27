@@ -6,7 +6,7 @@ import Html.Attributes as Attr
 import Signal exposing (Address)
 import Html.Events exposing (on, targetValue)
 import Landscape.Model exposing (Model, MousePosition)
-import Landscape.Action exposing (Action(..))
+import Action exposing (Action(..))
 
 
 possibleInput : Address Action -> Model -> List Html
