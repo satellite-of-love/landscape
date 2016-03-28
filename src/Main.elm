@@ -8,13 +8,13 @@ import Mouse
 import Keyboard
 import Char exposing (KeyCode)
 import Set exposing (Set)
-import Model exposing (Model, MousePosition)
+import Model exposing (Model, MousePosition, OutsideWorld, ApplicationState)
 import Action exposing (Action, News(..))
 import Landscape.View
 import Landscape.Update
-import Messages.Update exposing (messagesReact)
+import Messages.Update
 import Messages.View
-import TextInput.Update exposing (inputReact)
+import TextInput.Update
 import TextInput.View
 
 
@@ -54,24 +54,31 @@ mouseClicks =
 updateModel : News Action -> Model -> Model
 updateModel news model =
   let
-    model =
-      retainOutsideWorld news model
+    world =
+      retainOutsideWorld news model.world
 
-    actions : List Action
     actions =
-      (Landscape.Update.seeTheWorld news model)
-        ++ (Messages.Update.seeTheWorld news model)
-        ++ (TextInput.Update.seeTheWorld news model)
-        ++ (explicitActions news)
+      respondToNews news world
+
+    state =
+      List.foldl respondToAction model.state actions
   in
-    List.foldl respondToAction model actions
+    { world = world, state = state }
 
 
-respondToAction : Action -> Model -> Model
-respondToAction action model =
-  model
+respondToNews : News Action -> OutsideWorld -> List Action
+respondToNews news world =
+  (Landscape.Update.seeTheWorld news world)
+    ++ (Messages.Update.seeTheWorld news world)
+    ++ (TextInput.Update.seeTheWorld news world)
+    ++ (explicitActions news)
+
+
+respondToAction : Action -> ApplicationState -> ApplicationState
+respondToAction action state =
+  state
     |> Messages.Update.messagesReact action
-    |> inputReact action
+    |> TextInput.Update.inputReact action
     |> Landscape.Update.update action
 
 
@@ -105,8 +112,7 @@ view : Signal.Address Action -> Model -> Html
 view address model =
   Html.div
     []
-    ([ Landscape.View.landscapePane model
-     , Messages.View.view address model
-     ]
-      ++ (TextInput.View.possibleInput address model)
+    ([ Landscape.View.landscapePane model.state ]
+      ++ [ Messages.View.view address model ]
+      ++ (TextInput.View.possibleInput address model.state)
     )

@@ -3,12 +3,12 @@ module Landscape.View (landscapePane) where
 import Text
 import Html exposing (Html)
 import Html.Attributes as Attr
-import Model exposing (Model, MousePosition, InformativeText)
+import Model exposing (ApplicationState, InformativeText)
 import LandscapeCss exposing (beAt)
 import Css exposing (vh, vw, asPairs)
 
 
-landscapePane : Model -> Html
+landscapePane : ApplicationState -> Html
 landscapePane model =
   Html.node
     "main"
@@ -21,7 +21,7 @@ landscapePane model =
     )
 
 
-zoomTo : Int -> MousePosition -> Html.Attribute
+zoomTo : Int -> Model.MousePosition -> Html.Attribute
 zoomTo zoomLevel ( x, y ) =
   let
     scaleFunction =

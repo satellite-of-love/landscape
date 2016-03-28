@@ -4,7 +4,7 @@ import Html exposing (Html)
 import Html.Attributes as Attr
 import Html.Events
 import Html.CssHelpers as Help
-import Model exposing (Model, printableKeysDown)
+import Model exposing (Model, printableKeysDown, ApplicationState, OutsideWorld)
 import LandscapeCss
 import Action exposing (Action(Disvisiblate, Envisiblate))
 import Messages exposing (isVisible, importances, Message, MessageVisibility, MessageImportance)
@@ -17,15 +17,19 @@ import Signal exposing (Address)
 
 view : Address Action -> Model -> Html
 view address model =
-  Html.aside
-    []
-    [ whereAmI model
-    , visibility address model
-    , messagePane model.messageVisibility model.messages
-    ]
+  let
+    state =
+      model.state
+  in
+    Html.aside
+      []
+      [ whereAmI model
+      , visibility address state
+      , messagePane state.messageVisibility state.messages
+      ]
 
 
-visibility : Address Action -> Model -> Html
+visibility : Address Action -> ApplicationState -> Html
 visibility address model =
   Html.div
     []
@@ -52,9 +56,9 @@ whereAmI : Model -> Html
 whereAmI model =
   Html.div
     []
-    [ output ("mouse: " ++ (toString model.pointer))
-    , output ("zoom: " ++ (toString model.z))
-    , output ("keys: " ++ (printableKeysDown model))
+    [ output ("mouse: " ++ (toString model.world.pointer))
+    , output ("zoom: " ++ (toString model.state.z))
+    , output ("keys: " ++ (printableKeysDown model.world))
     ]
 
 

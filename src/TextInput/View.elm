@@ -5,11 +5,11 @@ import Html exposing (Html)
 import Html.Attributes as Attr
 import Signal exposing (Address)
 import Html.Events exposing (on, targetValue)
-import Model exposing (Model, MousePosition)
-import Action exposing (Action(..))
+import Model exposing (ApplicationState)
+import Action exposing (Action(ReceiveText))
 
 
-possibleInput : Address Action -> Model -> List Html
+possibleInput : Address Action -> ApplicationState -> List Html
 possibleInput address model =
   if model.textInput.isAThing then
     [ input address model.textInput ]

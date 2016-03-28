@@ -1,6 +1,6 @@
 module Messages.Update (seeTheWorld, messagesReact, takeNotice, takeSave) where
 
-import Model exposing (Model, keysPressed, xyz, printableKeysDown, betterFromCode)
+import Model exposing (Model, ApplicationState, OutsideWorld, updateState, keysPressed, printableKeysDown, betterFromCode)
 import Action exposing (Action(..), News(Click))
 import Char exposing (KeyCode)
 import Set exposing (Set)
@@ -8,39 +8,39 @@ import String
 import Messages exposing (Message, importances, removeVisibility, addVisibility)
 
 
-addMessages : Model -> List Message -> Model
-addMessages model more =
+addMessages : List Message -> ApplicationState -> ApplicationState
+addMessages more model =
   { model
     | messages =
         more ++ model.messages
   }
 
 
-takeNotice : String -> Model -> Model
+takeNotice : String -> ApplicationState -> ApplicationState
 takeNotice message model =
-  addMessages model [ Message Messages.notice message ]
+  addMessages [ Message Messages.notice message ] model
 
 
-takeSave : String -> Model -> Model
+takeSave : String -> ApplicationState -> ApplicationState
 takeSave message model =
-  addMessages model [ Message Messages.save message ]
+  addMessages [ Message Messages.save message ] model
 
 
-seeTheWorld : News Action -> Model -> List Action
-seeTheWorld news model =
+seeTheWorld : News Action -> OutsideWorld -> List Action
+seeTheWorld news world =
   case news of
     Click ->
       [ Chunder
           ("Click: "
-            ++ (toString (xyz model))
-            ++ (descriptionOfKeys model)
+            ++ (toString (world.pointer))
+            ++ (descriptionOfKeys world)
           )
       ]
 
     _ ->
       let
         notifactionsOfKeyPresses =
-          keysPressed model
+          keysPressed world
             |> Set.toList
             |> List.map betterFromCode
             |> List.map ((++) "Press: ")
@@ -48,26 +48,26 @@ seeTheWorld news model =
         List.map Chunder notifactionsOfKeyPresses
 
 
-messagesReact : Action -> Model -> Model
-messagesReact action model =
+messagesReact : Action -> ApplicationState -> ApplicationState
+messagesReact action state =
   case action of
     Chunder msg ->
       addMessages
-        model
         [ Message Messages.chunder msg
         ]
+        state
 
     Disvisiblate imp ->
-      model |> takeNotice (toString action) |> disvisiblate imp
+      state |> takeNotice (toString action) |> disvisiblate imp
 
     Envisiblate imp ->
-      model |> takeNotice (toString action) |> envisiblate imp
+      state |> takeNotice (toString action) |> envisiblate imp
 
     NewTextInput pos ->
-      takeNotice ("New input field at " ++ (toString (toString pos))) model
+      state |> takeNotice ("New input field at " ++ (toString (toString pos)))
 
     _ ->
-      model
+      state
 
 
 disvisiblate imp model =
@@ -82,8 +82,18 @@ envisiblate imp model =
   }
 
 
-descriptionOfKeys model =
-  if Set.isEmpty model.keysDown then
+descriptionOfKeys : OutsideWorld -> String
+descriptionOfKeys world =
+  if Set.isEmpty world.keysDown then
     ""
   else
-    "+" ++ (printableKeysDown model)
+    "+" ++ (printableKeysDown world)
+
+
+xyz : Model -> ( Int, Int, Int )
+xyz model =
+  let
+    ( x, y ) =
+      model.world.pointer
+  in
+    ( x, y, model.state.z )

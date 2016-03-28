@@ -1,6 +1,6 @@
 module TextInput.Update (seeTheWorld, inputReact) where
 
-import Model exposing (Model, keysPressed, InformativeText, MousePosition)
+import Model exposing (ApplicationState, OutsideWorld, keysPressed, InformativeText, MousePosition)
 import Action exposing (Action(NewTextInput, ReceiveText, SaveText, DiscardText), News(Click))
 import Char exposing (KeyCode)
 import Set exposing (Set)
@@ -8,7 +8,7 @@ import String
 import Messages.Update exposing (takeSave)
 
 
-seeTheWorld : News Action -> Model -> List Action
+seeTheWorld : News Action -> OutsideWorld -> List Action
 seeTheWorld news model =
   case news of
     Click ->
@@ -26,6 +26,7 @@ seeTheWorld news model =
         []
 
 
+inputReact : Action -> ApplicationState -> ApplicationState
 inputReact action model =
   case action of
     NewTextInput position ->
@@ -53,30 +54,27 @@ inputReact action model =
       model
 
 
+saveTheText : ApplicationState -> ApplicationState
 saveTheText model =
-  if model.textInput.isAThing then
-    let
-      newText =
-        model.textInput.contents
-
-      position =
-        moveItOverABit model.textInput.position
-
-      annotation =
-        InformativeText
-          newText
-          position
-    in
-      { model
-        | annotations =
-            model.annotations
-              ++ [ annotation
-                 ]
-      }
-        |> goodbyeInput
-        |> takeSave (toString annotation)
-  else
-    model
+  let
+    textInput =
+      model.textInput
+  in
+    if textInput.isAThing then
+      let
+        annotation =
+          InformativeText
+            textInput.contents
+            (moveItOverABit textInput.position)
+      in
+        { model
+          | annotations =
+              model.annotations ++ [ annotation ]
+        }
+          |> goodbyeInput
+          |> takeSave (toString annotation)
+    else
+      model
 
 
 moveItOverABit : MousePosition -> MousePosition
@@ -84,7 +82,7 @@ moveItOverABit ( x, y ) =
   ( x, y - 2 )
 
 
-initializeNewInput : Model -> MousePosition -> Model
+initializeNewInput : ApplicationState -> MousePosition -> ApplicationState
 initializeNewInput model position =
   { model
     | textInput =
@@ -95,6 +93,7 @@ initializeNewInput model position =
   }
 
 
+goodbyeInput : ApplicationState -> ApplicationState
 goodbyeInput model =
   { model
     | textInput =

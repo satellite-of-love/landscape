@@ -1,4 +1,4 @@
-module Model (Model, MousePosition, InformativeText, init, keysPressed, betterFromCode, xyz, printableKeysDown) where
+module Model (..) where
 
 import Set exposing (Set)
 import Char exposing (KeyCode)
@@ -10,62 +10,74 @@ type alias MousePosition =
   ( Int, Int )
 
 
+type alias OutsideWorld =
+  { pointer : MousePosition
+  , keysDown : Set KeyCode
+  , previousKeysDown : Set KeyCode
+  }
+
+
 type alias InformativeText =
   { text : String
   , position : MousePosition
   }
 
 
-type alias Model =
-  { pointer : MousePosition
-  , z : Int
-  , center : MousePosition
-  , messages : List Message
+type alias ApplicationState =
+  { messages : List Message
   , messageVisibility : MessageVisibility
-  , keysDown : Set KeyCode
-  , previousKeysDown : Set KeyCode
   , textInput :
       { isAThing : Bool
       , position : MousePosition
       , contents : String
       }
   , annotations : List InformativeText
+  , z : Int
+  , center : MousePosition
+  }
+
+
+type alias Model =
+  { world : OutsideWorld
+  , state : ApplicationState
+  }
+
+
+updateState : (a -> ApplicationState -> ApplicationState) -> a -> Model -> Model
+updateState update action model =
+  { model
+    | state = update action model.state
   }
 
 
 init : Model
 init =
-  { pointer = ( 0, 0 )
-  , z = 1
-  , center = ( 0, 0 )
-  , messages = []
-  , messageVisibility = allVisible
-  , keysDown = Set.empty
-  , previousKeysDown = Set.empty
-  , textInput =
-      { isAThing = False
-      , position = ( 0, 0 )
-      , contents = ""
+  { world =
+      { pointer = ( 0, 0 )
+      , keysDown = Set.empty
+      , previousKeysDown = Set.empty
       }
-  , annotations = []
+  , state =
+      { messages = []
+      , messageVisibility = allVisible
+      , textInput =
+          { isAThing = False
+          , position = ( 0, 0 )
+          , contents = ""
+          }
+      , annotations = []
+      , z = 1
+      , center = ( 0, 0 )
+      }
   }
 
 
-xyz : Model -> ( Int, Int, Int )
-xyz model =
-  let
-    ( x, y ) =
-      model.pointer
-  in
-    ( x, y, model.z )
-
-
-keysPressed : Model -> Set KeyCode
+keysPressed : OutsideWorld -> Set KeyCode
 keysPressed model =
   Set.diff model.keysDown model.previousKeysDown
 
 
-printableKeysDown : Model -> String
+printableKeysDown : OutsideWorld -> String
 printableKeysDown model =
   String.join "," (Set.toList (Set.map betterFromCode model.keysDown))
 

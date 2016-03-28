@@ -1,26 +1,24 @@
 module Landscape.Update (..) where
 
-import Model exposing (Model, MousePosition)
+import Model exposing (OutsideWorld, ApplicationState, MousePosition)
 import Action exposing (Action(ZoomIn, ZoomOut), News(Click))
 import Set
 
 
-update : Action -> Model -> Model
+update : Action -> ApplicationState -> ApplicationState
 update action model =
   case action of
     ZoomIn pointer ->
-      if upArrowPressed model then
-        zoomIn model pointer
-      else if downArrowPressed model then
-        zoomOut model pointer
-      else
-        model
+      zoomIn model pointer
+
+    ZoomOut pointer ->
+      zoomOut model pointer
 
     _ ->
       model
 
 
-seeTheWorld : News Action -> Model -> List Action
+seeTheWorld : News Action -> OutsideWorld -> List Action
 seeTheWorld news model =
   case news of
     Click ->
@@ -39,7 +37,7 @@ howMuchToZoomIn =
   1
 
 
-zoomIn : Model -> MousePosition -> Model
+zoomIn : ApplicationState -> MousePosition -> ApplicationState
 zoomIn model pointer =
   { model
     | z = model.z + howMuchToZoomIn
@@ -47,18 +45,18 @@ zoomIn model pointer =
   }
 
 
-zoomOut : Model -> MousePosition -> Model
+zoomOut : ApplicationState -> MousePosition -> ApplicationState
 zoomOut model pointer =
   { model
     | z = (max 1 (model.z - howMuchToZoomIn))
   }
 
 
-upArrowPressed : Model -> Bool
+upArrowPressed : OutsideWorld -> Bool
 upArrowPressed model =
   Set.member 38 model.keysDown
 
 
-downArrowPressed : Model -> Bool
+downArrowPressed : OutsideWorld -> Bool
 downArrowPressed model =
   Set.member 40 model.keysDown
