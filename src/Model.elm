@@ -43,13 +43,6 @@ type alias Model =
   }
 
 
-updateState : (a -> ApplicationState -> ApplicationState) -> a -> Model -> Model
-updateState update action model =
-  { model
-    | state = update action model.state
-  }
-
-
 init : Model
 init =
   { world =

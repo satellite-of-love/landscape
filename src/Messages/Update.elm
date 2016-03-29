@@ -1,6 +1,6 @@
 module Messages.Update (seeTheWorld, messagesReact, takeNotice, takeSave) where
 
-import Model exposing (Model, ApplicationState, OutsideWorld, updateState, keysPressed, printableKeysDown, betterFromCode)
+import Model exposing (Model, ApplicationState, OutsideWorld, keysPressed, printableKeysDown, betterFromCode)
 import Action exposing (Action(..), News(Click))
 import Char exposing (KeyCode)
 import Set exposing (Set)
