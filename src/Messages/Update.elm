@@ -21,6 +21,11 @@ takeNotice message model =
   addMessages [ Message Messages.notice message ] model
 
 
+takeChunder : String -> ApplicationState -> ApplicationState
+takeChunder message model =
+  addMessages [ Message Messages.chunder message ] model
+
+
 takeSave : String -> ApplicationState -> ApplicationState
 takeSave message model =
   addMessages [ Message Messages.save message ] model
@@ -57,16 +62,13 @@ messagesReact : Action -> ApplicationState -> ApplicationState
 messagesReact action state =
   case action of
     Chunder msg ->
-      addMessages
-        [ Message Messages.chunder msg
-        ]
-        state
+      state |> takeChunder msg
 
     Disvisiblate imp ->
-      state |> disvisiblate imp
+      state |> takeChunder ("don't see " ++ imp.name) |> disvisiblate imp
 
     Envisiblate imp ->
-      state |> envisiblate imp
+      state |> takeChunder ("do see " ++ imp.name) |> envisiblate imp
 
     NewTextInput pos ->
       state |> takeNotice ("New input field at " ++ (toString (toString pos)))
