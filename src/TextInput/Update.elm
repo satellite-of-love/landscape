@@ -1,7 +1,8 @@
 module TextInput.Update (seeTheWorld, inputReact) where
 
-import Model exposing (ApplicationState, OutsideWorld, keysPressed, InformativeText, MousePosition)
+import Model exposing (ApplicationState, OutsideWorld, keysPressed, MousePosition)
 import Action exposing (Action(NewTextInput, ReceiveText, SaveText, DiscardText), News(Click))
+import Landscape exposing (InformativeText)
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String

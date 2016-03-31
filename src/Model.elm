@@ -4,6 +4,7 @@ import Set exposing (Set)
 import Char exposing (KeyCode)
 import String
 import Messages exposing (Message, MessageVisibility, allVisible)
+import Landscape exposing (InformativeText)
 
 
 type alias MousePosition =
@@ -14,12 +15,6 @@ type alias OutsideWorld =
   { pointer : MousePosition
   , keysDown : Set KeyCode
   , previousKeysDown : Set KeyCode
-  }
-
-
-type alias InformativeText =
-  { text : String
-  , position : MousePosition
   }
 
 

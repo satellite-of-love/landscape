@@ -1,9 +1,10 @@
-module Action (Action(..), News(..)) where
+module Action (Action(..), News(..), ChangeTheWorld(..)) where
 
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import Model exposing (MousePosition)
 import Messages exposing (MessageImportance)
+import Landscape exposing (InformativeText)
 
 
 type News action
@@ -23,3 +24,7 @@ type Action
   | Disvisiblate MessageImportance
   | Envisiblate MessageImportance
   | Chunder String
+
+
+type ChangeTheWorld
+  = Save InformativeText

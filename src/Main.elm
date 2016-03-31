@@ -9,7 +9,7 @@ import Keyboard
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import Model exposing (Model, MousePosition, OutsideWorld, ApplicationState)
-import Action exposing (Action, News(..))
+import Action exposing (Action, News(..), ChangeTheWorld)
 import Landscape.View
 import Landscape.Update
 import Messages.Update
