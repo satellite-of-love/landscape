@@ -36,7 +36,7 @@ spyOnOutgoingNews news state =
   state |> takeSave (toString news)
 
 
-seeTheWorld : News Action -> OutsideWorld -> List Action
+seeTheWorld : News a b -> OutsideWorld -> List Action
 seeTheWorld news world =
   case news of
     Click ->

@@ -7,8 +7,9 @@ import Messages exposing (MessageImportance)
 import Landscape exposing (InformativeText)
 
 
-type News action
+type News action outgoingNews
   = DoThis action
+  | Ack outgoingNews
   | MouseMove MousePosition (Set KeyCode)
   | Click
   | NoOp

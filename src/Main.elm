@@ -25,12 +25,12 @@ main =
     |> Signal.map (view (Signal.forwardTo newsFromTheView.address DoThis))
 
 
-newsFromTheView : Signal.Mailbox (News Action)
+newsFromTheView : Signal.Mailbox (News Action OutgoingNews)
 newsFromTheView =
   Signal.mailbox NoOp
 
 
-mousePointer : Signal (News a)
+mousePointer : Signal (News a b)
 mousePointer =
   Signal.map2 MouseMove relativeMousePosition Keyboard.keysDown
 
@@ -45,13 +45,13 @@ relativize ( x, y ) w h =
   ( x * 100 // w, y * 100 // h )
 
 
-mouseClicks : Signal (News a)
+mouseClicks : Signal (News a b)
 mouseClicks =
   Mouse.clicks
     |> Signal.map (always Click)
 
 
-updateModel : News Action -> Model -> Model
+updateModel : News Action OutgoingNews -> Model -> Model
 updateModel news model =
   let
     world =
@@ -69,7 +69,7 @@ updateModel news model =
     { world = world, state = finalState }
 
 
-respondToNews : News Action -> OutsideWorld -> List Action
+respondToNews : News Action OutgoingNews -> OutsideWorld -> List Action
 respondToNews news world =
   (Landscape.Update.seeTheWorld news world)
     ++ (Messages.Update.seeTheWorld news world)

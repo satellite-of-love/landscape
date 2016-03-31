@@ -1,7 +1,7 @@
 module Landscape.Update (..) where
 
 import Model exposing (OutsideWorld, ApplicationState, MousePosition)
-import Action exposing (Action(ZoomIn, ZoomOut), News(Click))
+import Action exposing (Action(ZoomIn, ZoomOut), News(Click), OutgoingNews)
 import Set
 
 
@@ -18,7 +18,7 @@ update action model =
       model
 
 
-seeTheWorld : News Action -> OutsideWorld -> List Action
+seeTheWorld : News a b -> OutsideWorld -> List Action
 seeTheWorld news model =
   case news of
     Click ->

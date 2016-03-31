@@ -8,7 +8,7 @@ import Set exposing (Set)
 import String
 
 
-seeTheWorld : News Action -> OutsideWorld -> List Action
+seeTheWorld : News a b -> OutsideWorld -> List Action
 seeTheWorld news model =
   case news of
     Click ->
