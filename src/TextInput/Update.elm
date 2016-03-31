@@ -6,7 +6,6 @@ import Landscape exposing (InformativeText)
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
-import Messages.Update exposing (takeSave)
 
 
 seeTheWorld : News Action -> OutsideWorld -> List Action
@@ -81,7 +80,6 @@ saveTheText model =
             model.annotations ++ [ annotation ]
       }
         |> goodbyeInput
-        |> takeSave (toString annotation)
   in
     ( newState
     , [ Save annotation ]

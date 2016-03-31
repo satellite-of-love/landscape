@@ -1,7 +1,7 @@
-module Messages.Update (seeTheWorld, messagesReact, takeNotice, takeSave) where
+module Messages.Update (seeTheWorld, messagesReact, spyOnOutgoingNews) where
 
 import Model exposing (Model, ApplicationState, OutsideWorld, updateState, keysPressed, printableKeysDown, betterFromCode)
-import Action exposing (Action(..), News(Click))
+import Action exposing (Action(..), News(Click), OutgoingNews)
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
@@ -24,6 +24,11 @@ takeNotice message model =
 takeSave : String -> ApplicationState -> ApplicationState
 takeSave message model =
   addMessages [ Message Messages.save message ] model
+
+
+spyOnOutgoingNews : OutgoingNews -> ApplicationState -> ApplicationState
+spyOnOutgoingNews news state =
+  state |> takeSave (toString news)
 
 
 seeTheWorld : News Action -> OutsideWorld -> List Action
