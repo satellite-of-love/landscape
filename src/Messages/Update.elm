@@ -63,10 +63,10 @@ messagesReact action state =
         state
 
     Disvisiblate imp ->
-      state |> takeNotice (toString action) |> disvisiblate imp
+      state |> disvisiblate imp
 
     Envisiblate imp ->
-      state |> takeNotice (toString action) |> envisiblate imp
+      state |> envisiblate imp
 
     NewTextInput pos ->
       state |> takeNotice ("New input field at " ++ (toString (toString pos)))
