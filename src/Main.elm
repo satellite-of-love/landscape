@@ -16,6 +16,7 @@ import Messages.Update
 import Messages.View
 import TextInput.Update
 import TextInput.View
+import NewsInjector.Update
 
 
 main : Signal Html
@@ -74,6 +75,7 @@ respondToNews news world =
   (Landscape.Update.seeTheWorld news world)
     ++ (Messages.Update.seeTheWorld news world)
     ++ (TextInput.Update.seeTheWorld news world)
+    ++ (NewsInjector.Update.seeTheWorld news world)
     ++ (explicitActions news)
 
 
