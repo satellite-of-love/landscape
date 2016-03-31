@@ -60,8 +60,8 @@ updateModel news model =
     actions =
       respondToNews news world
 
-    state =
-      List.foldl respondToAction model.state actions
+    ( state, outgoingNews ) =
+      List.foldl respondToAction ( model.state, [] ) actions
   in
     { world = world, state = state }
 
@@ -74,12 +74,16 @@ respondToNews news world =
     ++ (explicitActions news)
 
 
-respondToAction : Action -> ApplicationState -> ApplicationState
-respondToAction action state =
-  state
-    |> Messages.Update.messagesReact action
-    |> TextInput.Update.inputReact action
-    |> Landscape.Update.update action
+respondToAction : Action -> ( ApplicationState, List ChangeTheWorld ) -> ( ApplicationState, List ChangeTheWorld )
+respondToAction action ( state, outgoingNews ) =
+  let
+    state =
+      state
+        |> Messages.Update.messagesReact action
+        |> TextInput.Update.inputReact action
+        |> Landscape.Update.update action
+  in
+    ( state, outgoingNews )
 
 
 explicitActions news =
