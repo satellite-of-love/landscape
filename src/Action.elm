@@ -26,6 +26,7 @@ type Action
   | Envisiblate MessageImportance
   | Chunder String
   | ActivateNewsInjector
+  | DiscardNewsInjector
 
 
 type OutgoingNews
