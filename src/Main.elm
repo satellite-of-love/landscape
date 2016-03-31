@@ -76,14 +76,24 @@ respondToNews news world =
 
 respondToAction : Action -> ( ApplicationState, List ChangeTheWorld ) -> ( ApplicationState, List ChangeTheWorld )
 respondToAction action ( state, outgoingNews ) =
+  ( state, outgoingNews )
+    |> updateOneIgnoreAnother (Messages.Update.messagesReact action)
+    |> updateOneIgnoreAnother (TextInput.Update.inputReact action)
+    |> updateOneIgnoreAnother (Landscape.Update.update action)
+
+
+updateOneIgnoreAnother : (b -> b) -> (( b, c ) -> ( b, c ))
+updateOneIgnoreAnother f ( one, another ) =
+  ( f one, another )
+
+
+updateOneSumAnother : (b -> ( b, List c )) -> (( b, List c ) -> ( b, List c ))
+updateOneSumAnother f ( one, others ) =
   let
-    state =
-      state
-        |> Messages.Update.messagesReact action
-        |> TextInput.Update.inputReact action
-        |> Landscape.Update.update action
+    ( newOne, moreOthers ) =
+      f one
   in
-    ( state, outgoingNews )
+    ( newOne, others ++ moreOthers )
 
 
 explicitActions news =
