@@ -19,5 +19,21 @@ seeTheWorld news world =
       []
 
 
+update : Action -> ApplicationState -> ApplicationState
+update action state =
+  let
+    newsInjector =
+      state.newsInjector
+  in
+    case action of
+      ActivateNewsInjector ->
+        { state
+          | newsInjector = { newsInjector | isAThing = True }
+        }
+
+      _ ->
+        state
+
+
 theyAreHoldingN model =
   Set.member 'N' (Set.map Char.fromCode model.keysDown)
