@@ -1,7 +1,7 @@
 module TextInput.Update (seeTheWorld, inputReact) where
 
 import Model exposing (ApplicationState, OutsideWorld, keysPressed, MousePosition)
-import Action exposing (Action(NewTextInput, ReceiveText, SaveText, DiscardText), News(Click))
+import Action exposing (Action(NewTextInput, ReceiveText, SaveText, DiscardText), News(Click), ChangeTheWorld(Save))
 import Landscape exposing (InformativeText)
 import Char exposing (KeyCode)
 import Set exposing (Set)
@@ -27,11 +27,11 @@ seeTheWorld news model =
         []
 
 
-inputReact : Action -> ApplicationState -> ApplicationState
+inputReact : Action -> ApplicationState -> ( ApplicationState, List ChangeTheWorld )
 inputReact action model =
   case action of
     NewTextInput position ->
-      initializeNewInput model position
+      doNothing (initializeNewInput model position)
 
     ReceiveText something ->
       let
@@ -41,41 +41,55 @@ inputReact action model =
         new =
           { ti | contents = something }
       in
-        { model
-          | textInput = new
-        }
+        doNothing
+          { model
+            | textInput = new
+          }
 
     DiscardText ->
-      goodbyeInput model
+      doNothing (goodbyeInput model)
 
     SaveText ->
-      saveTheText model
+      if theyHaveEnteredText model then
+        saveTheText model
+      else
+        doNothing model
 
     _ ->
-      model
+      doNothing model
 
 
-saveTheText : ApplicationState -> ApplicationState
+doNothing : ApplicationState -> ( ApplicationState, List ChangeTheWorld )
+doNothing state =
+  ( state, [] )
+
+
+saveTheText : ApplicationState -> ( ApplicationState, List ChangeTheWorld )
 saveTheText model =
   let
     textInput =
       model.textInput
+
+    annotation =
+      InformativeText
+        textInput.contents
+        (moveItOverABit textInput.position)
+
+    newState =
+      { model
+        | annotations =
+            model.annotations ++ [ annotation ]
+      }
+        |> goodbyeInput
+        |> takeSave (toString annotation)
   in
-    if textInput.isAThing then
-      let
-        annotation =
-          InformativeText
-            textInput.contents
-            (moveItOverABit textInput.position)
-      in
-        { model
-          | annotations =
-              model.annotations ++ [ annotation ]
-        }
-          |> goodbyeInput
-          |> takeSave (toString annotation)
-    else
-      model
+    ( newState
+    , [ Save annotation ]
+    )
+
+
+theyHaveEnteredText model =
+  model.textInput.isAThing
 
 
 moveItOverABit : MousePosition -> MousePosition

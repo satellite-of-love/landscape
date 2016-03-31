@@ -78,7 +78,7 @@ respondToAction : Action -> ( ApplicationState, List ChangeTheWorld ) -> ( Appli
 respondToAction action ( state, outgoingNews ) =
   ( state, outgoingNews )
     |> updateOneIgnoreAnother (Messages.Update.messagesReact action)
-    |> updateOneIgnoreAnother (TextInput.Update.inputReact action)
+    |> updateOneSumAnother (TextInput.Update.inputReact action)
     |> updateOneIgnoreAnother (Landscape.Update.update action)
 
 
