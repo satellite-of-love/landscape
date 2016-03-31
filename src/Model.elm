@@ -5,6 +5,7 @@ import Char exposing (KeyCode)
 import String
 import Messages exposing (Message, MessageVisibility, allVisible)
 import Landscape exposing (InformativeText)
+import NewsInjector exposing (NewsInjectorPane)
 
 
 type alias MousePosition =
@@ -29,6 +30,7 @@ type alias ApplicationState =
   , annotations : List InformativeText
   , z : Int
   , center : MousePosition
+  , newsInjector : NewsInjectorPane
   }
 
 
@@ -63,6 +65,10 @@ init =
       , annotations = []
       , z = 1
       , center = ( 0, 0 )
+      , newsInjector =
+          { isAThing = False
+          , contents = ""
+          }
       }
   }
 
