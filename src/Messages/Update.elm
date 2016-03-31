@@ -73,6 +73,9 @@ messagesReact action state =
     NewTextInput pos ->
       state |> takeNotice ("New input field at " ++ (toString (toString pos)))
 
+    ActivateNewsInjector ->
+      state |> takeNotice "activate news injector"
+
     _ ->
       state
 
