@@ -1,4 +1,4 @@
-module Action (Action(..), News(..), ChangeTheWorld(..)) where
+module Action (Action(..), News(..), OutgoingNews(..)) where
 
 import Char exposing (KeyCode)
 import Set exposing (Set)
@@ -26,5 +26,5 @@ type Action
   | Chunder String
 
 
-type ChangeTheWorld
+type OutgoingNews
   = Save InformativeText

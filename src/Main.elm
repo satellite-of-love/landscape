@@ -9,7 +9,7 @@ import Keyboard
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import Model exposing (Model, MousePosition, OutsideWorld, ApplicationState)
-import Action exposing (Action, News(..), ChangeTheWorld)
+import Action exposing (Action, News(..), OutgoingNews)
 import Landscape.View
 import Landscape.Update
 import Messages.Update
@@ -74,7 +74,7 @@ respondToNews news world =
     ++ (explicitActions news)
 
 
-respondToAction : Action -> ( ApplicationState, List ChangeTheWorld ) -> ( ApplicationState, List ChangeTheWorld )
+respondToAction : Action -> ( ApplicationState, List OutgoingNews ) -> ( ApplicationState, List OutgoingNews )
 respondToAction action ( state, outgoingNews ) =
   ( state, outgoingNews )
     |> updateOneIgnoreAnother (Messages.Update.messagesReact action)
