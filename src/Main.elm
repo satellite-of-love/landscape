@@ -17,6 +17,7 @@ import Messages.View
 import TextInput.Update
 import TextInput.View
 import NewsInjector.Update
+import NewsInjector.View
 
 
 main : Signal Html
@@ -85,6 +86,7 @@ respondToAction action ( state, outgoingNews ) =
     |> updateOneIgnoreAnother (Messages.Update.messagesReact action)
     |> updateOneSumAnother (TextInput.Update.inputReact action)
     |> updateOneIgnoreAnother (Landscape.Update.update action)
+    |> updateOneIgnoreAnother (NewsInjector.Update.update action)
 
 
 updateOneIgnoreAnother : (b -> b) -> (( b, c ) -> ( b, c ))
@@ -134,4 +136,5 @@ view address model =
     ([ Landscape.View.landscapePane model.state ]
       ++ [ Messages.View.view address model ]
       ++ (TextInput.View.possibleInput address model.state)
+      ++ NewsInjector.View.view address model.state
     )

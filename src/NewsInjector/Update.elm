@@ -1,4 +1,4 @@
-module NewsInjector.Update (seeTheWorld) where
+module NewsInjector.Update (seeTheWorld, update) where
 
 import Action exposing (News(Click), Action(ActivateNewsInjector))
 import Model exposing (OutsideWorld, ApplicationState)

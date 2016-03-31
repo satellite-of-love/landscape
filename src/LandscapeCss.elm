@@ -68,6 +68,13 @@ css =
         [ fontFamily monospace
         , whiteSpace noWrap
         ]
+    , selector
+        "textarea"
+        (beAt (vh 10) (vw 10)
+          ++ [ width (vw 50)
+             , height (vh 80)
+             ]
+        )
     , ((.) WhereAmI)
         [ padding (em 0.1)
         , border2 (px 3) inset
