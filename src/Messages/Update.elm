@@ -1,4 +1,4 @@
-module Messages.Update (seeTheWorld, messagesReact, spyOnOutgoingNews) where
+module Messages.Update (seeTheWorld, messagesReact, spyOnOutgoingNews, spyOnActions) where
 
 import Model exposing (Model, ApplicationState, OutsideWorld, updateState, keysPressed, printableKeysDown, betterFromCode)
 import Action exposing (Action(..), News(Click), OutgoingNews)
@@ -36,6 +36,25 @@ spyOnOutgoingNews news state =
   state |> takeSave (toString news)
 
 
+spyOnActions : Action -> ApplicationState -> ApplicationState
+spyOnActions action state =
+  case action of
+    Chunder _ ->
+      state
+
+    Disvisiblate imp ->
+      state |> takeChunder ("don't see " ++ imp.name)
+
+    Envisiblate imp ->
+      state |> takeChunder ("do see " ++ imp.name)
+
+    ReceiveText _ ->
+      state |> takeChunder (toString action)
+
+    _ ->
+      state |> takeNotice (toString action)
+
+
 seeTheWorld : News a b -> OutsideWorld -> List Action
 seeTheWorld news world =
   case news of
@@ -65,16 +84,10 @@ messagesReact action state =
       state |> takeChunder msg
 
     Disvisiblate imp ->
-      state |> takeChunder ("don't see " ++ imp.name) |> disvisiblate imp
+      state |> disvisiblate imp
 
     Envisiblate imp ->
-      state |> takeChunder ("do see " ++ imp.name) |> envisiblate imp
-
-    NewTextInput pos ->
-      state |> takeNotice ("New input field at " ++ (toString (toString pos)))
-
-    ActivateNewsInjector ->
-      state |> takeNotice "activate news injector"
+      state |> envisiblate imp
 
     _ ->
       state

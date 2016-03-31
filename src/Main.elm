@@ -62,8 +62,11 @@ updateModel news model =
     actions =
       respondToNews news world
 
+    spiedState =
+      List.foldl Messages.Update.spyOnActions model.state actions
+
     ( state, outgoingNews ) =
-      List.foldl respondToAction ( model.state, [] ) actions
+      List.foldl respondToAction ( spiedState, [] ) actions
 
     finalState =
       List.foldl Messages.Update.spyOnOutgoingNews state outgoingNews
