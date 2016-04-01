@@ -18,9 +18,13 @@ view address state =
       else
         0.0
   in
-    [ Html.textarea
-        [ Attr.style [ ( "transform", "scale(" ++ (toString zoom) ++ ")" ) ]
-        , Html.Events.on "input" targetValue (Signal.message address << NewsInjectorReceiveText)
-        ]
+    [ Html.div
         []
+        [ Html.textarea
+            [ Attr.style [ ( "transform", "scale(" ++ (toString zoom) ++ ")" ) ]
+            , Html.Events.on "input" targetValue (Signal.message address << NewsInjectorReceiveText)
+            ]
+            []
+        , Html.label [] [ Html.text "paste some news and hit command-enter" ]
+        ]
     ]

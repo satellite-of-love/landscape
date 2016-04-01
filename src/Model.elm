@@ -74,8 +74,8 @@ init =
 
 
 keysPressed : OutsideWorld -> Set KeyCode
-keysPressed model =
-  Set.diff model.keysDown model.previousKeysDown
+keysPressed world =
+  Set.diff world.keysDown world.previousKeysDown
 
 
 printableKeysDown : OutsideWorld -> String

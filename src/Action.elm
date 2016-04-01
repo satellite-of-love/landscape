@@ -28,6 +28,7 @@ type Action
   | ActivateNewsInjector
   | DiscardNewsInjector
   | NewsInjectorReceiveText String
+  | InjectTheNews
 
 
 type OutgoingNews

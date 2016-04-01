@@ -9,18 +9,18 @@ import String
 
 
 seeTheWorld : News a b -> OutsideWorld -> List Action
-seeTheWorld news model =
+seeTheWorld news world =
   case news of
     Click ->
-      if theyAreHoldingT model then
-        [ NewTextInput model.pointer ]
+      if theyAreHoldingT world then
+        [ NewTextInput world.pointer ]
       else
         []
 
     _ ->
-      if theyPushedEscape model then
+      if theyPushedEscape world then
         [ DiscardText ]
-      else if theyPushedEnter model then
+      else if theyPushedEnter world then
         [ SaveText ]
       else
         []
@@ -117,13 +117,14 @@ goodbyeInput model =
   }
 
 
-theyAreHoldingT model =
-  Set.member 'T' (Set.map Char.fromCode model.keysDown)
+theyAreHoldingT world =
+  Set.member 'T' (Set.map Char.fromCode world.keysDown)
 
 
-theyPushedEscape model =
-  Set.member 27 model.keysDown
+theyPushedEscape : OutsideWorld -> Bool
+theyPushedEscape world =
+  Set.member 27 (keysPressed world)
 
 
-theyPushedEnter model =
-  Set.member 13 model.keysDown
+theyPushedEnter world =
+  Set.member 13 (keysPressed world)

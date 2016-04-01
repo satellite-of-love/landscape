@@ -1,7 +1,7 @@
 module NewsInjector.Update (seeTheWorld, update) where
 
-import Action exposing (News(Click), Action(ActivateNewsInjector, DiscardNewsInjector))
-import Model exposing (OutsideWorld, ApplicationState)
+import Action exposing (News(Click), Action(InjectTheNews, ActivateNewsInjector, DiscardNewsInjector))
+import Model exposing (OutsideWorld, ApplicationState, keysPressed)
 import Char
 import Set
 
@@ -18,6 +18,8 @@ seeTheWorld news world =
     _ ->
       if theyPushedEscape world then
         [ DiscardNewsInjector ]
+      else if theyPushedEnter world && theyAreHoldingCommand world then
+        [ InjectTheNews ]
       else
         []
 
@@ -43,9 +45,17 @@ update action state =
         state
 
 
-theyPushedEscape model =
-  Set.member 27 model.keysDown
+theyPushedEscape world =
+  Set.member 27 (keysPressed world)
 
 
-theyAreHoldingN model =
-  Set.member 'N' (Set.map Char.fromCode model.keysDown)
+theyPushedEnter world =
+  Set.member 13 (keysPressed world)
+
+
+theyAreHoldingN world =
+  Set.member 'N' (Set.map Char.fromCode world.keysDown)
+
+
+theyAreHoldingCommand world =
+  Set.member 91 world.keysDown
