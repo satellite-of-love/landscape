@@ -2,26 +2,29 @@ module Action (Action(..), News(..), OutgoingNews(..)) where
 
 import Char exposing (KeyCode)
 import Set exposing (Set)
-import Model exposing (MousePosition)
 import Messages exposing (MessageImportance)
 import Landscape exposing (InformativeText)
 
 
+type alias Position =
+  ( Int, Int )
+
+
 type News action outgoingNews
   = DoThis action
-  | Ack outgoingNews
-  | MouseMove MousePosition (Set KeyCode)
+  | ServerSays outgoingNews
+  | MouseMove Position (Set KeyCode)
   | Click
   | NoOp
 
 
 type Action
-  = NewTextInput MousePosition
+  = NewTextInput Position
   | ReceiveText String
   | DiscardText
   | SaveText
-  | ZoomIn MousePosition
-  | ZoomOut MousePosition
+  | ZoomIn Position
+  | ZoomOut Position
   | Disvisiblate MessageImportance
   | Envisiblate MessageImportance
   | Chunder String

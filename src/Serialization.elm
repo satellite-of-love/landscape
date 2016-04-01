@@ -4,22 +4,13 @@ import Json.Encode
 import Json.Decode exposing ((:=))
 import Json.Decode.Extra exposing ((|:))
 import Landscape exposing (InformativeText)
+import Action exposing (News(ServerSays), Action, OutgoingNews(..))
 
 
-type alias News =
-  { ack : NewsAck
-  }
-
-
-type alias NewsAck =
-  { save : InformativeText
-  }
-
-
-decodeNews : Json.Decode.Decoder News
+decodeNews : Json.Decode.Decoder (News Action OutgoingNews)
 decodeNews =
-  Json.Decode.succeed News
-    |: ("ack" := decodeNewsAck)
+  Json.Decode.succeed ServerSays
+    |: ("serverSays" := decodeServerSays)
 
 
 decodeInformativeText : Json.Decode.Decoder InformativeText
@@ -29,17 +20,31 @@ decodeInformativeText =
     |: ("position" := Json.Decode.tuple2 (,) Json.Decode.int Json.Decode.int)
 
 
-decodeNewsAck : Json.Decode.Decoder NewsAck
-decodeNewsAck =
-  Json.Decode.succeed NewsAck
+decodeServerSays : Json.Decode.Decoder OutgoingNews
+decodeServerSays =
+  Json.Decode.succeed Save
     |: ("save" := decodeInformativeText)
 
 
-encodeNews : News -> Json.Encode.Value
-encodeNews record =
-  Json.Encode.object
-    [ ( "ack", encodeNewsAck <| record.ack )
-    ]
+encodeOutgoingNews : OutgoingNews -> Json.Encode.Value
+encodeOutgoingNews og =
+  case og of
+    Save informativeText ->
+      Json.Encode.object
+        [ ( "save", encodeInformativeText <| informativeText )
+        ]
+
+
+encodeNews : News Action OutgoingNews -> Json.Encode.Value
+encodeNews og =
+  case og of
+    ServerSays wut ->
+      Json.Encode.object
+        [ ( "serverSays", encodeOutgoingNews <| wut )
+        ]
+
+    _ ->
+      Json.Encode.string "This is not OK"
 
 
 encodeInformativeText : InformativeText -> Json.Encode.Value
@@ -52,10 +57,3 @@ encodeInformativeText record =
 
 tuple2list ( a, b ) =
   [ a, b ]
-
-
-encodeNewsAck : NewsAck -> Json.Encode.Value
-encodeNewsAck record =
-  Json.Encode.object
-    [ ( "save", encodeInformativeText <| record.save )
-    ]

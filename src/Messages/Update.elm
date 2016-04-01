@@ -5,6 +5,8 @@ import Action exposing (Action(..), News(Click), OutgoingNews)
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
+import Serialization
+import Json.Encode
 import Messages exposing (Message, importances, removeVisibility, addVisibility)
 
 
@@ -26,14 +28,18 @@ takeChunder message model =
   addMessages [ Message Messages.chunder message ] model
 
 
-takeSave : String -> ApplicationState -> ApplicationState
+takeSave : OutgoingNews -> ApplicationState -> ApplicationState
 takeSave message model =
-  addMessages [ Message Messages.save message ] model
+  let
+    json =
+      Serialization.encodeOutgoingNews message
+  in
+    addMessages [ Message Messages.save (Json.Encode.encode 1 json) ] model
 
 
 spyOnOutgoingNews : OutgoingNews -> ApplicationState -> ApplicationState
 spyOnOutgoingNews news state =
-  state |> takeSave (toString news)
+  state |> takeSave news
 
 
 spyOnActions : Action -> ApplicationState -> ApplicationState

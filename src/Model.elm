@@ -59,9 +59,7 @@ init =
       , z = 1
       , center = ( 0, 0 )
       , newsInjector =
-          { isAThing = False
-          , contents = ""
-          }
+          NewsInjector.init
       }
   }
 
