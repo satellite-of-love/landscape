@@ -1,9 +1,12 @@
 module NewsInjector.Update (seeTheWorld, update) where
 
-import Action exposing (News(Click), Action(InjectTheNews, ActivateNewsInjector, DiscardNewsInjector))
+import Action exposing (News(Click, ServerSays), Action(InjectTheNews, ActivateNewsInjector, DiscardNewsInjector))
 import Model exposing (OutsideWorld, ApplicationState, keysPressed)
 import Char
 import Set
+import NewsInjector exposing (NewsInjectorPane)
+import Serialization
+import Json.Decode
 
 
 seeTheWorld : News a b -> OutsideWorld -> List Action
@@ -40,6 +43,14 @@ update action state =
         { state
           | newsInjector = { newsInjector | isAThing = False }
         }
+
+      InjectTheNews ->
+        case Json.Decode.decodeString Serialization.decodeOutgoingNews newsInjector.contents of
+          Ok outgoingNews ->
+            { state | newsInjector = NewsInjectorPane False "" [ ServerSays outgoingNews ] Nothing }
+
+          Err e ->
+            { state | newsInjector = { newsInjector | error = Just e } }
 
       _ ->
         state

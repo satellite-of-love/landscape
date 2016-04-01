@@ -10,7 +10,7 @@ import Action exposing (News(ServerSays), Action, OutgoingNews(..))
 decodeNews : Json.Decode.Decoder (News Action OutgoingNews)
 decodeNews =
   Json.Decode.succeed ServerSays
-    |: ("serverSays" := decodeServerSays)
+    |: ("serverSays" := decodeOutgoingNews)
 
 
 decodeInformativeText : Json.Decode.Decoder InformativeText
@@ -20,8 +20,8 @@ decodeInformativeText =
     |: ("position" := Json.Decode.tuple2 (,) Json.Decode.int Json.Decode.int)
 
 
-decodeServerSays : Json.Decode.Decoder OutgoingNews
-decodeServerSays =
+decodeOutgoingNews : Json.Decode.Decoder OutgoingNews
+decodeOutgoingNews =
   Json.Decode.succeed Save
     |: ("save" := decodeInformativeText)
 
