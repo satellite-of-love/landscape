@@ -27,6 +27,7 @@ type Action
   | Chunder String
   | ActivateNewsInjector
   | DiscardNewsInjector
+  | NewsInjectorReceiveText String
 
 
 type OutgoingNews

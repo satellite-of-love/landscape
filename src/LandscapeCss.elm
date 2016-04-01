@@ -73,7 +73,7 @@ css =
         (beAt (vh 10) (vw 10)
           ++ [ width (vw 50)
              , height (vh 80)
-             , Css.property "transition" "1s ease-in-out"
+             , Css.property "transition" "0.5s ease-in-out"
              ]
         )
     , ((.) WhereAmI)
