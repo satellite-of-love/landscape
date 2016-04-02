@@ -4,6 +4,7 @@ import Action exposing (News(Click, ServerSays), OutgoingNews, Action(NewsInject
 import Model exposing (Model, OutsideWorld, ApplicationState, keysPressed)
 import Char
 import Set
+import String
 import NewsInjector exposing (NewsInjectorPane)
 import Serialization
 import Json.Decode
@@ -68,15 +69,50 @@ update action state =
         }
 
       InjectTheNews ->
-        case Json.Decode.decodeString Serialization.decodeOutgoingNews newsInjector.contents of
-          Ok outgoingNews ->
-            { state | newsInjector = NewsInjectorPane False "" [ ServerSays outgoingNews ] Nothing }
+        let
+          lines =
+            String.split "\n" newsInjector.contents
 
-          Err e ->
-            { state | newsInjector = { newsInjector | error = Just e } }
+          listOfResults =
+            List.map (Json.Decode.decodeString Serialization.decodeOutgoingNews) lines
+
+          resultOfList =
+            allOrNothing listOfResults
+        in
+          case resultOfList of
+            Ok outgoingNewses ->
+              { state
+                | newsInjector =
+                    { isAThing = False
+                    , contents = ""
+                    , pretendWeJustReceived = (List.map ServerSays outgoingNewses)
+                    , error = Nothing
+                    }
+              }
+
+            Err e ->
+              { state | newsInjector = { newsInjector | error = Just e } }
 
       _ ->
         state
+
+
+allOrNothing : List (Result b a) -> Result b (List a)
+allOrNothing =
+  let
+    incorporateOne : Result b a -> Result b (List a) -> Result b (List a)
+    incorporateOne result accum =
+      case ( accum, result ) of
+        ( Err boo, _ ) ->
+          Err boo
+
+        ( _, Err boo ) ->
+          Err boo
+
+        ( Ok some, Ok oneMore ) ->
+          Ok (some ++ [ oneMore ])
+  in
+    List.foldl incorporateOne (Ok [])
 
 
 theyPushedEscape world =
