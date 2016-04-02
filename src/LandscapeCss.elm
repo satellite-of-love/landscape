@@ -1,6 +1,6 @@
 module LandscapeCss (css, CssClass(..), beAt) where
 
-import Css exposing ((.), pct, left, selector, margin4, outset, fontWeight, bold, boxSizing, whiteSpace, noWrap, minWidth, border2, fontFamily, monospace, sansSerif, inset, em, borderBox, overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
+import Css exposing ((.), pct, left, color, selector, margin4, outset, fontWeight, bold, boxSizing, whiteSpace, noWrap, minWidth, border2, fontFamily, monospace, sansSerif, inset, em, borderBox, overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
 import Css.Elements exposing (canvas, ul)
 
 
@@ -12,6 +12,7 @@ type CssClass
   | CurrentlyVisible
   | CurrentlyInvisible
   | NewsInjectorPane
+  | Angry
 
 
 fullHeight =
@@ -84,6 +85,8 @@ css =
         [ width (pct 100)
         , height (pct 90)
         ]
+    , ((.) Angry)
+        [ color red ]
     , ((.) WhereAmI)
         [ padding (em 0.1)
         , border2 (px 3) inset
@@ -133,6 +136,10 @@ pink =
 
 blue =
   rgb 200 200 255
+
+
+red =
+  rgb 355 0 0
 
 
 gray =

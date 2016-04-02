@@ -7,7 +7,7 @@ import LandscapeCss exposing (beAt)
 import Signal exposing (Address)
 import Model exposing (ApplicationState)
 import Action exposing (Action(NewsInjectorReceiveText))
-import LandscapeCss exposing (CssClass(NewsInjectorPane))
+import LandscapeCss exposing (CssClass(NewsInjectorPane, Angry))
 import Html.CssHelpers
 
 
@@ -24,13 +24,13 @@ view address state =
       else
         0.0
 
-    text =
+    ( text, attributes ) =
       case state.newsInjector.error of
         Just failure ->
-          failure
+          ( failure, [ class [ Angry ] ] )
 
         Nothing ->
-          "paste some news and hit command-enter"
+          ( "paste some news and hit command-enter", [] )
   in
     [ Html.div
         [ class [ NewsInjectorPane ], Attr.style [ ( "transform", "scale(" ++ (toString zoom) ++ ")" ) ] ]
@@ -38,6 +38,6 @@ view address state =
             [ Html.Events.on "input" targetValue (Signal.message address << NewsInjectorReceiveText)
             ]
             []
-        , Html.label [] [ Html.text text ]
+        , Html.label attributes [ Html.text text ]
         ]
     ]
