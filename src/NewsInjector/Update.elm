@@ -74,7 +74,7 @@ update action state =
             String.split "\n" newsInjector.contents
 
           listOfResults =
-            List.map (Json.Decode.decodeString Serialization.decodeOutgoingNews) lines
+            List.map (putOriginalInError (Json.Decode.decodeString Serialization.decodeOutgoingNews)) lines
 
           resultOfList =
             allOrNothing listOfResults
@@ -95,6 +95,16 @@ update action state =
 
       _ ->
         state
+
+
+putOriginalInError : (String -> Result String c) -> String -> Result String c
+putOriginalInError decode string =
+  case decode string of
+    Ok ok ->
+      Ok ok
+
+    Err e ->
+      Err (e ++ " <" ++ string ++ ">")
 
 
 allOrNothing : List (Result b a) -> Result b (List a)
