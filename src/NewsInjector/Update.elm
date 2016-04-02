@@ -60,7 +60,7 @@ update action state =
 
       DiscardNewsInjector ->
         { state
-          | newsInjector = { newsInjector | isAThing = False }
+          | newsInjector = NewsInjector.init
         }
 
       NewsInjectorReceiveText string ->

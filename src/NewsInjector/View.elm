@@ -36,6 +36,7 @@ view address state =
         [ class [ NewsInjectorPane ], Attr.style [ ( "transform", "scale(" ++ (toString zoom) ++ ")" ) ] ]
         [ Html.textarea
             [ Html.Events.on "input" targetValue (Signal.message address << NewsInjectorReceiveText)
+            , Attr.value state.newsInjector.contents
             ]
             []
         , Html.label attributes [ Html.text text ]
