@@ -138,4 +138,4 @@ theyAreHoldingN world =
 
 
 theyAreHoldingCommand world =
-  Set.member 91 world.keysDown
+  Set.member 91 world.keysDown || Set.member 93 world.keysDown
