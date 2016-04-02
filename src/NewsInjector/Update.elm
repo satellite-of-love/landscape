@@ -1,6 +1,6 @@
 module NewsInjector.Update (seeTheWorld, update) where
 
-import Action exposing (News(Click, ServerSays), Action(InjectTheNews, ActivateNewsInjector, DiscardNewsInjector))
+import Action exposing (News(Click, ServerSays), Action(NewsInjectorReceiveText, InjectTheNews, ActivateNewsInjector, DiscardNewsInjector))
 import Model exposing (OutsideWorld, ApplicationState, keysPressed)
 import Char
 import Set
@@ -42,6 +42,11 @@ update action state =
       DiscardNewsInjector ->
         { state
           | newsInjector = { newsInjector | isAThing = False }
+        }
+
+      NewsInjectorReceiveText string ->
+        { state
+          | newsInjector = { newsInjector | contents = string }
         }
 
       InjectTheNews ->
