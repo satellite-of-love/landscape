@@ -56,6 +56,15 @@ mouseClicks =
 updateModel : News Action OutgoingNews -> Model -> Model
 updateModel news model =
   let
+    ( model, allTheNews ) =
+      NewsInjector.Update.pretendThingsHappened model news
+  in
+    List.foldl respondToOneNews model allTheNews
+
+
+respondToOneNews : News Action OutgoingNews -> Model -> Model
+respondToOneNews news model =
+  let
     world =
       retainOutsideWorld news model.world
 
@@ -65,11 +74,11 @@ updateModel news model =
     spiedState =
       List.foldl Messages.Update.spyOnActions model.state actions
 
-    ( state, outgoingNews ) =
+    ( actedState, outgoingNews ) =
       List.foldl respondToAction ( spiedState, [] ) actions
 
     finalState =
-      List.foldl Messages.Update.spyOnOutgoingNews state outgoingNews
+      List.foldl Messages.Update.spyOnOutgoingNews actedState outgoingNews
   in
     { world = world, state = finalState }
 

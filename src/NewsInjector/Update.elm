@@ -1,12 +1,30 @@
-module NewsInjector.Update (seeTheWorld, update) where
+module NewsInjector.Update (seeTheWorld, update, pretendThingsHappened) where
 
-import Action exposing (News(Click, ServerSays), Action(NewsInjectorReceiveText, InjectTheNews, ActivateNewsInjector, DiscardNewsInjector))
-import Model exposing (OutsideWorld, ApplicationState, keysPressed)
+import Action exposing (News(Click, ServerSays), OutgoingNews, Action(NewsInjectorReceiveText, InjectTheNews, ActivateNewsInjector, DiscardNewsInjector))
+import Model exposing (Model, OutsideWorld, ApplicationState, keysPressed)
 import Char
 import Set
 import NewsInjector exposing (NewsInjectorPane)
 import Serialization
 import Json.Decode
+
+
+pretendThingsHappened : Model -> News Action OutgoingNews -> ( Model, List (News Action OutgoingNews) )
+pretendThingsHappened model news =
+  let
+    newsInjector =
+      model.state.newsInjector
+
+    moreNews =
+      newsInjector.pretendWeJustReceived
+
+    state =
+      model.state
+
+    stateWithoutNews =
+      { state | newsInjector = { newsInjector | pretendWeJustReceived = [] } }
+  in
+    ( { model | state = stateWithoutNews }, moreNews ++ [ news ] )
 
 
 seeTheWorld : News a b -> OutsideWorld -> List Action
