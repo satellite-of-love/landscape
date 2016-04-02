@@ -7,6 +7,12 @@ import LandscapeCss exposing (beAt)
 import Signal exposing (Address)
 import Model exposing (ApplicationState)
 import Action exposing (Action(NewsInjectorReceiveText))
+import LandscapeCss exposing (CssClass(NewsInjectorPane))
+import Html.CssHelpers
+
+
+class =
+  .class (Html.CssHelpers.namespace "")
 
 
 view : Address Action -> ApplicationState -> List Html
@@ -19,10 +25,9 @@ view address state =
         0.0
   in
     [ Html.div
-        []
+        [ class [ NewsInjectorPane ], Attr.style [ ( "transform", "scale(" ++ (toString zoom) ++ ")" ) ] ]
         [ Html.textarea
-            [ Attr.style [ ( "transform", "scale(" ++ (toString zoom) ++ ")" ) ]
-            , Html.Events.on "input" targetValue (Signal.message address << NewsInjectorReceiveText)
+            [ Html.Events.on "input" targetValue (Signal.message address << NewsInjectorReceiveText)
             ]
             []
         , Html.label [] [ Html.text "paste some news and hit command-enter" ]
