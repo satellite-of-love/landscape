@@ -1,16 +1,23 @@
 module TextInput.Update (seeTheWorld, inputReact) where
 
 import Model exposing (ApplicationState, OutsideWorld, keysPressed, MousePosition)
-import Action exposing (Action(NewTextInput, ReceiveText, SaveText, DiscardText), News(Click), OutgoingNews(Save))
+import Action exposing (Action(NewTextInput, ReceiveText, SaveText, DiscardText), News(Click, ServerSays), OutgoingNews(Save))
 import Landscape exposing (InformativeText)
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
 
 
-seeTheWorld : News a b -> OutsideWorld -> List Action
+seeTheWorld : News Action OutgoingNews -> OutsideWorld -> List Action
 seeTheWorld news world =
   case news of
+    ServerSays (Save informativeText) ->
+      -- this is kinda cheating, but let's simulate entering it
+      [ NewTextInput informativeText.position
+      , ReceiveText informativeText.text
+      , SaveText
+      ]
+
     Click ->
       if theyAreHoldingT world then
         [ NewTextInput world.pointer ]
