@@ -23,6 +23,14 @@ view address state =
         1.0
       else
         0.0
+
+    text =
+      case state.newsInjector.error of
+        Just failure ->
+          failure
+
+        Nothing ->
+          "paste some news and hit command-enter"
   in
     [ Html.div
         [ class [ NewsInjectorPane ], Attr.style [ ( "transform", "scale(" ++ (toString zoom) ++ ")" ) ] ]
@@ -30,6 +38,6 @@ view address state =
             [ Html.Events.on "input" targetValue (Signal.message address << NewsInjectorReceiveText)
             ]
             []
-        , Html.label [] [ Html.text "paste some news and hit command-enter" ]
+        , Html.label [] [ Html.text text ]
         ]
     ]
