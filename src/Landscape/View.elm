@@ -25,12 +25,20 @@ landscapePane model =
 zoomTo : Int -> Model.MousePosition -> Html.Attribute
 zoomTo zoomLevel ( x, y ) =
   let
+    xMove =
+      35 - x
+
+    yMove =
+      50 - y
+
+    translateFunction =
+      "translate(" ++ (toString xMove) ++ "vw," ++ (toString yMove) ++ "vh)"
+
     scaleFunction =
       "scale(" ++ (toString zoomLevel) ++ ")"
   in
     Attr.style
-      [ ( "transform", scaleFunction )
-      , ( "transform-origin", (toString x) ++ "vw " ++ (toString y) ++ "vh" )
+      [ ( "transform", scaleFunction ++ " " ++ translateFunction )
       ]
 
 

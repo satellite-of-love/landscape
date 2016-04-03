@@ -34,15 +34,31 @@ seeTheWorld news model =
 
 
 howMuchToZoomIn =
-  1
+  0
 
 
 zoomIn : ApplicationState -> MousePosition -> ApplicationState
-zoomIn model pointer =
-  { model
-    | z = model.z + howMuchToZoomIn
-    , center = pointer
-  }
+zoomIn state click =
+  let
+    (newZ, newCenter) = findNewPlace howMuchToZoomIn state.z state.center click
+  in
+    { state
+      | z = newZ
+      , center = newCenter
+    }
+
+findNewPlace howMuchToZoomIn currentZ currentCenter (xClick, yClick) =
+  let
+    ( xCurrentCenter, yCurrentCenter ) =
+      currentCenter
+
+    newX =
+      xClick - (xCurrentCenter - 35)
+
+    newY =
+      yClick - (yCurrentCenter - 50)
+  in
+    (currentZ + howMuchToZoomIn, (newX, newY))
 
 
 zoomOut : ApplicationState -> MousePosition -> ApplicationState

@@ -57,7 +57,7 @@ init =
           }
       , annotations = []
       , z = 1
-      , center = ( 0, 0 )
+      , center = ( 35, 50 )
       , newsInjector =
           NewsInjector.init
       }
