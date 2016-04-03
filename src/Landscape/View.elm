@@ -7,6 +7,7 @@ import Model exposing (ApplicationState)
 import Landscape exposing (InformativeText)
 import LandscapeCss exposing (beAt)
 import Css exposing (vh, vw, asPairs)
+import Landscape.Calculations exposing (translateFunction)
 
 
 landscapePane : ApplicationState -> Html
@@ -23,22 +24,16 @@ landscapePane model =
 
 
 zoomTo : Int -> Model.MousePosition -> Html.Attribute
-zoomTo zoomLevel ( x, y ) =
+zoomTo zoomLevel center =
   let
-    xMove =
-      35 - x
+    translate =
+      translateFunction zoomLevel center
 
-    yMove =
-      50 - y
-
-    translateFunction =
-      "translate(" ++ (toString xMove) ++ "vw," ++ (toString yMove) ++ "vh)"
-
-    scaleFunction =
+    scale =
       "scale(" ++ (toString zoomLevel) ++ ")"
   in
     Attr.style
-      [ ( "transform", scaleFunction ++ " " ++ translateFunction )
+      [ ( "transform", scale ++ " " ++ translate )
       ]
 
 

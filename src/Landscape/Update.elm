@@ -3,6 +3,7 @@ module Landscape.Update (..) where
 import Model exposing (OutsideWorld, ApplicationState, MousePosition)
 import Action exposing (Action(ZoomIn, ZoomOut), News(Click), OutgoingNews)
 import Set
+import Landscape.Calculations exposing (findNewPlace)
 
 
 update : Action -> ApplicationState -> ApplicationState
@@ -40,25 +41,13 @@ howMuchToZoomIn =
 zoomIn : ApplicationState -> MousePosition -> ApplicationState
 zoomIn state click =
   let
-    (newZ, newCenter) = findNewPlace howMuchToZoomIn state.z state.center click
+    ( newZ, newCenter ) =
+      findNewPlace howMuchToZoomIn state.z state.center click
   in
     { state
       | z = newZ
       , center = newCenter
     }
-
-findNewPlace howMuchToZoomIn currentZ currentCenter (xClick, yClick) =
-  let
-    ( xCurrentCenter, yCurrentCenter ) =
-      currentCenter
-
-    newX =
-      xClick - (xCurrentCenter - 35)
-
-    newY =
-      yClick - (yCurrentCenter - 50)
-  in
-    (currentZ + howMuchToZoomIn, (newX, newY))
 
 
 zoomOut : ApplicationState -> MousePosition -> ApplicationState

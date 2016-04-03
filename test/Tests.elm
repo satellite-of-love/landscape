@@ -3,7 +3,7 @@ module Tests where
 import ElmTest exposing (..)
 
 import String
-import Landscape.Update as Subject
+import Landscape.Calculations as Subject
 
 
 all : Test
