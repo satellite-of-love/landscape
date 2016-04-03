@@ -10,7 +10,8 @@ all : Test
 all =
     suite "A Test Suite"
         [
-            movingOver
+            test "Move to the left" movingOver
+          , test "should fail" (assert False)
         ]
 
 movingOver =
