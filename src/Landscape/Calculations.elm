@@ -41,10 +41,10 @@ translateText : ZoomLevel -> LandscapeCenter -> PositionInDrawing -> String
 translateText zoom ( xCenter, yCenter ) ( xText, yText ) =
   let
     xMove =
-      (zoom * (xText - xCenter))
+      (xText - xCenter)
 
     yMove =
-      (zoom * (yText - yCenter))
+      (yText - yCenter)
   in
     "translate(" ++ (toString xMove) ++ "vw," ++ (toString yMove) ++ "vh)"
 
