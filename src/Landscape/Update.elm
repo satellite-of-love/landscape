@@ -51,10 +51,21 @@ zoomIn state click =
 
 
 zoomOut : ApplicationState -> MousePosition -> ApplicationState
-zoomOut model pointer =
-  { model
-    | z = (max 1 (model.z - howMuchToZoomIn))
-  }
+zoomOut state pointer =
+  let
+    newZoom =
+      (max 1 (state.z - howMuchToZoomIn))
+
+    newCenter =
+      if newZoom == 1 then
+        ( 35, 50 )
+      else
+        state.center
+  in
+    { state
+      | z = newZoom
+      , center = newCenter
+    }
 
 
 upArrowPressed : OutsideWorld -> Bool
