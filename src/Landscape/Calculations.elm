@@ -1,4 +1,4 @@
-module Landscape.Calculations (transform, translateFunction, findNewPlace) where
+module Landscape.Calculations (ZoomLevel, translateText, LandscapeCenter, transform, translateFunction, findNewPlace) where
 
 
 type alias ZoomLevel =
@@ -6,6 +6,10 @@ type alias ZoomLevel =
 
 
 type alias LandscapeCenter =
+  ( Int, Int )
+
+
+type alias PositionInDrawing =
   ( Int, Int )
 
 
@@ -29,6 +33,18 @@ translateFunction zoomLevel ( xCenter, yCenter ) =
 
     yMove =
       50 - yCenter
+  in
+    "translate(" ++ (toString xMove) ++ "vw," ++ (toString yMove) ++ "vh)"
+
+
+translateText : ZoomLevel -> LandscapeCenter -> PositionInDrawing -> String
+translateText zoom ( xCenter, yCenter ) ( xText, yText ) =
+  let
+    xMove =
+      (zoom * (xText - xCenter))
+
+    yMove =
+      (zoom * (yText - yCenter))
   in
     "translate(" ++ (toString xMove) ++ "vw," ++ (toString yMove) ++ "vh)"
 
