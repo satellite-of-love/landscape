@@ -4,7 +4,7 @@ import Text
 import Html exposing (Html)
 import Html.Attributes as Attr
 import Model exposing (ApplicationState)
-import Landscape exposing (InformativeText)
+import Landscape exposing (InformativeText, ZoomLevel, LandscapeCenter)
 import LandscapeCss exposing (beAt)
 import Css exposing (vh, vw, asPairs)
 import Landscape.Calculations exposing (..)

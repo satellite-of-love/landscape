@@ -1,16 +1,6 @@
-module Landscape.Calculations (ZoomLevel, transformText, LandscapeCenter, transform, translateFunction, findNewPlace) where
+module Landscape.Calculations (transformText, transform, translateFunction, findNewPlace) where
 
-
-type alias ZoomLevel =
-  Int
-
-
-type alias LandscapeCenter =
-  ( Int, Int )
-
-
-type alias PositionInDrawing =
-  ( Int, Int )
+import Landscape exposing (ZoomLevel, LandscapeCenter, PositionInDrawing)
 
 
 transform : ZoomLevel -> LandscapeCenter -> ( String, String )

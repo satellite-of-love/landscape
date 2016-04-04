@@ -18,6 +18,7 @@ decodeInformativeText =
   Json.Decode.succeed InformativeText
     |: ("text" := Json.Decode.string)
     |: ("position" := Json.Decode.tuple2 (,) Json.Decode.int Json.Decode.int)
+    |: ("naturalZoom" := Json.Decode.int)
 
 
 decodeOutgoingNews : Json.Decode.Decoder OutgoingNews
@@ -52,6 +53,7 @@ encodeInformativeText record =
   Json.Encode.object
     [ ( "text", Json.Encode.string <| record.text )
     , ( "position", Json.Encode.list <| List.map Json.Encode.int <| tuple2list <| record.position )
+    , ( "naturalZoom", Json.Encode.int <| record.naturalZoom )
     ]
 
 

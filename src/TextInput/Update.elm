@@ -34,35 +34,35 @@ seeTheWorld news world =
 
 
 inputReact : Action -> ApplicationState -> ( ApplicationState, List OutgoingNews )
-inputReact action model =
+inputReact action state =
   case action of
     NewTextInput position ->
-      doNothing (initializeNewInput model position)
+      doNothing (initializeNewInput state position)
 
     ReceiveText something ->
       let
         ti =
-          model.textInput
+          state.textInput
 
         new =
           { ti | contents = something }
       in
         doNothing
-          { model
+          { state
             | textInput = new
           }
 
     DiscardText ->
-      doNothing (goodbyeInput model)
+      doNothing (goodbyeInput state)
 
     SaveText ->
-      if theyHaveEnteredText model then
-        saveTheText model
+      if theyHaveEnteredText state then
+        saveTheText state
       else
-        doNothing model
+        doNothing state
 
     _ ->
-      doNothing model
+      doNothing state
 
 
 doNothing : ApplicationState -> ( ApplicationState, List OutgoingNews )
@@ -71,20 +71,21 @@ doNothing state =
 
 
 saveTheText : ApplicationState -> ( ApplicationState, List OutgoingNews )
-saveTheText model =
+saveTheText state =
   let
     textInput =
-      model.textInput
+      state.textInput
 
     annotation =
       InformativeText
         textInput.contents
         (moveItOverABit textInput.position)
+        state.z
 
     newState =
-      { model
+      { state
         | annotations =
-            model.annotations ++ [ annotation ]
+            state.annotations ++ [ annotation ]
       }
         |> goodbyeInput
   in
