@@ -16,6 +16,9 @@ all =
           , test "see it be down" down10
           , test "move down farther" moveDownAgain
           , test "see it be down farther" down20
+          , test "zoom in then out" zoomInAndThenOut
+          , test "click in the center" clickingInTheCenterDoesNotChangeTheCenter
+          , test "zoom in then out moving" zoomInAndThenOutMoving
         ]
 
 movingOver =
@@ -66,4 +69,37 @@ down20 =
   in
     assertEqual translation (Subject.translateFunction 1 center)
 
+-- this would be a great property test
+clickingInTheCenterDoesNotChangeTheCenter =
+  let
+   currentCenter = (35, 40)
+   clicked = (35, 50)
+   expectedCenter = (35, 40)
+   (_, actualCenter) = Subject.findNewPlace 0 1 currentCenter clicked
+  in
+    assertEqual expectedCenter actualCenter
+
+zoomInAndThenOut =
+  let
+    currentCenter = (35, 50)
+    clicked = (10, 20)
+    thenClick = (35, 50)
+    zoomAmount = 1
+    startingZoom = 1
+    (nextZ, newCenter) = Subject.findNewPlace zoomAmount startingZoom currentCenter clicked
+    (finalZ, finalCenter) = Subject.findNewPlace (-1 * zoomAmount) nextZ newCenter thenClick
+  in
+    assertEqual (1, (10,20)) (finalZ, finalCenter)
+
+zoomInAndThenOutMoving =
+  let
+    currentCenter = (35, 50)
+    clicked = (10, 20)
+    thenClick = (68, 98)
+    zoomAmount = 1
+    startingZoom = 1
+    (nextZ, newCenter) = Subject.findNewPlace zoomAmount startingZoom currentCenter clicked
+    (finalZ, finalCenter) = Subject.findNewPlace (-1 * zoomAmount) nextZ newCenter thenClick
+  in
+    assertEqual (1, (18,45)) (finalZ, finalCenter)
 
