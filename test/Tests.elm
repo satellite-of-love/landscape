@@ -94,12 +94,12 @@ zoomInAndThenOut =
 zoomInAndThenOutMoving =
   let
     currentCenter = (35, 50)
-    clicked = (10, 20)
-    thenClick = (68, 98)
+    clicked = (70, 60)
+    thenClick = (11, 10)
     zoomAmount = 1
     startingZoom = 1
     (nextZ, newCenter) = Subject.findNewPlace zoomAmount startingZoom currentCenter clicked
     (finalZ, finalCenter) = Subject.findNewPlace (-1 * zoomAmount) nextZ newCenter thenClick
   in
-    assertEqual (1, (18,45)) (finalZ, finalCenter)
+    assertEqual (1, (58,40)) (finalZ, finalCenter)
 

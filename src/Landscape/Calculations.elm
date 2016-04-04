@@ -24,13 +24,16 @@ translateFunction zoomLevel ( xCenter, yCenter ) =
 findNewPlace : ZoomLevel -> ZoomLevel -> LandscapeCenter -> ( Int, Int ) -> ( ZoomLevel, LandscapeCenter )
 findNewPlace howMuchToZoomIn currentZ currentCenter ( xClick, yClick ) =
   let
+    divideByZoom a =
+      round ((toFloat a) / (toFloat currentZ))
+
     ( xCurrentCenter, yCurrentCenter ) =
       currentCenter
 
     newX =
-      xClick + (xCurrentCenter - 35)
+      (divideByZoom xClick) + (xCurrentCenter - (divideByZoom 35))
 
     newY =
-      yClick + (yCurrentCenter - 50)
+      (divideByZoom yClick) + (yCurrentCenter - (divideByZoom 50))
   in
     ( currentZ + howMuchToZoomIn, ( newX, newY ) )

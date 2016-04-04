@@ -35,7 +35,7 @@ seeTheWorld news model =
 
 
 howMuchToZoomIn =
-  0
+  1
 
 
 zoomIn : ApplicationState -> MousePosition -> ApplicationState
