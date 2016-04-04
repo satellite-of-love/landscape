@@ -1,8 +1,10 @@
 set -e
 
-
 echo "Compiling..."
 elm make --output elm.js src/Main.elm
+
+echo "Running tests..."
+elm test test/TestRunner.elm
 
 echo "Formatting..."
 elm format --yes src/*

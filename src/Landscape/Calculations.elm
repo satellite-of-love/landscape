@@ -28,9 +28,9 @@ findNewPlace howMuchToZoomIn currentZ currentCenter ( xClick, yClick ) =
       currentCenter
 
     newX =
-      xClick - (xCurrentCenter - 35)
+      xClick + (xCurrentCenter - 35)
 
     newY =
-      yClick - (yCurrentCenter - 50)
+      yClick + (yCurrentCenter - 50)
   in
     ( currentZ + howMuchToZoomIn, ( newX, newY ) )
