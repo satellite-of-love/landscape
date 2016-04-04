@@ -33,7 +33,7 @@ zoomTo zoomLevel center =
 
 
 draw : ZoomLevel -> LandscapeCenter -> InformativeText -> Html
-draw z ( xCenter, yCenter ) annotation =
+draw z center annotation =
   let
     ( x, y ) =
       annotation.position
@@ -43,7 +43,7 @@ draw z ( xCenter, yCenter ) annotation =
   in
     Html.label
       [ Attr.style
-          ((asPairs positioningCss) ++ [ ( "transform", translateText z ( xCenter, yCenter ) annotation.position ) ])
+          ((asPairs positioningCss) ++ [ transformText z center annotation.position ])
       ]
       [ Html.text annotation.text ]
 
