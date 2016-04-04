@@ -1,4 +1,4 @@
-module Landscape.Calculations (translateFunction, findNewPlace) where
+module Landscape.Calculations (transform, translateFunction, findNewPlace) where
 
 
 type alias ZoomLevel =
@@ -7,6 +7,18 @@ type alias ZoomLevel =
 
 type alias LandscapeCenter =
   ( Int, Int )
+
+
+transform : ZoomLevel -> LandscapeCenter -> ( String, String )
+transform z center =
+  let
+    translate =
+      translateFunction z center
+
+    scale =
+      "scale(" ++ (toString z) ++ ")"
+  in
+    ( "transform", scale ++ " " ++ translate )
 
 
 translateFunction : ZoomLevel -> LandscapeCenter -> String

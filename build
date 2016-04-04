@@ -7,7 +7,7 @@ echo "Running tests..."
 elm test test/TestRunner.elm
 
 echo "Formatting..."
-elm format --yes src/*
+elm format --yes src/* test/*
 
 echo "Styling..."
 elm-css src/Stylesheets.elm

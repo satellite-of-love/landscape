@@ -30,6 +30,7 @@ input, label {
   font-family: sans-serif;
   font-size: 1em;
   line-height: 1.5em;
+  transition: 1s ease-in-out;
 }
 
 input:focus {

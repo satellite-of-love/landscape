@@ -7,38 +7,33 @@ import Model exposing (ApplicationState)
 import Landscape exposing (InformativeText)
 import LandscapeCss exposing (beAt)
 import Css exposing (vh, vw, asPairs)
-import Landscape.Calculations exposing (translateFunction)
+import Landscape.Calculations exposing (transform)
 
 
 landscapePane : ApplicationState -> Html
-landscapePane model =
-  Html.node
-    "main"
-    []
-    ([ Html.canvas
-        [ zoomTo model.z model.center ]
-        []
-     ]
-      ++ List.map draw model.annotations
-    )
+landscapePane state =
+  let
+    transformPair =
+      transform state.z state.center
+  in
+    Html.node
+      "main"
+      []
+      ([ Html.canvas [ Attr.style [ transformPair ] ] []
+       ]
+        ++ List.map (draw transformPair) state.annotations
+      )
 
 
 zoomTo : Int -> Model.MousePosition -> Html.Attribute
 zoomTo zoomLevel center =
-  let
-    translate =
-      translateFunction zoomLevel center
-
-    scale =
-      "scale(" ++ (toString zoomLevel) ++ ")"
-  in
-    Attr.style
-      [ ( "transform", scale ++ " " ++ translate )
-      ]
+  Attr.style
+    [ transform zoomLevel center
+    ]
 
 
-draw : InformativeText -> Html
-draw annotation =
+draw : ( String, String ) -> InformativeText -> Html
+draw transform annotation =
   let
     ( x, y ) =
       annotation.position
@@ -48,11 +43,7 @@ draw annotation =
   in
     Html.label
       [ Attr.style
-          (asPairs positioningCss)
-        -- [ ( "position", "absolute" )
-        -- , ( "top", (toString y) ++ "vh" )
-        -- , ( "left", (toString x) ++ "vw" )
-        -- ]
+          ((asPairs positioningCss) ++ [ transform ])
       ]
       [ Html.text annotation.text ]
 
