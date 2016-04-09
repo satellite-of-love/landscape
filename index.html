@@ -5,6 +5,15 @@
 </head>
 <body>
 	<script type="text/javascript">
-      Elm.fullscreen(Elm.Main)
+      var elm = Elm.fullscreen(Elm.Main);
+      
+      elm.ports.out.subscribe(respondinate);
+
+      function respondinate(listOfNews) {
+          if (listOfNews.length > 0) {
+             console.log(listOfNews);
+ 		  }
+      };
+
 	</script>
 </body>
