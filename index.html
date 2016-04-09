@@ -13,18 +13,21 @@
           listOfNews.map( function( newsItem ) {
              if ('focus' in newsItem) {
                console.log("setting focus to " + newsItem.focus);
-               var element =  document.getElementById(newsItem.focus);
-               if (element == null)
-               	{ console.log(":-( did not find element " + newsItem.focus)
-            	}
-               else
-               	{ element.focus();
-               	}
+               focusWhenItGetsHere(newsItem.focus)
              } else {
                console.log(newsItem);
              }
             })
       };
+
+      function focusWhenItGetsHere(elementId) {
+      	setTimeout(function() {
+          var element = document.getElementById(elementId);
+          if (element != null && document.activeElement !== element) {
+              element.focus()
+		  }
+		}, 50);
+      }
 
 	</script>
 </body>
