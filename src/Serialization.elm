@@ -35,6 +35,10 @@ encodeOutgoingNews og =
         [ ( "save", encodeInformativeText <| informativeText )
         ]
 
+    Focus elementName ->
+      Json.Encode.object
+        [ ( "focus", Json.Encode.string elementName ) ]
+
 
 encodeNews : News Action OutgoingNews -> Json.Encode.Value
 encodeNews og =

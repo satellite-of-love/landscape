@@ -36,3 +36,4 @@ type Action
 
 type OutgoingNews
   = Save InformativeText
+  | Focus String
