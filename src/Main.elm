@@ -8,7 +8,7 @@ import Mouse
 import Keyboard
 import Char exposing (KeyCode)
 import Set exposing (Set)
-import Model exposing (Model, MousePosition, OutsideWorld, ApplicationState)
+import Model exposing (Clock, Model, MousePosition, OutsideWorld, ApplicationState)
 import Action exposing (Action, News(..), OutgoingNews)
 import Landscape.View
 import Landscape.Update
@@ -113,7 +113,7 @@ respondToOneNews news model =
       List.foldl Messages.Update.spyOnActions model.state actions
 
     ( actedState, outgoingNews ) =
-      List.foldl respondToAction ( spiedState, [] ) actions
+      List.foldl (respondToAction model.clock) ( spiedState, [] ) actions
 
     finalState =
       List.foldl Messages.Update.spyOnOutgoingNews actedState outgoingNews
@@ -130,11 +130,11 @@ respondToNews news world =
     ++ (explicitActions news)
 
 
-respondToAction : Action -> ( ApplicationState, List OutgoingNews ) -> ( ApplicationState, List OutgoingNews )
-respondToAction action ( state, outgoingNews ) =
+respondToAction : Clock -> Action -> ( ApplicationState, List OutgoingNews ) -> ( ApplicationState, List OutgoingNews )
+respondToAction clock action ( state, outgoingNews ) =
   ( state, outgoingNews )
     |> updateOneIgnoreAnother (Messages.Update.messagesReact action)
-    |> updateOneSumAnother (TextInput.Update.inputReact action)
+    |> updateOneSumAnother (TextInput.Update.inputReact clock action)
     |> updateOneIgnoreAnother (Landscape.Update.update action)
     |> updateOneIgnoreAnother (NewsInjector.Update.update action)
 

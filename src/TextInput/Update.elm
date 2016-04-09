@@ -1,6 +1,6 @@
 module TextInput.Update (seeTheWorld, inputReact) where
 
-import Model exposing (ApplicationState, OutsideWorld, keysPressed, MousePosition)
+import Model exposing (Clock, ApplicationState, OutsideWorld, keysPressed, MousePosition)
 import Action exposing (Action(NewTextInput, ReceiveText, SaveText, DiscardText), News(Click, ServerSays), OutgoingNews(Save, Focus))
 import Landscape exposing (InformativeText)
 import Char exposing (KeyCode)
@@ -33,8 +33,8 @@ seeTheWorld news world =
         []
 
 
-inputReact : Action -> ApplicationState -> ( ApplicationState, List OutgoingNews )
-inputReact action state =
+inputReact : Clock -> Action -> ApplicationState -> ( ApplicationState, List OutgoingNews )
+inputReact clock action state =
   case action of
     NewTextInput position ->
       ( (initializeNewInput state position), [ Focus "that new input" ] )
