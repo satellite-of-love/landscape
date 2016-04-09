@@ -19,6 +19,10 @@ type alias OutsideWorld =
   }
 
 
+type alias InformativeTextId =
+  String
+
+
 type alias ApplicationState =
   { messages : List Message
   , messageVisibility : MessageVisibility
@@ -26,6 +30,7 @@ type alias ApplicationState =
       { isAThing : Bool
       , position : MousePosition
       , contents : String
+      , id : InformativeTextId
       }
   , annotations : List InformativeText
   , z : Int
@@ -56,9 +61,11 @@ init =
       { messages = []
       , messageVisibility = allVisible
       , textInput =
+          -- this whole thing should be a Maybe
           { isAThing = False
           , position = ( 0, 0 )
           , contents = ""
+          , id = ""
           }
       , annotations = []
       , z = 1

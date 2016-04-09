@@ -37,7 +37,11 @@ inputReact : Clock -> Action -> ApplicationState -> ( ApplicationState, List Out
 inputReact clock action state =
   case action of
     NewTextInput position ->
-      ( (initializeNewInput state position), [ Focus "that new input" ] )
+      let
+        newInputId =
+          "textInput_" ++ (toString clock)
+      in
+        ( (initializeNewInput newInputId state position), [ Focus newInputId ] )
 
     ReceiveText something ->
       let
@@ -103,13 +107,14 @@ moveItOverABit ( x, y ) =
   ( x, y - 2 )
 
 
-initializeNewInput : ApplicationState -> MousePosition -> ApplicationState
-initializeNewInput model position =
+initializeNewInput : String -> ApplicationState -> MousePosition -> ApplicationState
+initializeNewInput id model position =
   { model
     | textInput =
         { isAThing = True
         , contents = ""
         , position = position
+        , id = id
         }
   }
 
@@ -121,6 +126,7 @@ goodbyeInput model =
         { isAThing = False
         , contents = ""
         , position = ( 0, 0 )
+        , id = ""
         }
   }
 
