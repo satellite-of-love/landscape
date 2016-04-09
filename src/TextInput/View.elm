@@ -29,6 +29,7 @@ input address textInputModel =
           , ( "left", (toString x) ++ "vw" )
           , ( "width", (toString (8 * (String.length textInputModel.contents))) ++ "px" )
           ]
+      , Attr.id textInputModel.id
       , Attr.value textInputModel.contents
       , Attr.attribute "autofocus" "true"
       , on "input" targetValue (Signal.message address << ReceiveText)
