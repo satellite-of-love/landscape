@@ -29,7 +29,7 @@ app =
 
     modelAndNews =
       input
-        |> Signal.foldp (appendSecondOutput updateModel) ( Model.init, [] )
+        |> Signal.foldp (dropTheSecondInput updateModel) ( Model.init, [] )
   in
     { modelSignal = Signal.map fst modelAndNews
     , outgoingNews = Signal.map snd modelAndNews
@@ -147,6 +147,11 @@ updateOneIgnoreAnother f ( one, another ) =
 appendSecondOutput : (a -> b -> ( b, List c )) -> a -> ( b, List c ) -> ( b, List c )
 appendSecondOutput f a =
   updateOneSumAnother (f a)
+
+
+dropTheSecondInput : (a -> b -> ( b, List c )) -> a -> ( b, List c ) -> ( b, List c )
+dropTheSecondInput f a ( b, c ) =
+  f a b
 
 
 updateOneSumAnother : (b -> ( b, List c )) -> (( b, List c ) -> ( b, List c ))
