@@ -23,8 +23,15 @@ import NewsInjector.View
 main : Signal Html
 main =
   Signal.mergeMany [ mousePointer, mouseClicks, newsFromTheView.signal ]
-    |> Signal.foldp updateModel Model.init
+    |> Signal.foldp (doof updateModel) ( Model.init, [] )
+    |> Signal.map fst
     |> Signal.map (view (Signal.forwardTo newsFromTheView.address DoThis))
+
+
+
+-------
+-- Incoming signals
+-------
 
 
 newsFromTheView : Signal.Mailbox (News Action OutgoingNews)
@@ -53,16 +60,22 @@ mouseClicks =
     |> Signal.map (always Click)
 
 
-updateModel : News Action OutgoingNews -> Model -> Model
+
+-----
+-- UPDATE
+-----
+
+
+updateModel : News Action OutgoingNews -> Model -> ( Model, List OutgoingNews )
 updateModel news model =
   let
     ( model, allTheNews ) =
       NewsInjector.Update.pretendThingsHappened model news
   in
-    List.foldl respondToOneNews model allTheNews
+    List.foldl (doof respondToOneNews) ( model, [] ) allTheNews
 
 
-respondToOneNews : News Action OutgoingNews -> Model -> Model
+respondToOneNews : News Action OutgoingNews -> Model -> ( Model, List OutgoingNews )
 respondToOneNews news model =
   let
     world =
@@ -80,7 +93,7 @@ respondToOneNews news model =
     finalState =
       List.foldl Messages.Update.spyOnOutgoingNews actedState outgoingNews
   in
-    { world = world, state = finalState }
+    ( { world = world, state = finalState }, outgoingNews )
 
 
 respondToNews : News Action OutgoingNews -> OutsideWorld -> List Action
@@ -104,6 +117,11 @@ respondToAction action ( state, outgoingNews ) =
 updateOneIgnoreAnother : (b -> b) -> (( b, c ) -> ( b, c ))
 updateOneIgnoreAnother f ( one, another ) =
   ( f one, another )
+
+
+doof : (a -> b -> ( b, List c )) -> a -> ( b, List c ) -> ( b, List c )
+doof f a =
+  updateOneSumAnother (f a)
 
 
 updateOneSumAnother : (b -> ( b, List c )) -> (( b, List c ) -> ( b, List c ))
