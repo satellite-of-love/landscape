@@ -10,9 +10,9 @@
       elm.ports.out.subscribe(respondinate);
 
       function respondinate(listOfNews) {
-          if (listOfNews.length > 0) {
-             console.log(listOfNews);
- 		  }
+          listOfNews.map( function( newsItem ) {
+             console.log(newsItem);
+            })
       };
 
 	</script>
