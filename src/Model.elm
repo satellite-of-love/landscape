@@ -34,9 +34,14 @@ type alias ApplicationState =
   }
 
 
+type alias Clock =
+  Int
+
+
 type alias Model =
   { world : OutsideWorld
   , state : ApplicationState
+  , clock : Clock
   }
 
 
@@ -61,6 +66,7 @@ init =
       , newsInjector =
           NewsInjector.init
       }
+  , clock = 1
   }
 
 

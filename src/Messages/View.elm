@@ -56,7 +56,8 @@ whereAmI : Model -> Html
 whereAmI model =
   Html.div
     []
-    [ output ("mouse: " ++ (toString model.world.pointer))
+    [ output ("clock: " ++ (toString model.clock))
+    , output ("mouse: " ++ (toString model.world.pointer))
     , output ("zoom: " ++ (toString model.state.z))
     , output ("keys: " ++ (printableKeysDown model.world))
     ]

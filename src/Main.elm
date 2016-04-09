@@ -118,7 +118,7 @@ respondToOneNews news model =
     finalState =
       List.foldl Messages.Update.spyOnOutgoingNews actedState outgoingNews
   in
-    ( { world = world, state = finalState }, outgoingNews )
+    ( { world = world, state = finalState, clock = model.clock + 1 }, outgoingNews )
 
 
 respondToNews : News Action OutgoingNews -> OutsideWorld -> List Action
