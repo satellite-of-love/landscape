@@ -23,7 +23,7 @@ import NewsInjector.View
 main : Signal Html
 main =
   Signal.mergeMany [ mousePointer, mouseClicks, newsFromTheView.signal ]
-    |> Signal.foldp (doof updateModel) ( Model.init, [] )
+    |> Signal.foldp (appendSecondOutput updateModel) ( Model.init, [] )
     |> Signal.map fst
     |> Signal.map (view (Signal.forwardTo newsFromTheView.address DoThis))
 
@@ -72,7 +72,7 @@ updateModel news model =
     ( model, allTheNews ) =
       NewsInjector.Update.pretendThingsHappened model news
   in
-    List.foldl (doof respondToOneNews) ( model, [] ) allTheNews
+    List.foldl (appendSecondOutput respondToOneNews) ( model, [] ) allTheNews
 
 
 respondToOneNews : News Action OutgoingNews -> Model -> ( Model, List OutgoingNews )
@@ -119,8 +119,8 @@ updateOneIgnoreAnother f ( one, another ) =
   ( f one, another )
 
 
-doof : (a -> b -> ( b, List c )) -> a -> ( b, List c ) -> ( b, List c )
-doof f a =
+appendSecondOutput : (a -> b -> ( b, List c )) -> a -> ( b, List c ) -> ( b, List c )
+appendSecondOutput f a =
   updateOneSumAnother (f a)
 
 
