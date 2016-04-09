@@ -18,14 +18,39 @@ import TextInput.Update
 import TextInput.View
 import NewsInjector.Update
 import NewsInjector.View
+import Serialization
+import Json.Encode
+
+
+app =
+  let
+    input =
+      Signal.mergeMany [ mousePointer, mouseClicks, newsFromTheView.signal ]
+
+    modelAndNews =
+      input
+        |> Signal.foldp (appendSecondOutput updateModel) ( Model.init, [] )
+  in
+    { modelSignal = Signal.map fst modelAndNews
+    , outgoingNews = Signal.map snd modelAndNews
+    }
 
 
 main : Signal Html
 main =
-  Signal.mergeMany [ mousePointer, mouseClicks, newsFromTheView.signal ]
-    |> Signal.foldp (appendSecondOutput updateModel) ( Model.init, [] )
-    |> Signal.map fst
+  app.modelSignal
     |> Signal.map (view (Signal.forwardTo newsFromTheView.address DoThis))
+
+
+
+------
+-- outgoing signals
+------
+
+
+port out : Signal (List Json.Encode.Value)
+port out =
+  app.outgoingNews |> Signal.map (List.map Serialization.encodeOutgoingNews)
 
 
 
