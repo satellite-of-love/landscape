@@ -11,7 +11,18 @@
 
       function respondinate(listOfNews) {
           listOfNews.map( function( newsItem ) {
-             console.log(newsItem);
+             if ('focus' in newsItem) {
+               console.log("setting focus to " + newsItem.focus);
+               var element =  document.getElementById(newsItem.focus);
+               if (element == null)
+               	{ console.log(":-( did not find element " + newsItem.focus)
+            	}
+               else
+               	{ element.focus();
+               	}
+             } else {
+               console.log(newsItem);
+             }
             })
       };
 
