@@ -106,11 +106,14 @@ respondToOneNews news model =
     world =
       retainOutsideWorld news model.world
 
+    spiedOnNews =
+      Messages.Update.spyOnNews world news model.state
+
     actions =
       respondToNews news world
 
     spiedState =
-      List.foldl Messages.Update.spyOnActions model.state actions
+      List.foldl Messages.Update.spyOnActions spiedOnNews actions
 
     ( actedState, outgoingNews ) =
       List.foldl (respondToAction model.clock) ( spiedState, [] ) actions
@@ -124,8 +127,8 @@ respondToOneNews news model =
 respondToNews : News Action OutgoingNews -> OutsideWorld -> List Action
 respondToNews news world =
   (Landscape.Update.seeTheWorld news world)
-    ++ (Messages.Update.seeTheWorld news world)
     ++ (TextInput.Update.seeTheWorld news world)
+    ++ (Messages.Update.seeTheWorld news world)
     ++ (NewsInjector.Update.seeTheWorld news world)
     ++ (explicitActions news)
 
@@ -133,10 +136,10 @@ respondToNews news world =
 respondToAction : Clock -> Action -> ( ApplicationState, List OutgoingNews ) -> ( ApplicationState, List OutgoingNews )
 respondToAction clock action ( state, outgoingNews ) =
   ( state, outgoingNews )
-    |> updateOneIgnoreAnother (Messages.Update.messagesReact action)
     |> updateOneSumAnother (TextInput.Update.inputReact clock action)
     |> updateOneIgnoreAnother (Landscape.Update.update action)
     |> updateOneIgnoreAnother (NewsInjector.Update.update action)
+    |> updateOneIgnoreAnother (Messages.Update.messagesReact action)
 
 
 updateOneIgnoreAnother : (b -> b) -> (( b, c ) -> ( b, c ))

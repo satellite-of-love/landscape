@@ -1,4 +1,4 @@
-module Messages.Update (seeTheWorld, messagesReact, spyOnOutgoingNews, spyOnActions) where
+module Messages.Update (seeTheWorld, messagesReact, spyOnNews, spyOnOutgoingNews, spyOnActions) where
 
 import Model exposing (Model, ApplicationState, OutsideWorld, keysPressed, printableKeysDown, betterFromCode)
 import Action exposing (Action(..), News(Click), OutgoingNews)
@@ -45,9 +45,6 @@ spyOnOutgoingNews news state =
 spyOnActions : Action -> ApplicationState -> ApplicationState
 spyOnActions action state =
   case action of
-    Chunder _ ->
-      state
-
     Disvisiblate imp ->
       state |> takeChunder ("don't see " ++ imp.name)
 
@@ -61,34 +58,36 @@ spyOnActions action state =
       state |> takeNotice (toString action)
 
 
-seeTheWorld : News a b -> OutsideWorld -> List Action
-seeTheWorld news world =
+spyOnNews : OutsideWorld -> News a b -> ApplicationState -> ApplicationState
+spyOnNews world news state =
   case news of
     Click ->
-      [ Chunder
-          ("Click: "
-            ++ (toString (world.pointer))
-            ++ (descriptionOfKeys world)
-          )
-      ]
+      state
+        |> takeChunder
+            ("Click: "
+              ++ (toString (world.pointer))
+              ++ (descriptionOfKeys world)
+            )
 
     _ ->
       let
-        notifactionsOfKeyPresses =
+        notificationsOfKeyPresses =
           keysPressed world
             |> Set.toList
             |> List.map betterFromCode
             |> List.map ((++) "Press: ")
       in
-        List.map Chunder notifactionsOfKeyPresses
+        List.foldl takeChunder state notificationsOfKeyPresses
+
+
+seeTheWorld : News a b -> OutsideWorld -> List Action
+seeTheWorld world news =
+  []
 
 
 messagesReact : Action -> ApplicationState -> ApplicationState
 messagesReact action state =
   case action of
-    Chunder msg ->
-      state |> takeChunder msg
-
     Disvisiblate imp ->
       state |> disvisiblate imp
 

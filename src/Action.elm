@@ -27,7 +27,6 @@ type Action
   | ZoomOut Position
   | Disvisiblate MessageImportance
   | Envisiblate MessageImportance
-  | Chunder String
   | ActivateNewsInjector
   | DiscardNewsInjector
   | NewsInjectorReceiveText String
