@@ -1,4 +1,4 @@
-module Landscape.View (landscapePane) where
+module Landscape.View (view) where
 
 import Text
 import Html exposing (Html)
@@ -10,8 +10,8 @@ import Css exposing (vh, vw, asPairs)
 import Landscape.Calculations exposing (..)
 
 
-landscapePane : ApplicationState -> Html
-landscapePane state =
+view : ApplicationState -> Html
+view state =
   let
     transformPair =
       transform state.z state.center

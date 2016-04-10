@@ -1,4 +1,4 @@
-module TextInput.View (possibleInput) where
+module TextInput.View (view) where
 
 import String
 import Html exposing (Html)
@@ -9,8 +9,8 @@ import Model exposing (ApplicationState)
 import Action exposing (Action(ReceiveText))
 
 
-possibleInput : Address Action -> ApplicationState -> List Html
-possibleInput address model =
+view : Address Action -> ApplicationState -> List Html
+view address model =
   if model.textInput.isAThing then
     [ input address model.textInput ]
   else

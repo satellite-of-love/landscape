@@ -197,8 +197,8 @@ view : Signal.Address Action -> Model -> Html
 view address model =
   Html.div
     []
-    ([ Landscape.View.landscapePane model.state ]
+    ([ Landscape.View.view model.state ]
       ++ [ Messages.View.view address model ]
-      ++ (TextInput.View.possibleInput address model.state)
+      ++ (TextInput.View.view address model.state)
       ++ NewsInjector.View.view address model.state
     )
