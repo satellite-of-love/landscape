@@ -12,17 +12,13 @@ import Landscape.Calculations exposing (..)
 
 view : ApplicationState -> Html
 view state =
-  let
-    transformPair =
-      transform state.z state.center
-  in
-    Html.node
-      "main"
-      []
-      ([ Html.canvas [ Attr.style [ transformPair ] ] []
-       ]
-        ++ List.map (draw state.z state.center) state.annotations
-      )
+  Html.node
+    "main"
+    []
+    ([ Html.canvas [ Attr.style [ transform state.z state.center ] ] []
+     ]
+      ++ List.map (draw state.z state.center) state.annotations
+    )
 
 
 zoomTo : ZoomLevel -> Model.MousePosition -> Html.Attribute
