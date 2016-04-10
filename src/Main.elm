@@ -137,10 +137,10 @@ respondToNews news world =
 respondToAction : Clock -> Action -> ( ApplicationState, List OutgoingNews ) -> ( ApplicationState, List OutgoingNews )
 respondToAction clock action ( state, outgoingNews ) =
   ( state, outgoingNews )
-    |> updateOneSumAnother (TextInput.Update.inputReact clock action)
-    |> updateOneIgnoreAnother (Landscape.Update.update action)
-    |> updateOneIgnoreAnother (NewsInjector.Update.update action)
-    |> updateOneIgnoreAnother (Messages.Update.messagesReact action)
+    |> updateOneSumAnother (TextInput.Update.respondToActions clock action)
+    |> updateOneIgnoreAnother (Landscape.Update.respondToActions action)
+    |> updateOneIgnoreAnother (NewsInjector.Update.respondToActions action)
+    |> updateOneIgnoreAnother (Messages.Update.respondToActions action)
 
 
 updateOneIgnoreAnother : (b -> b) -> (( b, c ) -> ( b, c ))

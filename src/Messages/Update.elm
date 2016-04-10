@@ -1,4 +1,4 @@
-module Messages.Update (seeTheWorld, messagesReact, spyOnNews, spyOnOutgoingNews, spyOnActions) where
+module Messages.Update (seeTheWorld, respondToActions, spyOnNews, spyOnOutgoingNews, spyOnActions) where
 
 import Model exposing (Model, ApplicationState, OutsideWorld, keysPressed, printableKeysDown, betterFromCode)
 import Action exposing (Action(..), News(Click), OutgoingNews)
@@ -84,8 +84,8 @@ seeTheWorld world news =
   []
 
 
-messagesReact : Action -> ApplicationState -> ApplicationState
-messagesReact action state =
+respondToActions : Action -> ApplicationState -> ApplicationState
+respondToActions action state =
   case action of
     Disvisiblate imp ->
       state |> disvisiblate imp

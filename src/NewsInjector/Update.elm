@@ -1,4 +1,4 @@
-module NewsInjector.Update (seeTheWorld, update, pretendThingsHappened) where
+module NewsInjector.Update (seeTheWorld, respondToActions, pretendThingsHappened) where
 
 import Action exposing (News(Click, ServerSays), OutgoingNews, Action(NewsInjectorReceiveText, InjectTheNews, ActivateNewsInjector, DiscardNewsInjector))
 import Model exposing (Model, OutsideWorld, ApplicationState, keysPressed)
@@ -46,8 +46,8 @@ seeTheWorld news world =
         []
 
 
-update : Action -> ApplicationState -> ApplicationState
-update action state =
+respondToActions : Action -> ApplicationState -> ApplicationState
+respondToActions action state =
   let
     newsInjector =
       state.newsInjector

@@ -6,8 +6,8 @@ import Set
 import Landscape.Calculations exposing (findNewPlace)
 
 
-update : Action -> ApplicationState -> ApplicationState
-update action model =
+respondToActions : Action -> ApplicationState -> ApplicationState
+respondToActions action model =
   case action of
     ZoomIn pointer ->
       zoomIn model pointer

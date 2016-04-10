@@ -1,4 +1,4 @@
-module TextInput.Update (seeTheWorld, inputReact) where
+module TextInput.Update (seeTheWorld, respondToActions) where
 
 import Model exposing (ApplicationState, OutsideWorld, keysPressed, MousePosition)
 import Clock exposing (Clock)
@@ -34,8 +34,8 @@ seeTheWorld news world =
         []
 
 
-inputReact : Clock -> Action -> ApplicationState -> ( ApplicationState, List OutgoingNews )
-inputReact clock action state =
+respondToActions : Clock -> Action -> ApplicationState -> ( ApplicationState, List OutgoingNews )
+respondToActions clock action state =
   case action of
     NewTextInput position ->
       let
