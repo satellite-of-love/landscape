@@ -8,6 +8,7 @@ import String
 import Serialization
 import Json.Encode
 import Messages exposing (Message, importances, removeVisibility, addVisibility)
+import Clock exposing (Clock)
 
 
 addMessages : List Message -> ApplicationState -> ApplicationState
@@ -18,52 +19,53 @@ addMessages more model =
   }
 
 
-takeNotice : String -> ApplicationState -> ApplicationState
-takeNotice message model =
-  addMessages [ Message Messages.notice message ] model
+takeNotice : Clock -> String -> ApplicationState -> ApplicationState
+takeNotice clock message model =
+  addMessages [ Message Messages.notice clock message ] model
 
 
-takeChunder : String -> ApplicationState -> ApplicationState
-takeChunder message model =
-  addMessages [ Message Messages.chunder message ] model
+takeChunder : Clock -> String -> ApplicationState -> ApplicationState
+takeChunder clock message model =
+  addMessages [ Message Messages.chunder clock message ] model
 
 
-takeSave : OutgoingNews -> ApplicationState -> ApplicationState
-takeSave message model =
+takeSave : Clock -> OutgoingNews -> ApplicationState -> ApplicationState
+takeSave clock message model =
   let
     json =
       Serialization.encodeOutgoingNews message
   in
-    addMessages [ Message Messages.save (Json.Encode.encode 1 json) ] model
+    addMessages [ Message Messages.save clock (Json.Encode.encode 1 json) ] model
 
 
-spyOnOutgoingNews : OutgoingNews -> ApplicationState -> ApplicationState
-spyOnOutgoingNews news state =
-  state |> takeSave news
+spyOnOutgoingNews : Clock -> OutgoingNews -> ApplicationState -> ApplicationState
+spyOnOutgoingNews clock news state =
+  state |> takeSave clock news
 
 
-spyOnActions : Action -> ApplicationState -> ApplicationState
-spyOnActions action state =
+spyOnActions : Clock -> Action -> ApplicationState -> ApplicationState
+spyOnActions clock action state =
   case action of
     Disvisiblate imp ->
-      state |> takeChunder ("don't see " ++ imp.name)
+      state |> takeChunder clock ("don't see " ++ imp.name)
 
     Envisiblate imp ->
-      state |> takeChunder ("do see " ++ imp.name)
+      state |> takeChunder clock ("do see " ++ imp.name)
 
     ReceiveText _ ->
-      state |> takeChunder (toString action)
+      state |> takeChunder clock (toString action)
 
     _ ->
-      state |> takeNotice (toString action)
+      state |> takeNotice clock (toString action)
 
 
-spyOnNews : OutsideWorld -> News a b -> ApplicationState -> ApplicationState
-spyOnNews world news state =
+spyOnNews : Clock -> OutsideWorld -> News a b -> ApplicationState -> ApplicationState
+spyOnNews clock world news state =
   case news of
     Click ->
       state
         |> takeChunder
+            clock
             ("Click: "
               ++ (toString (world.pointer))
               ++ (descriptionOfKeys world)
@@ -77,7 +79,7 @@ spyOnNews world news state =
             |> List.map betterFromCode
             |> List.map ((++) "Press: ")
       in
-        List.foldl takeChunder state notificationsOfKeyPresses
+        List.foldl (takeChunder clock) state notificationsOfKeyPresses
 
 
 seeTheWorld : News a b -> OutsideWorld -> List Action

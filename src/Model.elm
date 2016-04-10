@@ -4,6 +4,7 @@ import Set exposing (Set)
 import Char exposing (KeyCode)
 import String
 import Messages exposing (Message, MessageVisibility, allVisible)
+import Clock exposing (Clock)
 import Landscape exposing (InformativeText)
 import NewsInjector exposing (NewsInjectorPane)
 
@@ -37,10 +38,6 @@ type alias ApplicationState =
   , center : MousePosition
   , newsInjector : NewsInjectorPane
   }
-
-
-type alias Clock =
-  Int
 
 
 type alias Model =

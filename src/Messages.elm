@@ -2,6 +2,7 @@ module Messages (..) where
 
 import Set exposing (Set)
 import LandscapeCss
+import Clock exposing (Clock)
 
 
 type alias MessageImportance =
@@ -31,7 +32,7 @@ importances =
 
 
 type alias Message =
-  { importance : MessageImportance, say : String }
+  { importance : MessageImportance, clock : Clock, say : String }
 
 
 type alias MessageImportanceShouldBeComparable =
