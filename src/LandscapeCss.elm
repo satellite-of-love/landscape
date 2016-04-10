@@ -54,7 +54,7 @@ css =
     , canvas
         (beAt veryTop veryLeft
           ++ landscapeSize
-          ++ [ backgroundImageUrl "images/solarsystem.png"
+          ++ [ backgroundImageUrl "images/elmscape.png"
              , Css.property "background-size" "100% 100%"
              , Css.property "transition" "1s ease-in-out"
              ]
