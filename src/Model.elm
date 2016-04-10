@@ -7,6 +7,7 @@ import Messages exposing (Message, MessageVisibility, allVisible)
 import Clock exposing (Clock)
 import Landscape exposing (InformativeText)
 import NewsInjector exposing (NewsInjectorPane)
+import Main
 
 
 type alias MousePosition =
