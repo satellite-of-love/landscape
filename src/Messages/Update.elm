@@ -46,15 +46,12 @@ spyOnOutgoingNews clock news state =
 spyOnActions : Clock -> Action -> ApplicationState -> ApplicationState
 spyOnActions clock action state =
   case action of
-    Disvisiblate imp ->
-      state |> takeChunder clock ("don't see " ++ imp.name)
-
-    Envisiblate imp ->
-      state |> takeChunder clock ("do see " ++ imp.name)
-
-    ReceiveText _ ->
-      state |> takeChunder clock (toString action)
-
+    --Disvisiblate imp ->
+    --  state |> takeChunder clock ("don't see " ++ imp.name)
+    --Envisiblate imp ->
+    --  state |> takeChunder clock ("do see " ++ imp.name)
+    --ReceiveText _ ->
+    --  state |> takeChunder clock (toString action)
     _ ->
       state |> takeNotice clock (toString action)
 
