@@ -86,4 +86,11 @@ messagePane visibility whatToSay =
 
 oneMessage : Message -> Html
 oneMessage m =
-  Html.li [ class [ m.importance.cssClass ] ] [ Html.text m.say ]
+  let
+    clockCycle =
+      if m.importance == Messages.save then
+        ""
+      else
+        (toString m.clock) ++ " | "
+  in
+    Html.li [ class [ m.importance.cssClass ] ] [ Html.text (clockCycle ++ m.say) ]
