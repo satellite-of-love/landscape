@@ -131,11 +131,11 @@ white =
 
 
 pink =
-  rgb 255 200 200
+  rgb 65 200 169
 
 
 blue =
-  rgb 200 200 255
+  rgb 253 145 152
 
 
 red =
