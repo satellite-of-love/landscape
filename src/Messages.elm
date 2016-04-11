@@ -32,7 +32,10 @@ importances =
 
 
 type alias Message =
-  { importance : MessageImportance, clock : Clock, say : String }
+  { importance : MessageImportance
+  , clock : Clock
+  , say : String
+  }
 
 
 type alias MessageImportanceShouldBeComparable =
