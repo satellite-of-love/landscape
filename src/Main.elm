@@ -125,24 +125,6 @@ respondToOneNews news model =
     ( { world = world, state = finalState, clock = model.clock + 1 }, outgoingNews )
 
 
-respondToNews : News Action OutgoingNews -> OutsideWorld -> List Action
-respondToNews news world =
-  (Landscape.Update.seeTheWorld news world)
-    ++ (TextInput.Update.seeTheWorld news world)
-    ++ (Messages.Update.seeTheWorld news world)
-    ++ (NewsInjector.Update.seeTheWorld news world)
-    ++ (explicitActions news)
-
-
-respondToAction : Clock -> Action -> ( ApplicationState, List OutgoingNews ) -> ( ApplicationState, List OutgoingNews )
-respondToAction clock action ( state, outgoingNews ) =
-  ( state, outgoingNews )
-    |> updateOneSumAnother (TextInput.Update.respondToActions clock action)
-    |> updateOneIgnoreAnother (Landscape.Update.respondToActions action)
-    |> updateOneIgnoreAnother (NewsInjector.Update.respondToActions action)
-    |> updateOneIgnoreAnother (Messages.Update.respondToActions action)
-
-
 updateOneIgnoreAnother : (b -> b) -> (( b, c ) -> ( b, c ))
 updateOneIgnoreAnother f ( one, another ) =
   ( f one, another )
@@ -191,6 +173,24 @@ retainOutsideWorld news model =
 
     _ ->
       model
+
+
+respondToNews : News Action OutgoingNews -> OutsideWorld -> List Action
+respondToNews news world =
+  (Landscape.Update.seeTheWorld news world)
+    ++ (TextInput.Update.seeTheWorld news world)
+    ++ (Messages.Update.seeTheWorld news world)
+    ++ (NewsInjector.Update.seeTheWorld news world)
+    ++ (explicitActions news)
+
+
+respondToAction : Clock -> Action -> ( ApplicationState, List OutgoingNews ) -> ( ApplicationState, List OutgoingNews )
+respondToAction clock action ( state, outgoingNews ) =
+  ( state, outgoingNews )
+    |> updateOneSumAnother (TextInput.Update.respondToActions clock action)
+    |> updateOneIgnoreAnother (Landscape.Update.respondToActions action)
+    |> updateOneIgnoreAnother (NewsInjector.Update.respondToActions action)
+    |> updateOneIgnoreAnother (Messages.Update.respondToActions action)
 
 
 view : Signal.Address Action -> Model -> Html
