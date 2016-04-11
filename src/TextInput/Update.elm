@@ -7,6 +7,7 @@ import Landscape exposing (InformativeText)
 import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
+import Messages.Update
 
 
 seeTheWorld : News Action OutgoingNews -> OutsideWorld -> List Action
@@ -46,16 +47,15 @@ respondToActions clock action state =
 
     ReceiveText something ->
       let
-        ti =
-          state.textInput
+        ( correctedText, corrections ) =
+          bePicky something
 
-        new =
-          { ti | contents = something }
+        stateWithMessages =
+          List.foldl (Messages.Update.takeChunder clock) state corrections
       in
-        doNothing
-          { state
-            | textInput = new
-          }
+        stateWithMessages
+          |> withTextInputContents correctedText
+          |> doNothing
 
     DiscardText ->
       doNothing (goodbyeInput state)
@@ -73,6 +73,33 @@ respondToActions clock action state =
 doNothing : ApplicationState -> ( ApplicationState, List OutgoingNews )
 doNothing state =
   ( state, [] )
+
+
+withTextInputContents contents state =
+  let
+    ti =
+      state.textInput
+  in
+    { state
+      | textInput =
+          { ti | contents = contents }
+    }
+
+
+bePicky : String -> ( String, List String )
+bePicky input =
+  let
+    removeOrlds =
+      String.split "orld" input
+  in
+    case removeOrlds of
+      [ one ] ->
+        ( one, [] )
+
+      _ ->
+        ( String.join "rold" removeOrlds
+        , [ "Fixed that for you ;-)" ]
+        )
 
 
 saveTheText : ApplicationState -> ( ApplicationState, List OutgoingNews )

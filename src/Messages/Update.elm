@@ -1,4 +1,4 @@
-module Messages.Update (seeTheWorld, respondToActions, spyOnNews, spyOnOutgoingNews, spyOnActions) where
+module Messages.Update (seeTheWorld, respondToActions, spyOnNews, spyOnOutgoingNews, spyOnActions, takeChunder) where
 
 import Model exposing (Model, ApplicationState, OutsideWorld, keysPressed, printableKeysDown, betterFromCode)
 import Action exposing (Action(..), News(Click), OutgoingNews)
