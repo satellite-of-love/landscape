@@ -23,8 +23,16 @@ decodeInformativeText =
 
 decodeOutgoingNews : Json.Decode.Decoder OutgoingNews
 decodeOutgoingNews =
-  Json.Decode.succeed Save
-    |: ("save" := decodeInformativeText)
+  let
+    decodeSave =
+      Json.Decode.succeed Save
+        |: ("save" := decodeInformativeText)
+
+    decodeFocus =
+      Json.Decode.succeed Focus
+        |: ("focus" := Json.Decode.string)
+  in
+    Json.Decode.oneOf [ decodeSave, decodeFocus ]
 
 
 encodeOutgoingNews : OutgoingNews -> Json.Encode.Value
