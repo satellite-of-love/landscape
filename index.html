@@ -1,0 +1,33 @@
+<head><title>Find around</title>
+ <script src="elm.js"></script>
+ <link type="text/css" href="styles.css" rel="stylesheet"/>
+ <link type="text/css" href="otherStyles.css" rel="stylesheet"/>
+</head>
+<body>
+	<script type="text/javascript">
+      var elm = Elm.fullscreen(Elm.Main);
+      
+      elm.ports.out.subscribe(respondinate);
+
+      function respondinate(listOfNews) {
+          listOfNews.map( function( newsItem ) {
+             if ('focus' in newsItem) {
+               console.log("setting focus to " + newsItem.focus);
+               focusWhenItGetsHere(newsItem.focus)
+             } else {
+               console.log(newsItem);
+             }
+            });
+      };
+
+      function focusWhenItGetsHere(elementId) {
+      	setTimeout(function() {
+          var element = document.getElementById(elementId);
+          if (element != null && document.activeElement !== element) {
+              element.focus()
+		  }
+		}, 50);
+      }
+
+	</script>
+</body>
