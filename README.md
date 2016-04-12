@@ -9,7 +9,7 @@ repeatability, and structure.
 
 ## Run the app
 
-I'll put a version of the running app on github.io once it's OK.
+Play with a running version [here](http://satellite-of-love.github.io/landscape/)
 
 Meanwhile, to run locally:
 
