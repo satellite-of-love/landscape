@@ -3,6 +3,7 @@ module Tests (..) where
 import ElmTest exposing (..)
 import String
 import Landscape.Calculations as Subject
+import ZoomAndCreateText
 
 
 all : Test
@@ -18,6 +19,7 @@ all =
     , test "zoom in then out" zoomInAndThenOut
     , test "click in the center" clickingInTheCenterDoesNotChangeTheCenter
     , test "zoom in then out moving" zoomInAndThenOutMoving
+    , test "text appears where the input was" ZoomAndCreateText.z
     ]
 
 
