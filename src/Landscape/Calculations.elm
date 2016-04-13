@@ -9,7 +9,12 @@ import Landscape exposing (ZoomLevel, LandscapeCenter, PositionInDrawing)
 
 
 findNewPlace : ZoomLevel -> ZoomLevel -> LandscapeCenter -> ( Int, Int ) -> ( ZoomLevel, LandscapeCenter )
-findNewPlace howMuchToZoomIn currentZ currentCenter ( xClick, yClick ) =
+findNewPlace howMuchToZoomIn currentZ currentCenter click =
+  ( currentZ + howMuchToZoomIn, whereIsThis currentZ currentCenter click )
+
+
+whereIsThis : ZoomLevel -> LandscapeCenter -> PositionOnScreen -> PositionInDrawing
+whereIsThis currentZ currentCenter ( xClick, yClick ) =
   let
     divideByZoom a =
       round ((toFloat a) / (toFloat currentZ))
@@ -23,7 +28,7 @@ findNewPlace howMuchToZoomIn currentZ currentCenter ( xClick, yClick ) =
     newY =
       (divideByZoom yClick) + (yCurrentCenter - (divideByZoom 50))
   in
-    ( currentZ + howMuchToZoomIn, ( newX, newY ) )
+    ( newX, newY )
 
 
 

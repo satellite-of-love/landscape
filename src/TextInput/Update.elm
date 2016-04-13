@@ -8,6 +8,7 @@ import Char exposing (KeyCode)
 import Set exposing (Set)
 import String
 import Messages.Update
+import Landscape.Calculations as Calculations
 
 
 seeTheWorld : News Action OutgoingNews -> OutsideWorld -> List Action
@@ -111,7 +112,7 @@ saveTheText state =
     annotation =
       InformativeText
         textInput.contents
-        (moveItOverABit textInput.position)
+        (Calculations.whereIsThis state.z state.center textInput.position)
         state.z
 
     newState =
