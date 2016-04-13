@@ -92,3 +92,27 @@ toStyle spec =
 transformText : ZoomLevel -> LandscapeCenter -> PositionInDrawing -> ( String, String )
 transformText zoom center pos =
   ( "transform", toStyle <| (calculateTransformation zoom center pos) )
+
+
+anchorX =
+  35
+
+
+anchorY =
+  50
+
+
+type alias PositionOnScreen =
+  ( Int, Int )
+
+
+
+-- This exists for testing the CssTransformation calculations.
+-- Hopefully it corresponds to what the browser does.
+
+
+resultingPositionOnScreen : CssTransformation -> PositionOnScreen
+resultingPositionOnScreen spec =
+  ( anchorX + (spec.translateX * spec.scale)
+  , anchorY + (spec.translateY * spec.scale)
+  )

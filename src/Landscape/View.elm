@@ -28,6 +28,14 @@ zoomTo zoomLevel center =
     ]
 
 
+anchorX =
+  35
+
+
+anchorY =
+  50
+
+
 draw : ZoomLevel -> LandscapeCenter -> InformativeText -> Html
 draw z center annotation =
   let
@@ -35,7 +43,7 @@ draw z center annotation =
       annotation.position
 
     positioningCss =
-      beAt (50 |> toFloat |> vh) (35 |> toFloat |> vw)
+      beAt (anchorY |> toFloat |> vh) (anchorX |> toFloat |> vw)
   in
     Html.label
       [ Attr.style
