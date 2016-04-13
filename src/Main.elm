@@ -199,6 +199,6 @@ view address model =
     []
     ([ Landscape.View.view model.state ]
       ++ [ Messages.View.view address model ]
-      ++ (TextInput.View.view address model.state)
+      ++ TextInput.View.view address model.state
       ++ NewsInjector.View.view address model.state
     )
