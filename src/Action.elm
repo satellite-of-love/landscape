@@ -23,10 +23,13 @@ type Action
   | ReceiveText String
   | DiscardText
   | SaveText
+    -- landscape
   | ZoomIn Position
   | ZoomOut Position
+    -- message pane
   | Disvisiblate MessageImportance
   | Envisiblate MessageImportance
+    -- news injector
   | ActivateNewsInjector
   | DiscardNewsInjector
   | NewsInjectorReceiveText String
