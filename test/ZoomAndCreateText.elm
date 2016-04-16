@@ -22,6 +22,9 @@ z =
     resultingModel =
       List.foldl (dropSecond Subject.updateModel) Model.init news
 
+    expectedZoomIsReached =
+      resultingModel.state.whereAmI.zoom == 2
+
     resultingAnnotation =
       List.head (resultingModel.state.annotations)
         |> Maybe.map (accountForZoom resultingModel.state)
@@ -31,7 +34,7 @@ z =
         ElmTest.fail "did not find text output"
 
       Just ( xPos, yPos ) ->
-        assert (withinTolerance x xPos && withinTolerance y yPos)
+        assert (withinTolerance x xPos && withinTolerance y yPos && expectedZoomIsReached)
 
 
 withinTolerance a b =
