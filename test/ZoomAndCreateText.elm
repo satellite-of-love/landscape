@@ -12,12 +12,12 @@ import Char
 z =
   let
     -- could be anywhere in the landscape
-    whereIClicked =
+    ( x, y ) =
       ( 30, 33 )
 
     news =
       triggerSomeZoom
-        ++ (triggerInformativeTextCreation whereIClicked "Hello")
+        ++ (triggerInformativeTextCreation ( x, y ) "Hello")
 
     resultingModel =
       List.foldl (dropSecond Subject.updateModel) Model.init news
@@ -30,8 +30,12 @@ z =
       Nothing ->
         ElmTest.fail "did not find text output"
 
-      Just position ->
-        assertEqual whereIClicked position
+      Just ( xPos, yPos ) ->
+        assert (withinTolerance x xPos && withinTolerance y yPos)
+
+
+withinTolerance a b =
+  -1 <= (a - b) && (a - b) <= 1
 
 
 
