@@ -116,7 +116,7 @@ landscapeSize =
 
 
 absolutePositionAtCenter =
-  asPairs (beAt (vh 50) (vw 50))
+  asPairs (beAt (vh 50) (vw 35))
 
 
 beAt myTop myLeft =
