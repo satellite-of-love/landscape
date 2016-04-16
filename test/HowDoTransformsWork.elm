@@ -27,7 +27,11 @@ main =
 view p =
   Html.div
     [ Attr.style [ ( "position", "absolute" ), ( "top", "0" ), ( "left", "0" ) ] ]
-    [ showMousePos p, oneTransformCheck 1 0 0, oneTransformCheck 1 -10 -20 ]
+    [ showMousePos p
+    , oneTransformCheck 1 0 0
+    , oneTransformCheck 1 -10 -20
+    , oneTransformCheck 2 -15 5
+    ]
 
 
 showMousePos p =
@@ -47,12 +51,13 @@ oneTransformCheck zoom x y =
           (absolutePositionAtCenter
             ++ [ ( "border", "thin green solid" )
                , ( "transform", Calculations.toStyle cssTransformation )
+               , ( "transform-origin", "top left" )
                ]
           )
       ]
       [ Html.text
           ((toString cssTransformation)
-            ++ "I expect this to be at "
+            ++ " so I expect this to be at "
             ++ (toString expectedPlacement)
           )
       ]
