@@ -1,6 +1,6 @@
-module LandscapeCss (css, CssClass(..), beAt) where
+module LandscapeCss (css, CssClass(..), beAt, absolutePositionAtCenter) where
 
-import Css exposing ((.), pct, left, color, selector, margin4, outset, fontWeight, bold, boxSizing, whiteSpace, noWrap, minWidth, border2, fontFamily, monospace, sansSerif, inset, em, borderBox, overflow, hidden, top, vw, scroll, border3, verticalAlign, height, width, groove, vh, stylesheet, px, rgb, backgroundColor, margin, padding, position, absolute)
+import Css exposing (..)
 import Css.Elements exposing (canvas, ul)
 
 
@@ -113,6 +113,10 @@ landscapeSize =
   [ width landscapeWidth
   , height fullHeight
   ]
+
+
+absolutePositionAtCenter =
+  asPairs (beAt (vh 50) (vw 50))
 
 
 beAt myTop myLeft =
