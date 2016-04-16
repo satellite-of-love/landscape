@@ -5,16 +5,17 @@ import Char exposing (KeyCode)
 import String
 import Messages exposing (Message, MessageVisibility, allVisible)
 import Clock exposing (Clock)
-import Landscape exposing (InformativeText)
+import Landscape exposing (InformativeText, ZoomLevel, PositionInDrawing, WhereAmI)
 import NewsInjector exposing (NewsInjectorPane)
+import Base
 
 
-type alias MousePosition =
-  ( Int, Int )
+type alias PositionOnScreen =
+  Base.PositionOnScreen
 
 
 type alias OutsideWorld =
-  { pointer : MousePosition
+  { pointer : PositionOnScreen
   , keysDown : Set KeyCode
   , previousKeysDown : Set KeyCode
   }
@@ -25,17 +26,22 @@ type alias InformativeTextId =
 
 
 type alias ApplicationState =
-  { messages : List Message
-  , messageVisibility : MessageVisibility
+  { -- messages
+    messages : List Message
+  , messageVisibility :
+      MessageVisibility
+      -- textInput
   , textInput :
       { isAThing : Bool
-      , position : MousePosition
+      , position : PositionOnScreen
       , contents : String
       , id : InformativeTextId
       }
+      -- Landscape
   , annotations : List InformativeText
-  , z : Int
-  , center : MousePosition
+  , whereAmI :
+      WhereAmI
+      -- news injector
   , newsInjector : NewsInjectorPane
   }
 
@@ -65,8 +71,7 @@ init =
           , id = ""
           }
       , annotations = []
-      , z = 1
-      , center = ( 35, 50 )
+      , whereAmI = Landscape.initialPosition
       , newsInjector =
           NewsInjector.init
       }

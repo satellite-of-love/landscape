@@ -115,12 +115,3 @@ descriptionOfKeys world =
     ""
   else
     "+" ++ (printableKeysDown world)
-
-
-xyz : Model -> ( Int, Int, Int )
-xyz model =
-  let
-    ( x, y ) =
-      model.world.pointer
-  in
-    ( x, y, model.state.z )

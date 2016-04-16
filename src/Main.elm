@@ -8,7 +8,7 @@ import Mouse
 import Keyboard
 import Char exposing (KeyCode)
 import Set exposing (Set)
-import Model exposing (Model, MousePosition, OutsideWorld, ApplicationState)
+import Model exposing (Model, PositionOnScreen, OutsideWorld, ApplicationState)
 import Clock exposing (Clock)
 import Action exposing (Action, News(..), OutgoingNews)
 import Update exposing (updateModel)
@@ -72,12 +72,12 @@ mousePointer =
   Signal.map2 MouseMove relativeMousePosition Keyboard.keysDown
 
 
-relativeMousePosition : Signal MousePosition
+relativeMousePosition : Signal PositionOnScreen
 relativeMousePosition =
   Signal.map3 relativize Mouse.position Window.width Window.height
 
 
-relativize : MousePosition -> Int -> Int -> MousePosition
+relativize : ( Int, Int ) -> Int -> Int -> PositionOnScreen
 relativize ( x, y ) w h =
   ( x * 100 // w, y * 100 // h )
 

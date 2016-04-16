@@ -1,6 +1,7 @@
 module Landscape.Calculations (..) where
 
-import Landscape exposing (ZoomLevel, LandscapeCenter, PositionInDrawing)
+import Landscape exposing (ZoomLevel, LandscapeCenter, PositionInDrawing, WhereAmI)
+import Base exposing (PositionOnScreen)
 
 
 ----
@@ -8,27 +9,31 @@ import Landscape exposing (ZoomLevel, LandscapeCenter, PositionInDrawing)
 ----
 
 
-findNewPlace : ZoomLevel -> ZoomLevel -> LandscapeCenter -> ( Int, Int ) -> ( ZoomLevel, LandscapeCenter )
-findNewPlace howMuchToZoomIn currentZ currentCenter click =
-  ( currentZ + howMuchToZoomIn, whereIsThis currentZ currentCenter click )
+findNewPlace : ZoomLevel -> WhereAmI -> PositionOnScreen -> WhereAmI
+findNewPlace howMuchToZoomIn current click =
+  let
+    recenter =
+      whereIsThis current click
+  in
+    { x = recenter.x
+    , y = recenter.y
+    , zoom = current.zoom + howMuchToZoomIn
+    }
 
 
-whereIsThis : ZoomLevel -> LandscapeCenter -> PositionOnScreen -> PositionInDrawing
-whereIsThis currentZ currentCenter ( xClick, yClick ) =
+whereIsThis : WhereAmI -> PositionOnScreen -> PositionInDrawing
+whereIsThis current ( xClick, yClick ) =
   let
     divideByZoom a =
-      round ((toFloat a) / (toFloat currentZ))
-
-    ( xCurrentCenter, yCurrentCenter ) =
-      currentCenter
+      round ((toFloat a) / (toFloat current.zoom))
 
     newX =
-      (divideByZoom xClick) + (xCurrentCenter - (divideByZoom 35))
+      (divideByZoom xClick) + (current.x - (divideByZoom 35))
 
     newY =
-      (divideByZoom yClick) + (yCurrentCenter - (divideByZoom 50))
+      (divideByZoom yClick) + (current.y - (divideByZoom 50))
   in
-    ( newX, newY )
+    { x = newX, y = newY, naturalZoom = current.zoom }
 
 
 
@@ -37,26 +42,26 @@ whereIsThis currentZ currentCenter ( xClick, yClick ) =
 -----
 
 
-transform : ZoomLevel -> LandscapeCenter -> ( String, String )
-transform z center =
+transform : WhereAmI -> ( String, String )
+transform pos =
   let
     translate =
-      translateFunction z center
+      translateFunction pos
 
     scale =
-      "scale(" ++ (toString z) ++ ")"
+      "scale(" ++ (toString pos.zoom) ++ ")"
   in
     ( "transform", scale ++ " " ++ translate )
 
 
-translateFunction : ZoomLevel -> LandscapeCenter -> String
-translateFunction zoomLevel ( xCenter, yCenter ) =
+translateFunction : WhereAmI -> String
+translateFunction pos =
   let
     xMove =
-      35 - xCenter
+      35 - pos.x
 
     yMove =
-      50 - yCenter
+      50 - pos.y
   in
     "translate(" ++ (toString xMove) ++ "vw," ++ (toString yMove) ++ "vh)"
 
@@ -74,11 +79,11 @@ type alias CssTransformation =
   }
 
 
-calculateTransformation : ZoomLevel -> LandscapeCenter -> PositionInDrawing -> CssTransformation
-calculateTransformation zoom ( xCenter, yCenter ) ( xText, yText ) =
-  { scale = zoom
-  , translateX = xText - xCenter
-  , translateY = yText - yCenter
+calculateTransformation : WhereAmI -> PositionInDrawing -> CssTransformation
+calculateTransformation whereAmI positionOfThing =
+  { scale = whereAmI.zoom
+  , translateX = positionOfThing.x - whereAmI.x
+  , translateY = positionOfThing.x - whereAmI.y
   }
 
 
@@ -94,9 +99,9 @@ toStyle spec =
     scale ++ " " ++ translate
 
 
-transformText : ZoomLevel -> LandscapeCenter -> PositionInDrawing -> ( String, String )
-transformText zoom center pos =
-  ( "transform", toStyle <| (calculateTransformation zoom center pos) )
+transformText : WhereAmI -> PositionInDrawing -> ( String, String )
+transformText whereAmI textPos =
+  ( "transform", toStyle <| (calculateTransformation whereAmI textPos) )
 
 
 anchorX =
@@ -105,10 +110,6 @@ anchorX =
 
 anchorY =
   50
-
-
-type alias PositionOnScreen =
-  ( Int, Int )
 
 
 

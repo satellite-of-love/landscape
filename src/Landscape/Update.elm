@@ -1,9 +1,10 @@
 module Landscape.Update (..) where
 
-import Model exposing (OutsideWorld, ApplicationState, MousePosition)
+import Model exposing (OutsideWorld, ApplicationState, PositionOnScreen)
 import Action exposing (Action(ZoomIn, ZoomOut), News(Click), OutgoingNews)
 import Set
-import Landscape.Calculations exposing (findNewPlace)
+import Landscape.Calculations as Calculations
+import Landscape
 
 
 respondToActions : Action -> ApplicationState -> ApplicationState
@@ -38,33 +39,30 @@ howMuchToZoomIn =
   1
 
 
-zoomIn : ApplicationState -> MousePosition -> ApplicationState
+zoomIn : ApplicationState -> PositionOnScreen -> ApplicationState
 zoomIn state click =
-  let
-    ( newZ, newCenter ) =
-      findNewPlace howMuchToZoomIn state.z state.center click
-  in
-    { state
-      | z = newZ
-      , center = newCenter
-    }
+  { state
+    | whereAmI = Calculations.findNewPlace howMuchToZoomIn state.whereAmI click
+  }
 
 
-zoomOut : ApplicationState -> MousePosition -> ApplicationState
+zoomOut : ApplicationState -> PositionOnScreen -> ApplicationState
 zoomOut state pointer =
   let
-    newZoom =
-      (max 1 (state.z - howMuchToZoomIn))
+    oldPos =
+      state.whereAmI
 
-    newCenter =
+    newZoom =
+      (max 1 (oldPos.zoom - howMuchToZoomIn))
+
+    newPos =
       if newZoom == 1 then
-        ( 35, 50 )
+        Landscape.initialPosition
       else
-        state.center
+        { oldPos | zoom = newZoom }
   in
     { state
-      | z = newZoom
-      , center = newCenter
+      | whereAmI = newPos
     }
 
 

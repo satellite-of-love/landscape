@@ -58,7 +58,7 @@ whereAmI model =
     []
     [ output ("clock: " ++ (toString model.clock))
     , output ("mouse: " ++ (toString model.world.pointer))
-    , output ("zoom: " ++ (toString model.state.z))
+    , output ("zoom: " ++ (toString model.state.whereAmI.zoom))
     , output ("keys: " ++ (printableKeysDown model.world))
     ]
 

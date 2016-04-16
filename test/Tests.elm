@@ -25,83 +25,92 @@ all =
 
 movingOver =
   let
-    currentCenter =
-      ( 60, 50 )
-
     clicked =
       ( 28, 50 )
 
-    expectedCenter =
-      ( 53, 50 )
+    expectedPos =
+      { x = 53, y = 50, zoom = 1 }
 
-    ( _, actualCenter ) =
-      Subject.findNewPlace 0 1 currentCenter clicked
+    finalPos =
+      Subject.findNewPlace 0 { zoom = 1, x = 60, y = 50 } clicked
   in
-    assertEqual expectedCenter actualCenter
+    assertEqual expectedPos finalPos
 
 
 beSomewhere =
   let
-    iWantTheCenterToBe =
-      ( 3, 50 )
+    iWantThePosToBe =
+      { x = 3
+      , y = 50
+      , zoom = 1
+      }
 
     thisShouldWork =
       "translate(32vw,0vh)"
   in
-    assertEqual thisShouldWork (Subject.translateFunction 1 iWantTheCenterToBe)
+    assertEqual thisShouldWork (Subject.translateFunction iWantThePosToBe)
 
 
 moveDown =
   let
-    currentCenter =
-      ( 35, 50 )
+    currentPos =
+      { x = 35
+      , y = 50
+      , zoom = 1
+      }
 
     clicked =
       ( 35, 40 )
 
-    ( _, actualCenter ) =
-      Subject.findNewPlace 0 1 currentCenter clicked
+    finalPos =
+      Subject.findNewPlace 0 currentPos clicked
   in
-    assertEqual ( 35, 40 ) actualCenter
+    assertEqual { zoom = 1, x = 35, y = 40 } finalPos
 
 
 down10 =
   let
-    center =
-      ( 35, 40 )
+    currentPos =
+      { x = 35
+      , y = 40
+      , zoom = 1
+      }
 
     translation =
       "translate(0vw,10vh)"
   in
-    assertEqual translation (Subject.translateFunction 1 center)
+    assertEqual translation (Subject.translateFunction currentPos)
 
 
 moveDownAgain =
   let
-    currentCenter =
-      ( 35, 40 )
+    currentPos =
+      { x = 35
+      , y = 40
+      , zoom = 1
+      }
 
     clicked =
       ( 35, 40 )
 
-    expectedCenter =
-      ( 35, 30 )
-
-    ( _, actualCenter ) =
-      Subject.findNewPlace 0 1 currentCenter clicked
+    finalPos =
+      Subject.findNewPlace 0 currentPos clicked
   in
-    assertEqual expectedCenter actualCenter
+    assertEqual { zoom = 1, x = 35, y = 30 } finalPos
 
 
 down20 =
   let
-    center =
-      ( 35, 30 )
+    currentPos =
+      { x = 35
+      , y = 30
+      , zoom = 1
+      }
 
     translation =
       "translate(0vw,20vh)"
   in
-    assertEqual translation (Subject.translateFunction 1 center)
+    assertEqual translation (Subject.translateFunction currentPos)
 
 
 
@@ -110,25 +119,28 @@ down20 =
 
 clickingInTheCenterDoesNotChangeTheCenter =
   let
-    currentCenter =
-      ( 35, 40 )
+    currentPos =
+      { x = 35
+      , y = 50
+      , zoom = 1
+      }
 
     clicked =
       ( 35, 50 )
 
-    expectedCenter =
-      ( 35, 40 )
-
-    ( _, actualCenter ) =
-      Subject.findNewPlace 0 1 currentCenter clicked
+    finalPos =
+      Subject.findNewPlace 0 currentPos clicked
   in
-    assertEqual expectedCenter actualCenter
+    assertEqual { zoom = 1, x = 35, y = 50 } finalPos
 
 
 zoomInAndThenOut =
   let
-    currentCenter =
-      ( 35, 50 )
+    currentPos =
+      { x = 35
+      , y = 50
+      , zoom = 1
+      }
 
     clicked =
       ( 10, 20 )
@@ -139,22 +151,22 @@ zoomInAndThenOut =
     zoomAmount =
       1
 
-    startingZoom =
-      1
+    nextPos =
+      Subject.findNewPlace zoomAmount currentPos clicked
 
-    ( nextZ, newCenter ) =
-      Subject.findNewPlace zoomAmount startingZoom currentCenter clicked
-
-    ( finalZ, finalCenter ) =
-      Subject.findNewPlace (-1 * zoomAmount) nextZ newCenter thenClick
+    finalPos =
+      Subject.findNewPlace (-1 * zoomAmount) nextPos thenClick
   in
-    assertEqual ( 1, ( 10, 20 ) ) ( finalZ, finalCenter )
+    assertEqual { zoom = 1, x = 10, y = 20 } finalPos
 
 
 zoomInAndThenOutMoving =
   let
-    currentCenter =
-      ( 35, 50 )
+    currentPos =
+      { x = 35
+      , y = 50
+      , zoom = 1
+      }
 
     clicked =
       ( 70, 60 )
@@ -165,13 +177,10 @@ zoomInAndThenOutMoving =
     zoomAmount =
       1
 
-    startingZoom =
-      1
+    nextPos =
+      Subject.findNewPlace zoomAmount currentPos clicked
 
-    ( nextZ, newCenter ) =
-      Subject.findNewPlace zoomAmount startingZoom currentCenter clicked
-
-    ( finalZ, finalCenter ) =
-      Subject.findNewPlace (-1 * zoomAmount) nextZ newCenter thenClick
+    finalPos =
+      Subject.findNewPlace (-1 * zoomAmount) nextPos thenClick
   in
-    assertEqual ( 1, ( 58, 40 ) ) ( finalZ, finalCenter )
+    assertEqual { zoom = 1, x = 58, y = 40 } finalPos

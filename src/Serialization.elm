@@ -3,7 +3,7 @@ module Serialization (..) where
 import Json.Encode
 import Json.Decode exposing ((:=))
 import Json.Decode.Extra exposing ((|:))
-import Landscape exposing (InformativeText)
+import Landscape exposing (InformativeText, PositionInDrawing)
 import Action exposing (News(ServerSays), Action, OutgoingNews(..))
 
 
@@ -17,7 +17,14 @@ decodeInformativeText : Json.Decode.Decoder InformativeText
 decodeInformativeText =
   Json.Decode.succeed InformativeText
     |: ("text" := Json.Decode.string)
-    |: ("position" := Json.Decode.tuple2 (,) Json.Decode.int Json.Decode.int)
+    |: ("position" := decodePosition)
+
+
+decodePosition : Json.Decode.Decoder PositionInDrawing
+decodePosition =
+  Json.Decode.succeed PositionInDrawing
+    |: ("x" := Json.Decode.int)
+    |: ("y" := Json.Decode.int)
     |: ("naturalZoom" := Json.Decode.int)
 
 
@@ -64,8 +71,16 @@ encodeInformativeText : InformativeText -> Json.Encode.Value
 encodeInformativeText record =
   Json.Encode.object
     [ ( "text", Json.Encode.string <| record.text )
-    , ( "position", Json.Encode.list <| List.map Json.Encode.int <| tuple2list <| record.position )
-    , ( "naturalZoom", Json.Encode.int <| record.naturalZoom )
+    , ( "position", encodePosition <| record.position )
+    ]
+
+
+encodePosition : PositionInDrawing -> Json.Encode.Value
+encodePosition p =
+  Json.Encode.object
+    [ ( "x", Json.Encode.int <| p.x )
+    , ( "y", Json.Encode.int <| p.y )
+    , ( "naturalZoom", Json.Encode.int <| p.naturalZoom )
     ]
 
 

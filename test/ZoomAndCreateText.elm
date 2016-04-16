@@ -82,6 +82,6 @@ triggerSomeZoom =
 accountForZoom state informativeText =
   let
     transforms =
-      Calculations.calculateTransformation state.z state.center informativeText.position
+      Calculations.calculateTransformation state.whereAmI informativeText.position
   in
     Calculations.resultingPositionOnScreen transforms

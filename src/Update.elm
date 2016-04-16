@@ -1,6 +1,6 @@
 module Update (updateModel) where
 
-import Model exposing (Model, MousePosition, OutsideWorld, ApplicationState)
+import Model exposing (Model, OutsideWorld, ApplicationState)
 import Clock exposing (Clock)
 import Action exposing (Action, News(..), OutgoingNews)
 import Landscape.Update

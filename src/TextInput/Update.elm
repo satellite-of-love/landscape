@@ -1,6 +1,6 @@
 module TextInput.Update (seeTheWorld, respondToActions) where
 
-import Model exposing (ApplicationState, OutsideWorld, keysPressed, MousePosition)
+import Model exposing (ApplicationState, OutsideWorld, keysPressed, PositionOnScreen)
 import Clock exposing (Clock)
 import Action exposing (Action(NewTextInput, ReceiveText, SaveText, DiscardText), News(Click, ServerSays), OutgoingNews(Save, Focus))
 import Landscape exposing (InformativeText)
@@ -16,7 +16,8 @@ seeTheWorld news world =
   case news of
     ServerSays (Save informativeText) ->
       -- this is kinda cheating, but let's simulate entering it
-      [ NewTextInput informativeText.position
+      -- this will not work if we are currently zoomed!!
+      [ NewTextInput ( informativeText.position.x, informativeText.position.y )
       , ReceiveText informativeText.text
       , SaveText
       ]
@@ -112,8 +113,7 @@ saveTheText state =
     annotation =
       InformativeText
         textInput.contents
-        (Calculations.whereIsThis state.z state.center textInput.position)
-        state.z
+        (Calculations.whereIsThis state.whereAmI textInput.position)
 
     newState =
       { state
@@ -131,12 +131,7 @@ theyHaveEnteredText model =
   model.textInput.isAThing
 
 
-moveItOverABit : MousePosition -> MousePosition
-moveItOverABit ( x, y ) =
-  ( x, y - 2 )
-
-
-initializeNewInput : String -> ApplicationState -> MousePosition -> ApplicationState
+initializeNewInput : String -> ApplicationState -> PositionOnScreen -> ApplicationState
 initializeNewInput id model position =
   { model
     | textInput =

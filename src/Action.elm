@@ -4,28 +4,25 @@ import Char exposing (KeyCode)
 import Set exposing (Set)
 import Messages exposing (MessageImportance)
 import Landscape exposing (InformativeText)
-
-
-type alias Position =
-  ( Int, Int )
+import Base exposing (PositionOnScreen)
 
 
 type News action outgoingNews
   = DoThis action
   | ServerSays outgoingNews
-  | MouseMove Position (Set KeyCode)
+  | MouseMove PositionOnScreen (Set KeyCode)
   | Click
   | NoOp
 
 
 type Action
-  = NewTextInput Position
+  = NewTextInput PositionOnScreen
   | ReceiveText String
   | DiscardText
   | SaveText
     -- landscape
-  | ZoomIn Position
-  | ZoomOut Position
+  | ZoomIn PositionOnScreen
+  | ZoomOut PositionOnScreen
     -- message pane
   | Disvisiblate MessageImportance
   | Envisiblate MessageImportance
