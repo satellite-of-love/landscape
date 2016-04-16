@@ -49,6 +49,20 @@ dropSecond f a b =
   fst (f a b)
 
 
+triggerSomeZoom =
+  let
+    up : Char.KeyCode
+    up =
+      38
+
+    holdingUp =
+      Set.fromList [ up ]
+  in
+    [ MouseMove ( 15, 20 ) holdingUp
+    , Click
+    ]
+
+
 triggerInformativeTextCreation pos text =
   let
     holdingT =
@@ -65,20 +79,6 @@ triggerInformativeTextCreation pos text =
     , Click
     , DoThis (ReceiveText text)
     , MouseMove ( 0, 0 ) holdingEnter
-    ]
-
-
-triggerSomeZoom =
-  let
-    up : Char.KeyCode
-    up =
-      38
-
-    holdingUp =
-      Set.fromList [ up ]
-  in
-    [ MouseMove ( 15, 20 ) holdingUp
-    , Click
     ]
 
 
