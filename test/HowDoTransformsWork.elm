@@ -56,10 +56,7 @@ oneTransformCheck anchorX anchorY zoom x y =
           )
       ]
       [ Html.text
-          ((toString cssTransformation)
-            ++ " so I expect this to be at "
-            ++ (toString expectedPlacement)
-          )
+          ((toString expectedPlacement) ++ " because " ++ (toString cssTransformation))
       ]
 
 
