@@ -112,16 +112,18 @@ transformStyle spec =
     scale ++ " " ++ translate
 
 
-transformText : WhereAmI -> PositionInDrawing -> List ( String, String )
-transformText whereAmI textPos =
+positioningStyles : GetOnTheScreenRightHere -> List ( String, String )
+positioningStyles spec =
   let
-    spec =
-      calculateTransformation whereAmI textPos
-
     absolutePositioning =
       (Css.asPairs (LandscapeCss.beAt (vh spec.fromTop) (vw spec.fromLeft)))
   in
     absolutePositioning ++ [ ( "transform", transformStyle spec ) ]
+
+
+transformText : WhereAmI -> PositionInDrawing -> List ( String, String )
+transformText whereAmI textPos =
+  calculateTransformation whereAmI textPos |> positioningStyles
 
 
 anchorX =

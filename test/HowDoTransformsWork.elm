@@ -11,7 +11,6 @@ is consistent with what the box says.
 
 import Html exposing (Html)
 import Html.Attributes as Attr
-import LandscapeCss exposing (absolutePositionAtCenter)
 import Landscape.Calculations as Calculations
 import Mouse
 import Window
@@ -41,16 +40,15 @@ showMousePos p =
 oneTransformCheck zoom x y =
   let
     cssTransformation =
-      { scale = zoom, translateX = x, translateY = y }
+      { fromLeft = Calculations.anchorX, fromTop = Calculations.anchorY, scale = zoom, translateX = x, translateY = y }
 
     expectedPlacement =
       Calculations.resultingPositionOnScreen cssTransformation
   in
     Html.div
       [ Attr.style
-          (absolutePositionAtCenter
+          ((Calculations.positioningStyles cssTransformation)
             ++ [ ( "border", "thin green solid" )
-               , ( "transform", Calculations.toStyle cssTransformation )
                , ( "transform-origin", "top left" )
                ]
           )

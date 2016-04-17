@@ -17,3 +17,6 @@ elm-css src/Stylesheets.elm
 
 echo "Compiling again just in case..."
 elm make --output elm.js src/Main.elm
+
+echo "Compiling the test of tests"
+elm make --output HowDoTransformsWork.html test/HowDoTransformsWork.elm
