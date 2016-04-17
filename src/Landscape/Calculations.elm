@@ -81,10 +81,17 @@ type alias CssTransformation =
 
 calculateTransformation : WhereAmI -> PositionInDrawing -> CssTransformation
 calculateTransformation whereAmI positionOfThing =
-  { scale = whereAmI.zoom
-  , translateX = positionOfThing.x - whereAmI.x
-  , translateY = positionOfThing.y - whereAmI.y
-  }
+  let
+    scale =
+      whereAmI.zoom / positionOfThing.naturalZoom
+
+    divideByScale i =
+      i
+  in
+    { scale = scale
+    , translateX = divideByScale (positionOfThing.x - whereAmI.x)
+    , translateY = divideByScale (positionOfThing.y - whereAmI.y)
+    }
 
 
 toStyle : CssTransformation -> String

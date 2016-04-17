@@ -20,6 +20,7 @@ type Action
   | ReceiveText String
   | DiscardText
   | SaveText
+  | TheServerKnowsAbout InformativeText
     -- landscape
   | ZoomIn PositionOnScreen
   | ZoomOut PositionOnScreen

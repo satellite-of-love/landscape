@@ -2,7 +2,7 @@ module TextInput.Update (seeTheWorld, respondToActions) where
 
 import Model exposing (ApplicationState, OutsideWorld, keysPressed, PositionOnScreen)
 import Clock exposing (Clock)
-import Action exposing (Action(NewTextInput, ReceiveText, SaveText, DiscardText), News(Click, ServerSays), OutgoingNews(Save, Focus))
+import Action exposing (Action(NewTextInput, ReceiveText, SaveText, DiscardText, TheServerKnowsAbout), News(Click, ServerSays), OutgoingNews(Save, Focus))
 import Landscape exposing (InformativeText)
 import Char exposing (KeyCode)
 import Set exposing (Set)
@@ -16,11 +16,8 @@ seeTheWorld news world =
   case news of
     ServerSays (Save informativeText) ->
       -- this is kinda cheating, but let's simulate entering it
-      -- this will not work if we are currently zoomed!!
-      [ NewTextInput ( informativeText.position.x, informativeText.position.y )
-      , ReceiveText informativeText.text
-      , SaveText
-      ]
+      -- this will not work if we are currently zoomed!! or if the text was zoomed
+      [ TheServerKnowsAbout informativeText ]
 
     Click ->
       if theyAreHoldingT world then
@@ -67,6 +64,13 @@ respondToActions clock action state =
         saveTheText state
       else
         doNothing state
+
+    TheServerKnowsAbout annotation ->
+      { state
+        | annotations =
+            state.annotations ++ [ annotation ]
+      }
+        |> doNothing
 
     _ ->
       doNothing state
