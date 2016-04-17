@@ -117,8 +117,14 @@ positioningStyles spec =
   let
     absolutePositioning =
       (Css.asPairs (LandscapeCss.beAt (vh spec.fromTop) (vw spec.fromLeft)))
+
+    scale =
+      "scale(" ++ (toString spec.scale) ++ ")"
+
+    translate =
+      "translate(" ++ (toString spec.translateX) ++ "vw," ++ (toString spec.translateY) ++ "vh)"
   in
-    absolutePositioning ++ [ ( "transform", transformStyle spec ) ]
+    absolutePositioning ++ [ ( "transform", scale ++ " " ++ translate ) ]
 
 
 transformText : WhereAmI -> PositionInDrawing -> List ( String, String )
