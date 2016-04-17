@@ -87,7 +87,7 @@ calculateTransformation : WhereAmI -> PositionInDrawing -> GetOnTheScreenRightHe
 calculateTransformation whereAmI positionOfThing =
   let
     scale =
-      whereAmI.zoom
+      whereAmI.zoom / positionOfThing.naturalZoom
   in
     { fromLeft = positionOfThing.x - whereAmI.x |> toFloat |> (*) whereAmI.zoom |> (+) 35
     , fromTop = positionOfThing.y - whereAmI.y |> toFloat |> (*) whereAmI.zoom |> (+) 50
