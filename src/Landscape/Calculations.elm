@@ -83,7 +83,7 @@ calculateTransformation : WhereAmI -> PositionInDrawing -> CssTransformation
 calculateTransformation whereAmI positionOfThing =
   let
     scale =
-      whereAmI.zoom / positionOfThing.naturalZoom
+      whereAmI.zoom
 
     divideByScale i =
       i
