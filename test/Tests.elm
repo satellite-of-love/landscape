@@ -10,17 +10,18 @@ all : Test
 all =
   suite
     "A Test Suite"
-    [ test "Move to the left" movingOver
-    , test "translate for the view" beSomewhere
-    , test "move down from start" moveDown
-    , test "see it be down" down10
-    , test "move down farther" moveDownAgain
-    , test "see it be down farther" down20
-    , test "zoom in then out" zoomInAndThenOut
-    , test "click in the center" clickingInTheCenterDoesNotChangeTheCenter
-    , test "zoom in then out moving" zoomInAndThenOutMoving
-    , test "text appears where the input was" ZoomAndCreateText.z
-    ]
+    ([ test "Move to the left" movingOver
+     , test "translate for the view" beSomewhere
+     , test "move down from start" moveDown
+     , test "see it be down" down10
+     , test "move down farther" moveDownAgain
+     , test "see it be down farther" down20
+     , test "zoom in then out" zoomInAndThenOut
+     , test "click in the center" clickingInTheCenterDoesNotChangeTheCenter
+     , test "zoom in then out moving" zoomInAndThenOutMoving
+     ]
+      ++ ZoomAndCreateText.tests
+    )
 
 
 movingOver =

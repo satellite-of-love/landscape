@@ -9,17 +9,20 @@ import Set
 import Char
 
 
-z =
-  makeATest 30 33
+tests =
+  [ makeATest 30 33 ]
 
 
 makeATest x y =
-  case (resultingAnnotation ( x, y )) of
-    Nothing ->
-      ElmTest.fail "did not find text output"
+  test
+    ("creating text at " ++ (toString ( x, y )))
+    (case (resultingAnnotation ( x, y )) of
+      Nothing ->
+        ElmTest.fail "did not find text output"
 
-    Just ( xPos, yPos ) ->
-      assert (bothWithinTolerance ( x, y ) ( xPos, yPos ))
+      Just ( xPos, yPos ) ->
+        assert (bothWithinTolerance ( x, y ) ( xPos, yPos ))
+    )
 
 
 resultingAnnotation ( x, y ) =
