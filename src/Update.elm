@@ -112,4 +112,4 @@ respondToAction clock action ( state, outgoingNews ) =
     |> updateOneSumAnother (TextInput.Update.respondToActions clock action)
     |> updateOneIgnoreAnother (Landscape.Update.respondToActions action)
     |> updateOneIgnoreAnother (NewsInjector.Update.respondToActions action)
-    |> updateOneIgnoreAnother (Messages.Update.respondToActions action)
+    |> updateOneIgnoreAnother (Messages.Update.respondToActions clock action)

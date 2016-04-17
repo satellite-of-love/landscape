@@ -26,7 +26,7 @@ type Action
     -- message pane
   | Disvisiblate MessageImportance
   | Envisiblate MessageImportance
-  | PleasePrintTheModel
+  | PleasePrintTheState
     -- news injector
   | ActivateNewsInjector
   | DiscardNewsInjector

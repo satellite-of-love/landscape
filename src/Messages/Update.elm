@@ -84,7 +84,7 @@ seeTheWorld news world =
   case news of
     Click ->
       if theyAreHoldingM world then
-        [ PleasePrintTheModel ]
+        [ PleasePrintTheState ]
       else
         []
 
@@ -92,14 +92,17 @@ seeTheWorld news world =
       []
 
 
-respondToActions : Action -> ApplicationState -> ApplicationState
-respondToActions action state =
+respondToActions : Clock -> Action -> ApplicationState -> ApplicationState
+respondToActions clock action state =
   case action of
     Disvisiblate imp ->
       state |> disvisiblate imp
 
     Envisiblate imp ->
       state |> envisiblate imp
+
+    PleasePrintTheState ->
+      state |> takeChunder clock (toString state)
 
     _ ->
       state
