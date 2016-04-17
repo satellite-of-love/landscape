@@ -27,11 +27,11 @@ view p =
   Html.div
     [ Attr.style [ ( "position", "absolute" ), ( "top", "0" ), ( "left", "0" ) ] ]
     [ showMousePos p
-    , oneTransformCheck 1 0 0
-    , oneTransformCheck 1 -10 -20
-    , oneTransformCheck 2 -15 5
-    , oneTransformCheck 0.5 15 25
-    , oneTransformCheck 0.5 30 -40
+    , oneTransformCheck 35 50 1 0 0
+    , oneTransformCheck 35 50 1 -10 -20
+    , oneTransformCheck 35 50 2 -15 5
+    , oneTransformCheck 35 50 0.5 15 25
+    , oneTransformCheck 35 50 0.5 30 -40
     ]
 
 
@@ -39,10 +39,10 @@ showMousePos p =
   Html.text (toString p)
 
 
-oneTransformCheck zoom x y =
+oneTransformCheck anchorX anchorY zoom x y =
   let
     cssTransformation =
-      { fromLeft = Calculations.anchorX, fromTop = Calculations.anchorY, scale = zoom, translateX = x, translateY = y }
+      { fromLeft = anchorX, fromTop = anchorY, scale = zoom, translateX = x, translateY = y }
 
     expectedPlacement =
       Calculations.resultingPositionOnScreen cssTransformation
