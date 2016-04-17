@@ -33,7 +33,7 @@ draw : WhereAmI -> InformativeText -> Html
 draw pos annotation =
   let
     positioningCss =
-      (asPairs (beAt (anchorY |> toFloat |> vh) (anchorX |> toFloat |> vw))) ++ [ Calculations.transformText pos annotation.position ]
+      Calculations.transformText pos annotation.position
   in
     Html.label
       [ Attr.style

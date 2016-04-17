@@ -2,6 +2,8 @@ module Landscape.Calculations (..) where
 
 import Landscape exposing (ZoomLevel, LandscapeCenter, PositionInDrawing, WhereAmI)
 import Base exposing (PositionOnScreen)
+import LandscapeCss
+import Css exposing (vh, vw)
 
 
 ----
@@ -72,14 +74,16 @@ translateFunction pos =
 -----
 
 
-type alias CssTransformation =
-  { scale : Float
+type alias GetOnTheScreenRightHere =
+  { fromTop : Float
+  , fromLeft : Float
+  , scale : Float
   , translateX : Int
   , translateY : Int
   }
 
 
-calculateTransformation : WhereAmI -> PositionInDrawing -> CssTransformation
+calculateTransformation : WhereAmI -> PositionInDrawing -> GetOnTheScreenRightHere
 calculateTransformation whereAmI positionOfThing =
   let
     scale =
@@ -88,14 +92,16 @@ calculateTransformation whereAmI positionOfThing =
     divideByScale i =
       i
   in
-    { scale = scale
+    { fromTop = anchorY
+    , fromLeft = anchorX
+    , scale = scale
     , translateX = divideByScale (positionOfThing.x - whereAmI.x)
     , translateY = divideByScale (positionOfThing.y - whereAmI.y)
     }
 
 
-toStyle : CssTransformation -> String
-toStyle spec =
+transformStyle : GetOnTheScreenRightHere -> String
+transformStyle spec =
   let
     scale =
       "scale(" ++ (toString spec.scale) ++ ")"
@@ -106,9 +112,16 @@ toStyle spec =
     scale ++ " " ++ translate
 
 
-transformText : WhereAmI -> PositionInDrawing -> ( String, String )
+transformText : WhereAmI -> PositionInDrawing -> List ( String, String )
 transformText whereAmI textPos =
-  ( "transform", toStyle <| (calculateTransformation whereAmI textPos) )
+  let
+    spec =
+      calculateTransformation whereAmI textPos
+
+    absolutePositioning =
+      (Css.asPairs (LandscapeCss.beAt (vh spec.fromTop) (vw spec.fromLeft)))
+  in
+    absolutePositioning ++ [ ( "transform", transformStyle spec ) ]
 
 
 anchorX =
@@ -124,7 +137,7 @@ anchorY =
 -- Hopefully it corresponds to what the browser does.
 
 
-resultingPositionOnScreen : CssTransformation -> PositionOnScreen
+resultingPositionOnScreen : GetOnTheScreenRightHere -> PositionOnScreen
 resultingPositionOnScreen spec =
   ( anchorX + (round ((toFloat spec.translateX) * spec.scale))
   , anchorY + (round ((toFloat spec.translateY) * spec.scale))
