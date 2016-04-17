@@ -30,6 +30,8 @@ view p =
     , oneTransformCheck 1 0 0
     , oneTransformCheck 1 -10 -20
     , oneTransformCheck 2 -15 5
+    , oneTransformCheck 0.5 15 25
+    , oneTransformCheck 0.5 30 -40
     ]
 
 
