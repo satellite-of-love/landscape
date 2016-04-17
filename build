@@ -6,6 +6,9 @@ elm make --output elm.js src/Main.elm
 echo "Running tests..."
 elm test test/TestRunner.elm
 
+echo "Running properties..."
+elm test test/Properties.elm
+
 echo "Formatting..."
 elm format --yes src/* test/*
 
