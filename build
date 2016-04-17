@@ -1,5 +1,9 @@
 set -e
 
+function echo {
+	/bin/echo ">>> " $*
+}
+
 echo "Compiling..."
 elm make --output elm.js src/Main.elm
 
