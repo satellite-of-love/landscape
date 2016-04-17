@@ -21,7 +21,10 @@ makeATest x y =
         ElmTest.fail "did not find text output"
 
       Just ( xPos, yPos ) ->
-        assert (bothWithinTolerance ( x, y ) ( xPos, yPos ))
+        if bothWithinTolerance ( x, y ) ( xPos, yPos ) then
+          assert True
+        else
+          ElmTest.fail ("Wanted " ++ (toString ( x, y ) ++ " but got " ++ (toString ( xPos, yPos ))))
     )
 
 
