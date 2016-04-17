@@ -75,8 +75,8 @@ translateFunction pos =
 
 
 type alias GetOnTheScreenRightHere =
-  { fromTop : Float
-  , fromLeft : Float
+  { fromLeft : Float
+  , fromTop : Float
   , scale : Float
   , translateX : Int
   , translateY : Int
@@ -89,11 +89,11 @@ calculateTransformation whereAmI positionOfThing =
     scale =
       whereAmI.zoom
   in
-    { fromTop = 50
-    , fromLeft = 35
+    { fromLeft = positionOfThing.x - whereAmI.x |> toFloat |> (*) whereAmI.zoom |> (+) 35
+    , fromTop = positionOfThing.y - whereAmI.y |> toFloat |> (*) whereAmI.zoom |> (+) 50
     , scale = scale
-    , translateX = positionOfThing.x - whereAmI.x
-    , translateY = positionOfThing.y - whereAmI.y
+    , translateX = 0
+    , translateY = 0
     }
 
 
