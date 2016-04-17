@@ -80,8 +80,16 @@ spyOnNews clock world news state =
 
 
 seeTheWorld : News a b -> OutsideWorld -> List Action
-seeTheWorld world news =
-  []
+seeTheWorld news world =
+  case news of
+    Click ->
+      if theyAreHoldingM world then
+        [ PleasePrintTheModel ]
+      else
+        []
+
+    _ ->
+      []
 
 
 respondToActions : Action -> ApplicationState -> ApplicationState
@@ -115,3 +123,7 @@ descriptionOfKeys world =
     ""
   else
     "+" ++ (printableKeysDown world)
+
+
+theyAreHoldingM world =
+  Set.member 'M' (Set.map Char.fromCode world.keysDown)
