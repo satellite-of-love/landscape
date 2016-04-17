@@ -1,0 +1,5 @@
+cp ../landscape/elm.js .
+cp ../landscape/index.html .
+cp ../landscape/styles.css .
+cp ../landscape/otherStyles.css .
+cp ../landscape/HowDoTransformsWork.html .
