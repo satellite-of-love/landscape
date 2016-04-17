@@ -83,7 +83,7 @@ calculateTransformation : WhereAmI -> PositionInDrawing -> CssTransformation
 calculateTransformation whereAmI positionOfThing =
   { scale = whereAmI.zoom
   , translateX = positionOfThing.x - whereAmI.x
-  , translateY = positionOfThing.x - whereAmI.y
+  , translateY = positionOfThing.y - whereAmI.y
   }
 
 
