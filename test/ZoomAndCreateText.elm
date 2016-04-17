@@ -14,27 +14,30 @@ z =
     -- could be anywhere in the landscape
     ( x, y ) =
       ( 30, 33 )
+  in
+    case (resultingAnnotation ( x, y )) of
+      Nothing ->
+        ElmTest.fail "did not find text output"
 
+      Just ( xPos, yPos ) ->
+        assert (bothWithinTolerance ( x, y ) ( xPos, yPos ))
+
+
+resultingAnnotation ( x, y ) =
+  let
     news =
       triggerSomeZoom
         ++ (triggerInformativeTextCreation ( x, y ) "Hello")
 
     resultingModel =
       List.foldl (dropSecond Subject.updateModel) Model.init news
-
-    expectedZoomIsReached =
-      resultingModel.state.whereAmI.zoom == 2
-
-    resultingAnnotation =
-      List.head (resultingModel.state.annotations)
-        |> Maybe.map (accountForZoom resultingModel.state)
   in
-    case resultingAnnotation of
-      Nothing ->
-        ElmTest.fail "did not find text output"
+    List.head (resultingModel.state.annotations)
+      |> Maybe.map (accountForZoom resultingModel.state)
 
-      Just ( xPos, yPos ) ->
-        assert (withinTolerance x xPos && withinTolerance y yPos && expectedZoomIsReached)
+
+bothWithinTolerance ( x1, y1 ) ( x2, y2 ) =
+  (withinTolerance x1 x2) && (withinTolerance y1 y2)
 
 
 withinTolerance a b =
