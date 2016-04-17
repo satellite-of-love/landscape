@@ -10,17 +10,16 @@ import Char
 
 
 z =
-  let
-    -- could be anywhere in the landscape
-    ( x, y ) =
-      ( 30, 33 )
-  in
-    case (resultingAnnotation ( x, y )) of
-      Nothing ->
-        ElmTest.fail "did not find text output"
+  makeATest 30 33
 
-      Just ( xPos, yPos ) ->
-        assert (bothWithinTolerance ( x, y ) ( xPos, yPos ))
+
+makeATest x y =
+  case (resultingAnnotation ( x, y )) of
+    Nothing ->
+      ElmTest.fail "did not find text output"
+
+    Just ( xPos, yPos ) ->
+      assert (bothWithinTolerance ( x, y ) ( xPos, yPos ))
 
 
 resultingAnnotation ( x, y ) =
