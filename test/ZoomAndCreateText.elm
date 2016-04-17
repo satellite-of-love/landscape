@@ -10,7 +10,7 @@ import Char
 
 
 tests =
-  [ makeATest 30 33 ]
+  [ makeATest 30 33, makeATest 0 0 ]
 
 
 makeATest x y =
