@@ -141,6 +141,6 @@ anchorY =
 
 resultingPositionOnScreen : GetOnTheScreenRightHere -> PositionOnScreen
 resultingPositionOnScreen spec =
-  ( anchorX + (round ((toFloat spec.translateX) * spec.scale))
-  , anchorY + (round ((toFloat spec.translateY) * spec.scale))
+  ( (round (spec.fromLeft + (toFloat spec.translateX) * spec.scale))
+  , (round (spec.fromTop + (toFloat spec.translateY) * spec.scale))
   )
