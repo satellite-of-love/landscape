@@ -102,7 +102,7 @@ respondToActions clock action state =
       state |> envisiblate imp
 
     PleasePrintTheState ->
-      state |> takeChunder clock (toString state)
+      state |> takeChunder clock (toString { state | messages = [] })
 
     _ ->
       state
