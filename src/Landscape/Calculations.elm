@@ -92,8 +92,8 @@ calculateTransformation whereAmI positionOfThing =
     divideByScale i =
       i
   in
-    { fromTop = anchorY
-    , fromLeft = anchorX
+    { fromTop = 50
+    , fromLeft = 35
     , scale = scale
     , translateX = divideByScale (positionOfThing.x - whereAmI.x)
     , translateY = divideByScale (positionOfThing.y - whereAmI.y)
@@ -130,14 +130,6 @@ positioningStyles spec =
 transformText : WhereAmI -> PositionInDrawing -> List ( String, String )
 transformText whereAmI textPos =
   calculateTransformation whereAmI textPos |> positioningStyles
-
-
-anchorX =
-  35
-
-
-anchorY =
-  50
 
 
 
