@@ -88,15 +88,12 @@ calculateTransformation whereAmI positionOfThing =
   let
     scale =
       whereAmI.zoom
-
-    divideByScale i =
-      i
   in
     { fromTop = 50
     , fromLeft = 35
     , scale = scale
-    , translateX = divideByScale (positionOfThing.x - whereAmI.x)
-    , translateY = divideByScale (positionOfThing.y - whereAmI.y)
+    , translateX = positionOfThing.x - whereAmI.x
+    , translateY = positionOfThing.y - whereAmI.y
     }
 
 
