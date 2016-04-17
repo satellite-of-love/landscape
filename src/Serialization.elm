@@ -25,7 +25,7 @@ decodePosition =
   Json.Decode.succeed PositionInDrawing
     |: ("x" := Json.Decode.int)
     |: ("y" := Json.Decode.int)
-    |: ("naturalZoom" := Json.Decode.int)
+    |: ("naturalZoom" := Json.Decode.float)
 
 
 decodeOutgoingNews : Json.Decode.Decoder OutgoingNews
@@ -80,7 +80,7 @@ encodePosition p =
   Json.Encode.object
     [ ( "x", Json.Encode.int <| p.x )
     , ( "y", Json.Encode.int <| p.y )
-    , ( "naturalZoom", Json.Encode.int <| p.naturalZoom )
+    , ( "naturalZoom", Json.Encode.float <| p.naturalZoom )
     ]
 
 

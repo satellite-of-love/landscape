@@ -2,7 +2,7 @@ module Landscape (..) where
 
 
 type alias ZoomLevel =
-  Int
+  Float
 
 
 type alias XFromFarLeft =

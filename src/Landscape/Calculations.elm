@@ -25,7 +25,7 @@ whereIsThis : WhereAmI -> PositionOnScreen -> PositionInDrawing
 whereIsThis current ( xClick, yClick ) =
   let
     divideByZoom a =
-      round ((toFloat a) / (toFloat current.zoom))
+      round ((toFloat a) / current.zoom)
 
     newX =
       (divideByZoom xClick) + (current.x - (divideByZoom 35))
@@ -73,7 +73,7 @@ translateFunction pos =
 
 
 type alias CssTransformation =
-  { scale : Int
+  { scale : Float
   , translateX : Int
   , translateY : Int
   }
@@ -119,6 +119,6 @@ anchorY =
 
 resultingPositionOnScreen : CssTransformation -> PositionOnScreen
 resultingPositionOnScreen spec =
-  ( anchorX + (spec.translateX * spec.scale)
-  , anchorY + (spec.translateY * spec.scale)
+  ( anchorX + (round ((toFloat spec.translateX) * spec.scale))
+  , anchorY + (round ((toFloat spec.translateY) * spec.scale))
   )
