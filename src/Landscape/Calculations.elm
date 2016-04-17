@@ -88,12 +88,18 @@ calculateTransformation whereAmI positionOfThing =
   let
     scale =
       whereAmI.zoom / positionOfThing.naturalZoom
+
+    distanceFromLeft =
+      positionOfThing.x - whereAmI.x |> toFloat |> (*) whereAmI.zoom |> (+) 35
+
+    distanceFromTop =
+      positionOfThing.y - whereAmI.y |> toFloat |> (*) whereAmI.zoom |> (+) 50
   in
-    { fromLeft = positionOfThing.x - whereAmI.x |> toFloat |> (*) whereAmI.zoom |> (+) 35
-    , fromTop = positionOfThing.y - whereAmI.y |> toFloat |> (*) whereAmI.zoom |> (+) 50
+    { fromLeft = 0
+    , fromTop = 0
     , scale = scale
-    , translateX = 0
-    , translateY = 0
+    , translateX = (distanceFromLeft / scale) |> round
+    , translateY = (distanceFromTop / scale) |> round
     }
 
 
